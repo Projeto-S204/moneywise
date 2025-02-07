@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return 'MoneyWise!ß'
+    return 'MoneyWise!'
 
 if __name__ == '__main__':
     app.run(debug=True)
