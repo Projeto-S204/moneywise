@@ -1,7 +1,7 @@
 import os
 from socket import socket
 
-BASEDIR = os.path.dirname(os.path.abspath("main.py"))
+BASEDIR = os.path.dirname(os.path.abspath("app.py"))
 DATABASE = "sqlite:///" + os.path.join(BASEDIR, "database.db")
 
 def find_available_port():
