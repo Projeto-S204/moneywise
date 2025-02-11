@@ -1,11 +1,47 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home</title>
-</head>
-<body>
-  <h1>HOME PAGE PEDRO VILAS</h1>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('home.static', filename='css/home.css') }}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jomhuria&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jomhuria&family=Josefin+Sans:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>MoneyWise</title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <img src="images/logo.png" alt="logo" />
+        <ul>
+          <li id="Entrar"><a href="#">Entrar</a></li>
+          <li id="Sobre"><a href="#">Informações</a></li>
+          <li id="Contato"><a href="#">Contato</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <div>
+        <h1>MoneyWise</h1>
+        <p>
+          Transforme suas finanças em algo simples e inteligente. Controle
+          gastos, alcance metas e viva com mais tranquilidade
+        </p>
+        <div id="button-container">
+          <button><a href="#">Comece Agora!</a></button>
+        </div>
+      </div>
+      <div>
+        <img src="images/main_img.png" alt="home" />
+      </div>
+    </main>
+  </body>
 </html>
