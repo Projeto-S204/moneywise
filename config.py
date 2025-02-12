@@ -1,8 +1,11 @@
-import os
 from socket import socket
+import psycopg2
 
-BASEDIR = os.path.dirname(os.path.abspath("app.py"))
-DATABASE = "sqlite:///" + os.path.join(BASEDIR, "database.db")
+DB_HOST = "database.cp6y2smecfjo.us-east-2.rds.amazonaws.com"
+DB_NAME = "moneywise"
+DB_USER = "postgres"
+DB_PASS = "nrqakc12"
+DB_PORT = "5432"
 
 def find_available_port():
     with socket() as s:
@@ -12,6 +15,13 @@ def find_available_port():
 
 class Config:
     FLASK_DEBUG = 1
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_DATABASE_URI = DATABASE
     SECRET_KEY = "k\x8d-\xbd\xb9\x05\xeax\x92\xd9{H\xf0\x9c\xf9\xde\x91\xc6\xe6\xa8\x14\xf9\x89t"
+
+    def get_db_connection():
+        return psycopg2.connect(
+            dbname=DB_NAME,
+            user=DB_USER,
+            password=DB_PASS,
+            host=DB_HOST,
+            port=DB_PORT
+        )
