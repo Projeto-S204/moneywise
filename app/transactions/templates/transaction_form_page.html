@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="{{ url_for('transactions.static', filename='js/transaction_form_page.js') }}"></script>
+  <link rel="stylesheet" href="{{ url_for('transactions.static', filename='css/transaction_form_page.css') }}">
+</head>
+
+<body>
+  <h1>Nova Transação</h1>
+  <form action="">
+    <input type="text" id="title" ng-model="transaction.title" placeholder="Nome da transação" required />
+
+    <br>
+
+    <input type="text" id="amount" ng-model="transaction.amount" placeholder="Digite o valor" required />
+
+    <br>
+
+    <select id="category" ng-model="transaction.category" required>
+      <option value="" disabled selected>Selecione uma categoria</option>
+      <option value="home">Casa</option>
+      <option value="entertainment">Entretenimento</option>
+      <option value="study">Estudos</option>
+      <option value="trip">Viagem</option>
+    </select>
+
+    <br>
+
+    <select id="payment_method" ng-model="transaction.payment_method" required>
+      <option value="" disabled selected>Selecione um método de pagamento</option>
+      <option value="debit">Débito</option>
+      <option value="credit">Crédito</option>
+      <option value="pix">PIX</option>
+      <option value="bank slip">Boleto Bancário</option>
+      <option value="other">Outro</option>
+    </select>
+
+    <br>  
+
+    <input type="date" id="transaction_date" placeholder="Data da Transação" required>
+    <input type="time" id="transaction_hour" placeholder="Horário da Transação" required>
+
+    <br>
+
+    <textarea id="description" ng-model="transaction.description"
+      placeholder="Digite uma descrição para a transação"></textarea>
+
+    <br>
+
+    <label for="is_recurring">
+      <input type="checkbox" id="is_recurring" ng-model="transaction.is_recurring">
+      Recorrente
+    </label>
+
+    <br>
+
+    <input style="display:none" type="date" id="start_date" ng-model="transaction.start_date"
+      placeholder="Data Inicial" />
+
+    <br>
+
+    <input style="display:none" type="date" id="end_date" ng-model="transaction.end_date" placeholder="Data Final" />
+
+    <br>
+
+    <select style="display:none" id="interval" ng-model="transaction.interval">
+      <option value="" disabled selected>Selecione o intervalo</option>
+      <option value="1">Diário</option>
+      <option value="7">Semanal</option>
+      <option value="30">Mensal</option>
+      <option value="365">Anual</option>
+    </select>
+
+    <br>
+
+    <label for="type">Tipo</label>
+    <select id="type" ng-model="transaction.type">
+      <option value="" disabled selected>Selecione o tipo da transação</option>
+      <option value="income">Receitas</option>
+      <option value="expenses">Despesas</option>
+    </select>
+
+  </form>
+
+  <br>
+
+  <button type="submit">Criar</button>
+  <a href="{{ url_for('transactions.transactions_page')}}">Back</a>
+</body>
+
+</html>

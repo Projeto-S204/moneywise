@@ -1,7 +1,7 @@
 from app import create_app
-from config import find_available_port
+from config import Config
 
 app = create_app()
 
 if __name__ == "__main__":
-    app.run(debug=True, port=find_available_port())
+    app.run(debug=True, port=Config.find_available_port())
