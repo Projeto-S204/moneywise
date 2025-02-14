@@ -1,40 +1,68 @@
-from flask import Blueprint, render_template, request
-from .transaction_db import TransactionsQueries
+from flask import Blueprint, redirect, render_template, request, url_for, flash
+from .transaction_db import TransactionsModal
 
-
-TransactionsQueries.create_transaction_table()
+TransactionsModal.create_transaction_table()
 
 transactions = Blueprint(
     'transactions',
     __name__,
     url_prefix='/transactions',
-    static_url_path='',
     static_folder='static',
     template_folder='templates'
-    )
+)
 
 @transactions.route('/', methods=['GET'])
 def transactions_page():
-    # type_filter = request.args.get('type', None)
-    # category_filter = request.args.get('category', None)
-    # start_date_filter = request.args.get('start_date', None)
-    # end_date_filter = request.args.get('end_date', None)
-    # min_amount_filter = request.args.get('min_amount', None)
-    # max_amount_filter = request.args.get('max_amount', None)
-    # payment_method_filter = request.args.get('payment_method', None)
-
-    # transactions = TransactionsQueries.transactions_get_list(
-    #     type=type_filter,
-    #     category=category_filter,
-    #     start_date=start_date_filter,
-    #     end_date=end_date_filter,
-    #     min_amount=min_amount_filter,
-    #     max_amount=max_amount_filter,
-    #     payment_method=payment_method_filter
-    # )
-
-    return render_template('transactions_list_page.html')
+    transactions_list = TransactionsModal.transactions_get_list()
+    return render_template('transactions_list_page.html', transactions=transactions_list)
 
 @transactions.route('/create', methods=['GET', 'POST'])
 def transaction_create_page():
-    return render_template('transaction_form_page.html')
+    if request.method == 'POST':
+        try:
+            transaction_data = {key: request.form.get(key) for key in [
+                'title', 'amount', 'category', 'payment_method', 'description', 
+                'transaction_date', 'transaction_hour', 'is_recurring', 'start_date',
+                'end_date', 'interval', 'number_of_payments', 'transaction_type']
+            }
+
+            TransactionsModal.transaction_create(transaction_data)
+            flash('Transação criada com sucesso!', 'success')
+            return redirect(url_for('transactions.transactions_page'))
+        except Exception as e:
+            flash(f'Erro ao criar transação: {str(e)}', 'danger')
+    
+    return render_template('transaction_form_page.html', transaction=None)
+
+@transactions.route('/edit/<int:transaction_id>', methods=['GET', 'POST'])
+def transaction_edit_page(transaction_id):
+    transaction = TransactionsModal.transactions_get_list(transaction_id)
+    
+    if request.method == 'POST':
+        try:
+            transaction_data = {key: request.form.get(key) for key in [
+                'title', 'amount', 'category', 'payment_method', 'description', 
+                'transaction_date','transaction_hour', 'is_recurring', 
+                'start_date', 'end_date', 'interval', 'number_of_payments', 'transaction_type']
+            }
+            transaction_data['transaction_id'] = transaction_id
+            
+            TransactionsModal.transaction_edit(transaction_data)
+            flash('Transação atualizada com sucesso!', 'success')
+            return redirect(url_for('transactions.transactions_page'))
+        except Exception as e:
+            flash(f'Erro ao atualizar transação: {str(e)}', 'danger')
+    
+    return render_template('transaction_form_page.html', transaction=transaction)
+
+
+@transactions.route('/delete/<int:transaction_id>', methods=['GET'])
+def transaction_delete(transaction_id):
+    try:
+        TransactionsModal.transaction_delete(transaction_id)
+        flash('Transação deletada com sucesso!', 'success')
+    except Exception as e:
+        print(e)
+        flash(f'Erro ao deletar transação: {str(e)}', 'danger')
+
+    return redirect(url_for('transactions.transactions_page'))

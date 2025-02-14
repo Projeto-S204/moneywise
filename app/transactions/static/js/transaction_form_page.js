@@ -12,15 +12,18 @@ document.addEventListener("DOMContentLoaded", function () {
     const startDateField = document.getElementById('start_date');
     const endDateField = document.getElementById('end_date');
     const frequencyField = document.getElementById('interval');
+    const numberPaymentsField = document.getElementById('number_of_payments');
 
     if (document.getElementById('is_recurring').checked) {
       startDateField.style.display = 'block';
       endDateField.style.display = 'block';
       frequencyField.style.display = 'block';
+      numberPaymentsField.style.display = 'block';
     } else {
       startDateField.style.display = 'none';
       endDateField.style.display = 'none';
       frequencyField.style.display = 'none';
+      numberPaymentsField.style.display = 'none';
     }
   });
 });

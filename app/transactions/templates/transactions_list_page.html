@@ -1,3 +1,43 @@
-<h1>Transações</h1>
-<a href="{{ url_for('transactions.transaction_create_page')}}">create</a>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Transações</title>
+</head>
+<body>
+  <h1>Lista de Transações</h1>
 
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Título</th>
+        <th>Valor</th>
+        <th>Categoria</th>
+        <th>Método de Pagamento</th>
+        <th>Data da Transação</th>
+        <th>Ação</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for transaction in transactions %}
+        <tr>
+          <td>{{ transaction[2] }}</td>
+          <td>{{ transaction[3] }}</td>
+          <td>{{ transaction[4] }}</td>
+          <td>{{ transaction[5] }}</td>
+          <td>{{ transaction[7] }}</td>
+          <td>
+            <form action="{{ url_for('transactions.transaction_edit_page', transaction_id=transaction[0]) }}" method="GET">
+              <button type="submit">Ver Detalhes</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  
+  <a href="{{ url_for('transactions.transaction_create_page')}}">create</a>
+</body>
+</html>
+  

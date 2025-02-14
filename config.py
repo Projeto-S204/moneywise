@@ -1,10 +1,10 @@
 from socket import socket
 import psycopg2
 
-DB_HOST = "database.cp6y2smecfjo.us-east-2.rds.amazonaws.com"
+DB_HOST = "localhost"
 DB_NAME = "moneywise"
 DB_USER = "postgres"
-DB_PASS = "nrqakc12"
+DB_PASS = "1234"
 DB_PORT = "5432"
 
 
@@ -21,10 +21,12 @@ class Config:
         
     @staticmethod
     def get_db_connection():
-        return psycopg2.connect(
+        conn = psycopg2.connect(
             dbname=DB_NAME,
             user=DB_USER,
             password=DB_PASS,
             host=DB_HOST,
             port=DB_PORT
         )
+        conn.autocommit = True
+        return conn
