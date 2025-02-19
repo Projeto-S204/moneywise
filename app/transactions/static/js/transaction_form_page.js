@@ -26,4 +26,16 @@ document.addEventListener("DOMContentLoaded", function () {
       numberPaymentsField.style.display = 'none';
     }
   });
+
+  function validateAmount(input) {
+    try {
+  let value = parseFloat(input.value);
+  if (isNaN(value)) {
+    throw new Error("Invalid input");
+  }
+  input.setCustomValidity("");
+    } catch (error) {
+  input.setCustomValidity("Por favor, insira um valor numérico.");
+    }
+  }
 });

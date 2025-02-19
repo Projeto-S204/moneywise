@@ -27,16 +27,15 @@ def transaction_create_page():
             }
 
             TransactionsModal.transaction_create(transaction_data)
-            flash('Transação criada com sucesso!', 'success')
             return redirect(url_for('transactions.transactions_page'))
         except Exception as e:
-            flash(f'Erro ao criar transação: {str(e)}', 'danger')
+            print(f"Error: {e}")
     
     return render_template('transaction_form_page.html', transaction=None)
 
 @transactions.route('/edit/<int:transaction_id>', methods=['GET', 'POST'])
-def transaction_edit_page(transaction_id):
-    transaction = TransactionsModal.transactions_get_list(transaction_id)
+def transaction_edit_page(transaction_id): 
+    transaction = TransactionsModal.transactions_get_list(transaction_id)[0]
     
     if request.method == 'POST':
         try:
@@ -46,12 +45,11 @@ def transaction_edit_page(transaction_id):
                 'start_date', 'end_date', 'interval', 'number_of_payments', 'transaction_type']
             }
             transaction_data['transaction_id'] = transaction_id
-            
+    
             TransactionsModal.transaction_edit(transaction_data)
-            flash('Transação atualizada com sucesso!', 'success')
             return redirect(url_for('transactions.transactions_page'))
         except Exception as e:
-            flash(f'Erro ao atualizar transação: {str(e)}', 'danger')
+            print(f"Error: {e}")
     
     return render_template('transaction_form_page.html', transaction=transaction)
 
@@ -60,9 +58,7 @@ def transaction_edit_page(transaction_id):
 def transaction_delete(transaction_id):
     try:
         TransactionsModal.transaction_delete(transaction_id)
-        flash('Transação deletada com sucesso!', 'success')
     except Exception as e:
-        print(e)
-        flash(f'Erro ao deletar transação: {str(e)}', 'danger')
+        print(f"Error: {e}")
 
     return redirect(url_for('transactions.transactions_page'))

@@ -11,80 +11,77 @@
 
 <body>
   <h1>Nova Transação</h1>
-  {% set transaction = transaction[0] if transaction else None %}
-
-  {{ transaction }}
 
   {% if transaction %}
-  <form action="{{ url_for('transactions.transaction_edit_page', transaction_id=transaction[0]) }}" method="POST">
+  <form action="{{ url_for('transactions.transaction_edit_page', transaction_id=transaction['transaction_id']) }}" method="POST">
     {% else %}
     <form action="{{ url_for('transactions.transaction_create_page') }}" method="POST">
       {% endif %}
 
       <input type="text" id="title" name="title" placeholder="Nome da transação"
-        value="{{ transaction[2] if transaction else '' }}" required />
+        value="{{ transaction['title'] if transaction else '' }}" required />
 
       <br>
 
       <input type="text" id="amount" name="amount" placeholder="Digite o valor"
-        value="{{ transaction[3] if transaction else '' }}" required />
+        value="{{ transaction['amount'] if transaction else '' }}" required />
 
       <br>
 
       <select id="category" name="category" required>
         <option value="" disabled {% if not transaction %}selected{% endif %}>Selecione uma categoria</option>
-        <option value="home" {% if transaction and transaction[4]=='home' %}selected{% endif %}>Casa</option>
-        <option value="entertainment" {% if transaction and transaction[4]=='entertainment' %}selected{% endif %}>
+        <option value="home" {% if transaction and transaction['category']=='home' %}selected{% endif %}>Casa</option>
+        <option value="entertainment" {% if transaction and transaction['category']=='entertainment' %}selected{% endif %}>
           Entretenimento</option>
-        <option value="study" {% if transaction and transaction[4]=='study' %}selected{% endif %}>Estudos</option>
-        <option value="trip" {% if transaction and transaction[4]=='trip' %}selected{% endif %}>Viagem</option>
+        <option value="study" {% if transaction and transaction['category']=='study' %}selected{% endif %}>Estudos</option>
+        <option value="trip" {% if transaction and transaction['category']=='trip' %}selected{% endif %}>Viagem</option>
       </select>
 
       <br>
 
       <select id="payment_method" name="payment_method" required>
         <option value="" disabled {% if not transaction %}selected{% endif %}>Selecione um método de pagamento</option>
-        <option value="debit" {% if transaction and transaction[5]=='debit' %}selected{% endif %}>Débito</option>
-        <option value="credit" {% if transaction and transaction[5]=='credit' %}selected{% endif %}>Crédito</option>
-        <option value="pix" {% if transaction and transaction[5]=='pix' %}selected{% endif %}>PIX</option>
-        <option value="bank slip" {% if transaction and transaction[5]=='bank slip' %}selected{% endif %}>Boleto
+        <option value="debit" {% if transaction and transaction['payment_method']=='debit' %}selected{% endif %}>Débito</option>
+        <option value="credit" {% if transaction and transaction['payment_method']=='credit' %}selected{% endif %}>Crédito</option>
+        <option value="pix" {% if transaction and transaction['payment_method']=='pix' %}selected{% endif %}>PIX</option>
+        <option value="bank slip" {% if transaction and transaction['payment_method']=='bank slip' %}selected{% endif %}>Boleto
           Bancário</option>
-        <option value="other" {% if transaction and transaction[5]=='other' %}selected{% endif %}>Outro</option>
+        <option value="other" {% if transaction and transaction['payment_method']=='other' %}selected{% endif %}>Outro</option>
       </select>
 
       <br>
 
       <textarea id="description" name="description"
-        placeholder="Digite uma descrição para a transação">{% if transaction %}{{ transaction[6] }}{% endif %}</textarea>
+        placeholder="Digite uma descrição para a transação">{% if transaction and transaction['description'] %}{{ transaction['description'] }}{% endif %}</textarea>
 
       <br>
 
       <input type="date" id="transaction_date" name="transaction_date"
-        value="{{ transaction[1].date() if transaction else '' }}" required>
+        value="{{ transaction[transaction_date].date() if transaction[transaction_date] else '' }}" required>
       <input type="time" id="transaction_hour" name="transaction_hour"
-        value="{{ transaction[1].time() if transaction else '' }}" required>
+        value="{{ transaction[transaction_hour].time() if transaction[transaction_hour] else '' }}" required>
 
       <br>
 
       <label for="is_recurring">
-        <input type="checkbox" id="is_recurring" name="is_recurring" {% if transaction and transaction[8] %}checked{%
+        <input type="checkbox" id="is_recurring" name="is_recurring" {% if transaction and transaction['is_recurring'] %}checked{%
           endif %}>
         Recorrente
       </label>
 
       <br>
 
-      <input type="date" id="start_date" name="start_date" value="{{ transaction[9] if transaction else '' }}" {% if not
-        transaction or not transaction[8] %}style="display:none" {% endif %}>
+      <input style="display: none;" type="date" id="start_date" name="start_date" value="{{ transaction['start_date'] if transaction else '' }}">
 
       <br>
 
-      <input type="date" id="end_date" name="end_date" value="{{ transaction[10] if transaction else '' }}" {% if not
-        transaction or not transaction[8] %}style="display:none" {% endif %}>
+      <input style="display: none;" type="date" id="end_date" name="end_date" value="{{ transaction['end_date'] if transaction else '' }}">
 
       <br>
 
-      <select style="display:none" id="interval" ng-model="transaction.interval">
+      <select style="display: none;" id="interval" ng-model="transaction.interval">
+        <option value="" disabled {% if not transaction %}selected{% endif %}>Selecione um intervalo</option>
+        <option value="0">Sem intervalo</option>
         <option value="daily">Diário</option>
         <option value="weekly">Semanal</option>
         <option value="monthly">Mensal</option>
@@ -93,18 +90,15 @@
 
       <br>
 
-      <input type="number" id="number_of_payments" name="number_of_payments" placeholder="Número de parcelas"
-        value="{{ transaction[11] if transaction else '' }}" {% if not transaction or not transaction[8]
-        %}style="display:none" {% endif %}>
-
-      <br>
+      <input style="display: none;" type="number" id="number_of_payments" name="number_of_payments" placeholder="Número de parcelas"
+        value="{{ transaction[11] if transaction else '' }}">
 
       <br>
 
       <select id="transaction_type" name="transaction_type" required>
         <option value="" disabled {% if not transaction %}selected{% endif %}>Selecione o tipo da transação</option>
-        <option value="income" {% if transaction and transaction[13]=='income' %}selected{% endif %}>Receitas</option>
-        <option value="expenses" {% if transaction and transaction[13]=='expenses' %}selected{% endif %}>Despesas
+        <option value="income" {% if transaction and transaction['transaction_type']=='income' %}selected{% endif %}>Receitas</option>
+        <option value="expenses" {% if transaction and transaction['transaction_type']=='expenses' %}selected{% endif %}>Despesas
         </option>
       </select>
 
@@ -113,7 +107,7 @@
       {% if transaction %}
       <button type="submit">Editar</button>
       <button type="submit"><a
-          href="{{url_for('transactions.transaction_delete', transaction_id=transaction[0])}}">Deletar</a></button>
+          href="{{url_for('transactions.transaction_delete', transaction_id=transaction['transaction_id'])}}">Deletar</a></button>
       {% else %}
       <button type="submit">Criar</button>
       {% endif %}

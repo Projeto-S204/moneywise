@@ -8,13 +8,12 @@
 <body>
   <h1>Lista de Transações</h1>
 
-  <table border="1">
+  <table border="2">
     <thead>
       <tr>
         <th>Título</th>
         <th>Valor</th>
         <th>Categoria</th>
-        <th>Método de Pagamento</th>
         <th>Data da Transação</th>
         <th>Ação</th>
       </tr>
@@ -22,13 +21,12 @@
     <tbody>
       {% for transaction in transactions %}
         <tr>
-          <td>{{ transaction[2] }}</td>
-          <td>{{ transaction[3] }}</td>
-          <td>{{ transaction[4] }}</td>
-          <td>{{ transaction[5] }}</td>
-          <td>{{ transaction[7] }}</td>
+          <td>{{ transaction['title'] }}</td>
+          <td>{{ transaction['amount'] }}</td>
+          <td>{{ transaction['category'] }}</td>
+          <td>{{ transaction['transaction_date'] }}</td>
           <td>
-            <form action="{{ url_for('transactions.transaction_edit_page', transaction_id=transaction[0]) }}" method="GET">
+            <form action="{{ url_for('transactions.transaction_edit_page', transaction_id=transaction['transaction_id']) }}" method="GET">
               <button type="submit">Ver Detalhes</button>
             </form>
           </td>

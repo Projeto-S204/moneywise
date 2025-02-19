@@ -1,4 +1,5 @@
 from config import Config
+from .utils import convert_value
 
 class TransactionsModal:
     
@@ -29,7 +30,7 @@ class TransactionsModal:
                     cursor.execute(query)
                     db_connection.commit()
         except Exception as e:
-            print(f"Erro ao criar a tabela: {e}")
+            print(f"Error {e}")
         
 
     @staticmethod
@@ -67,7 +68,7 @@ class TransactionsModal:
                     db_connection.commit()
                     return f"Transação {transaction_id} criada com sucesso!"
         except Exception as e:
-            print(e)
+            print(f"Error {e}")
             return f"Erro ao criar transação: {e}"
 
     @staticmethod
@@ -75,7 +76,20 @@ class TransactionsModal:
         try:
             query = """
             SELECT 
-                * 
+                transaction_id, 
+                title, 
+                amount::float, 
+                category, 
+                payment_method, 
+                description, 
+                TO_CHAR(transaction_date, 'YYYY-MM-DD') AS transaction_date,
+                TO_CHAR(transaction_hour, 'HH24:MI') AS transaction_hour, 
+                is_recurring, 
+                TO_CHAR(start_date, 'YYYY-MM-DD') AS start_date, 
+                TO_CHAR(end_date, 'YYYY-MM-DD') AS start_date, 
+                interval, 
+                number_of_payments, 
+                transaction_type
             FROM 
                 transactions
             WHERE
@@ -114,55 +128,36 @@ class TransactionsModal:
             with Config.get_db_connection() as db_connection:
                 with db_connection.cursor() as cursor:
                     cursor.execute(query, params)
-                    return cursor.fetchall()
+                    column_names = [desc[0] for desc in cursor.description]
+                    rows = cursor.fetchall()
+                    result = [dict(zip(column_names, row)) for row in rows]
+                    return result
 
         except Exception as e:
-            print(e)
-            return str(e)
+            print(f"Error {e}")
 
     @staticmethod
     def transaction_edit(transaction_data: dict):
         try:
             with Config.get_db_connection() as db_connection:
                 with db_connection.cursor() as cursor:
-                    update_fields = []
-                    update_values = []
 
-                    for key, value in transaction_data.items():
-                        if key != "transaction_id":
-                            if key in ["start_date", "end_date"] and value == "":
-                                value = None 
-                            if key in ['is_recurring'] and value == None:
-                                value = False
-                                transaction_data['start_date'] = None
-                                transaction_data['end_date'] = None
-                                transaction_data['interval'] = None
-                                transaction_data['number_of_payments'] = None
+                    update_fields, update_values = convert_value(transaction_data)
 
-                            update_fields.append(f"{key} = %s")
-                            update_values.append(value)
-
-                    if not update_fields:
-                        return "Nenhuma atualização fornecida."
-
-                    set_clause = ", ".join(update_fields)
-                    update_values.append(transaction_data['transaction_id'])
-
-                    for i in range(len(update_fields)):
-                        print(f"{update_fields[i]} = {update_values[i]}")
+                    print(f'Update Fields: {update_fields}')
+                    print(f'Update Values: {update_values}')
 
                     query = f"""
                     UPDATE transactions
-                    SET {set_clause}
+                    SET {', '.join(update_fields)}
                     WHERE transaction_id = %s
-                    RETURNING transaction_id
                     """
-
                     cursor.execute(query, update_values)
                     db_connection.commit()
+                    print('Atualizou')
 
         except Exception as e:
-            print(e)
+            print(f"Error: {e}")
             return f"Erro ao atualizar transação: {e}"
         
     @staticmethod
@@ -176,7 +171,8 @@ class TransactionsModal:
                     """
                     cursor.execute(query, (transaction_id,))
                     db_connection.commit()
+                    
         except Exception as e:
-            print(e)
+            print(f"Error {e}")
             return f"Erro ao deletar transação: {e}"
         
