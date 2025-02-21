@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lista de Transações</title>
 </head>
+
 <body>
   <h1>Lista de Transações</h1>
 
@@ -20,22 +22,43 @@
     </thead>
     <tbody>
       {% for transaction in transactions %}
-        <tr>
-          <td>{{ transaction['title'] }}</td>
-          <td>{{ transaction['amount'] }}</td>
-          <td>{{ transaction['category'] }}</td>
-          <td>{{ transaction['transaction_date'] }}</td>
-          <td>
-            <form action="{{ url_for('transactions.transaction_edit_page', transaction_id=transaction['transaction_id']) }}" method="GET">
-              <button type="submit">Ver Detalhes</button>
-            </form>
-          </td>
-        </tr>
+      <tr>
+        {% if transaction['is_recurring'] %}
+          {% for i in range(transaction['number_of_payments']) %}
+          <tr>
+            <td>{{ transaction['title'] }} {{ i+1 }}/{{ transaction['number_of_payments'] }}</td>
+            <td>{{ transaction['amount'] }}</td>
+            <td>{{ transaction['category'] }}</td>
+            <td>{{ transaction['transaction_date'] }}</td>
+            <td>
+              <form
+                action="{{ url_for('transactions.transaction_edit_page', transaction_id=transaction['transaction_id']) }}"
+                method="GET">
+                <button type="submit">Ver Detalhes</button>œ
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        {% else %}
+        
+        <td>{{ transaction['title'] }}</td>
+        <td>{{ transaction['amount'] }}</td>
+        <td>{{ transaction['category'] }}</td>
+        <td>{{ transaction['transaction_date'] }}</td>
+        <td>
+          <form
+            action="{{ url_for('transactions.transaction_edit_page', transaction_id=transaction['transaction_id']) }}"
+            method="GET">
+            <button type="submit">Ver Detalhes</button>
+          </form>
+        </td>
+        {% endif %}
+      </tr>
       {% endfor %}
     </tbody>
   </table>
-  
+
   <a href="{{ url_for('transactions.transaction_create_page')}}">create</a>
 </body>
+
 </html>
-  

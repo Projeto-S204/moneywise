@@ -16,6 +16,7 @@ def transactions_page():
     transactions_list = TransactionsModal.transactions_get_list()
     return render_template('transactions_list_page.html', transactions=transactions_list)
 
+
 @transactions.route('/create', methods=['GET', 'POST'])
 def transaction_create_page():
     if request.method == 'POST':
@@ -33,6 +34,7 @@ def transaction_create_page():
     
     return render_template('transaction_form_page.html', transaction=None)
 
+
 @transactions.route('/edit/<int:transaction_id>', methods=['GET', 'POST'])
 def transaction_edit_page(transaction_id): 
     transaction = TransactionsModal.transactions_get_list(transaction_id)[0]
@@ -41,7 +43,7 @@ def transaction_edit_page(transaction_id):
         try:
             transaction_data = {key: request.form.get(key) for key in [
                 'title', 'amount', 'category', 'payment_method', 'description', 
-                'transaction_date','transaction_hour', 'is_recurring', 
+                'transaction_date','transaction_hour', 'is_recurring',
                 'start_date', 'end_date', 'interval', 'number_of_payments', 'transaction_type']
             }
             transaction_data['transaction_id'] = transaction_id

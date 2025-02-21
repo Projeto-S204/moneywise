@@ -86,7 +86,7 @@ class TransactionsModal:
                 TO_CHAR(transaction_hour, 'HH24:MI') AS transaction_hour, 
                 is_recurring, 
                 TO_CHAR(start_date, 'YYYY-MM-DD') AS start_date, 
-                TO_CHAR(end_date, 'YYYY-MM-DD') AS start_date, 
+                TO_CHAR(end_date, 'YYYY-MM-DD') AS end_date, 
                 interval, 
                 number_of_payments, 
                 transaction_type
@@ -97,31 +97,31 @@ class TransactionsModal:
             """
             params = []
 
-            if transaction_id is not None:
+            if transaction_id:
                 query += " AND transaction_id = %s"
                 params.append(transaction_id)
-            if amount_min is not None:
+            if amount_min:
                 query += " AND amount >= %s"
                 params.append(amount_min)
-            if amount_max is not None:
+            if amount_max:
                 query += " AND amount <= %s"
                 params.append(amount_max)
-            if date_start is not None:
+            if date_start:
                 query += " AND transaction_date >= %s"
                 params.append(date_start)
-            if date_end is not None:
+            if date_end:
                 query += " AND transaction_date <= %s"
                 params.append(date_end)
-            if category is not None:
+            if category:
                 query += " AND category = %s"
                 params.append(category)
-            if transaction_type is not None:
+            if transaction_type:
                 query += " AND transaction_type = %s"
                 params.append(transaction_type)
-            if payment_method is not None:
+            if payment_method:
                 query += " AND payment_method = %s"
                 params.append(payment_method)
-            if is_recurring is not None:
+            if is_recurring:
                 query += " AND is_recurring = %s"
                 params.append(is_recurring)
 
@@ -144,9 +144,6 @@ class TransactionsModal:
 
                     update_fields, update_values = convert_value(transaction_data)
 
-                    print(f'Update Fields: {update_fields}')
-                    print(f'Update Values: {update_values}')
-
                     query = f"""
                     UPDATE transactions
                     SET {', '.join(update_fields)}
@@ -154,7 +151,7 @@ class TransactionsModal:
                     """
                     cursor.execute(query, update_values)
                     db_connection.commit()
-                    print('Atualizou')
+                    return True
 
         except Exception as e:
             print(f"Error: {e}")
@@ -175,4 +172,3 @@ class TransactionsModal:
         except Exception as e:
             print(f"Error {e}")
             return f"Erro ao deletar transação: {e}"
-        

@@ -25,12 +25,6 @@ def convert_value(transaction_data):
         if key == 'amount' and value is not None:
             value = float(value)
 
-        if key == 'transaction_date' and value is not None:
-            value = datetime.datetime.strptime(value, '%Y-%m-%d').date()
-
-        if key == 'transaction_hour' and value is not None:
-            value = datetime.datetime.strptime(value, '%H:%M').time()
-
         update_fields.append(f"{key} = %s")
         update_values.append(value)
 
