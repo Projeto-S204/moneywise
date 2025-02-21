@@ -21,20 +21,21 @@
       </tr>
     </thead>
     <tbody>
+      {% if transactions %}
       {% for transaction in transactions %}
       <tr>
         {% if transaction['is_recurring'] %}
           {% for i in range(transaction['number_of_payments']) %}
           <tr>
             <td>{{ transaction['title'] }} {{ i+1 }}/{{ transaction['number_of_payments'] }}</td>
-            <td>{{ transaction['amount'] }}</td>
+            <td>{{ transaction['amount'] / transaction['number_of_payments']}}</td>
             <td>{{ transaction['category'] }}</td>
             <td>{{ transaction['transaction_date'] }}</td>
             <td>
               <form
                 action="{{ url_for('transactions.transaction_edit_page', transaction_id=transaction['transaction_id']) }}"
                 method="GET">
-                <button type="submit">Ver Detalhes</button>œ
+                <button type="submit">Ver Detalhes</button>
               </form>
             </td>
           </tr>
@@ -55,6 +56,7 @@
         {% endif %}
       </tr>
       {% endfor %}
+      {% endif %}
     </tbody>
   </table>
 

@@ -19,6 +19,7 @@ def transactions_page():
 
 @transactions.route('/create', methods=['GET', 'POST'])
 def transaction_create_page():
+
     if request.method == 'POST':
         try:
             transaction_data = {key: request.form.get(key) for key in [
@@ -28,16 +29,21 @@ def transaction_create_page():
             }
 
             TransactionsModal.transaction_create(transaction_data)
+
+            flash('Criada com sucesso.', 'success')
             return redirect(url_for('transactions.transactions_page'))
         except Exception as e:
+            flash('Ocorreu um erro ao criar, tente novamente.', 'error')
             print(f"Error: {e}")
     
     return render_template('transaction_form_page.html', transaction=None)
 
 
 @transactions.route('/edit/<int:transaction_id>', methods=['GET', 'POST'])
-def transaction_edit_page(transaction_id): 
-    transaction = TransactionsModal.transactions_get_list(transaction_id)[0]
+def transaction_edit_page(transaction_id):
+
+    if request.method == 'GET':
+        transaction = TransactionsModal.transactions_get_list(transaction_id)[0]
     
     if request.method == 'POST':
         try:
@@ -49,8 +55,11 @@ def transaction_edit_page(transaction_id):
             transaction_data['transaction_id'] = transaction_id
     
             TransactionsModal.transaction_edit(transaction_data)
+
+            flash('Editado com sucesso.', 'success')
             return redirect(url_for('transactions.transactions_page'))
         except Exception as e:
+            flash('Ocorreu um erro ao editar, tente novamente.', 'error')
             print(f"Error: {e}")
     
     return render_template('transaction_form_page.html', transaction=transaction)
@@ -60,7 +69,9 @@ def transaction_edit_page(transaction_id):
 def transaction_delete(transaction_id):
     try:
         TransactionsModal.transaction_delete(transaction_id)
+        flash('Deletado com sucesso.', 'success')
     except Exception as e:
+        flash('Ocorreu um erro ao deletar', 'error')
         print(f"Error: {e}")
 
     return redirect(url_for('transactions.transactions_page'))
