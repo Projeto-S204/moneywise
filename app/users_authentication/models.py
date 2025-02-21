@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 from app import db
-
-# Criação da tabela de usuários
+from werkzeug.security import generate_password_hash
+from collections import OrderedDict
 
 
 class User(db.Model):
@@ -19,12 +19,19 @@ class User(db.Model):
         return f'<User {self.name}>'
 
     def to_dict(self):
-        return {
-            'avatar': self.avatar,
-            'id': self.id,
-            'name': self.name,
-            'email': self.email,
-            'birthday': self.birthday.strftime('%Y-%m-%d'),
-            'created_at': self.created_at,
+        return OrderedDict([
+            ('id', self.id),
+            ('avatar', self.avatar),
+            ('name', self.name),
+            ('email', self.email),
+            ('birthday',
+             self.birthday.strftime('%Y-%m-%d') if self.birthday else None),
+            ('password', self.hashed_password),
+            ('created_at', self.created_at)])
 
-        }
+    def __init__(self, email, name, password, birthday, avatar=None):
+        self.email = email
+        self.name = name
+        self.hashed_password = generate_password_hash(password)
+        self.birthday = birthday
+        self.avatar = avatar

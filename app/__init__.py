@@ -2,10 +2,13 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from .home.routes import home
 from config import Config
+from flask_jwt_extended import JWTManager
 
 db = SQLAlchemy()
 
 # Preciso ajustar esse import dentro da função!
+
+jwt = JWTManager()
 
 
 def create_app():
@@ -16,5 +19,6 @@ def create_app():
     app.register_blueprint(home)
 
     db.init_app(app)
+    jwt.init_app(app)
 
     return app
