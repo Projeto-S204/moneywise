@@ -96,7 +96,7 @@
       <select id="transaction_type" name="transaction_type" required>
         <option value="" disabled {% if not transaction %}selected{% endif %}>Selecione o tipo da transação</option>
         <option value="income" {% if transaction and transaction['transaction_type']=='income' %}selected{% endif %} >Receitas</option>
-        <option value="expenses" {% if transaction and transaction['transaction_type']=='expenses' %}selected{% endif %} >Despesas
+        <option value="expense" {% if transaction and transaction['transaction_type']=='expense' %}selected{% endif %} >Despesas
         </option>
       </select>
 

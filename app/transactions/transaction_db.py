@@ -72,7 +72,7 @@ class TransactionsModal:
             return f"Erro ao criar transação: {e}"
 
     @staticmethod
-    def transactions_get_list(transaction_id=None, amount_min=None, amount_max=None, date_start=None, date_end=None, category=None, transaction_type=None, payment_method=None, is_recurring=None):
+    def transactions_get_list(transactions_filters=None, transaction_id=None):
         try:
             query = """
             SELECT 
@@ -100,30 +100,39 @@ class TransactionsModal:
             if transaction_id:
                 query += " AND transaction_id = %s"
                 params.append(transaction_id)
-            if amount_min:
-                query += " AND amount >= %s"
-                params.append(amount_min)
-            if amount_max:
-                query += " AND amount <= %s"
-                params.append(amount_max)
-            if date_start:
-                query += " AND transaction_date >= %s"
-                params.append(date_start)
-            if date_end:
-                query += " AND transaction_date <= %s"
-                params.append(date_end)
-            if category:
-                query += " AND category = %s"
-                params.append(category)
-            if transaction_type:
-                query += " AND transaction_type = %s"
-                params.append(transaction_type)
-            if payment_method:
-                query += " AND payment_method = %s"
-                params.append(payment_method)
-            if is_recurring:
-                query += " AND is_recurring = %s"
-                params.append(is_recurring)
+
+            if transactions_filters:
+                if transactions_filters['search']:
+                    query += " AND title LIKE %s"
+                    params.append(f"%{transactions_filters['search']}%")
+
+                if transactions_filters['filter-type']:
+                    query += " AND transaction_type = %s"
+                    params.append(transactions_filters['filter-type'])
+
+                if transactions_filters['filter-category']:
+                    query += " AND category = %s"
+                    params.append(transactions_filters['filter-category'])
+
+                if transactions_filters['filter-start-date']:
+                    query += " AND transaction_date <= %s"
+                    params.append(transactions_filters['filter-start-date'])
+
+                if transactions_filters['filter-end-date']:
+                    query += " AND transaction_date <= %s"
+                    params.append(transactions_filters['filter-end-date'])
+                    
+                if transactions_filters['filter-min-amount']:
+                    query += " AND amount >= %s"
+                    params.append(transactions_filters['filter-min-amount'])
+
+                if transactions_filters['filter-max-amount']:
+                    query += " AND amount <= %s"
+                    params.append(transactions_filters['filter-max-amount'])
+
+                if transactions_filters['filter-payment-method']:
+                    query += " AND payment_method >= %s"
+                    params.append(transactions_filters['filter-payment-method'])
 
             with Config.get_db_connection() as db_connection:
                 with db_connection.cursor() as cursor:
@@ -134,7 +143,7 @@ class TransactionsModal:
                     return result
 
         except Exception as e:
-            print(f"Error {e}")
+            print(f"Error: {e}")
 
     @staticmethod
     def transaction_edit(transaction_data: dict):
