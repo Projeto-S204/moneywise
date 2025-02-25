@@ -31,7 +31,7 @@ def create_user():
         email=data['email'],
         name=data['name'],
         birthday=datetime.strptime(data['birthday'], '%Y-%m-%d'),
-        hashed_password=data['password'],
+        password=data['password'],
     )
 
     try:
