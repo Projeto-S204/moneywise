@@ -1,0 +1,62 @@
+<div id="filterModal" class="modal" onclick="closeFilterModal(event)">
+  <div class="modal-content">
+    <h2>Filtros</h2>
+    <form action="{{ url_for('transactions.transactions_page') }}" method="GET">
+
+      <label for="filter-type">Tipo</label><br>
+      <select name="filter-type" id="filter-type">
+        <option disabled selected value="" >Selecione o Tipo</option>
+        <option value="">-</option>
+        <option value="income" {% if transactions_filters and transactions_filters['filter-type']=='income' %}selected{% endif %} >Receita</option>
+        <option value="expense" {% if transactions_filters and transactions_filters['filter-type']=='expense' %}selected{% endif %} >Despesa</option>
+      </select>
+
+      <br>
+
+      <label for="filter-category">Categoria:</label><br>
+      <select name="filter-category" id="filter-category">
+        <option disabled selected value="" >Selecione a Categoria</option>
+        <option value="">-</option>
+        <option value="home"{% if transactions_filters and transactions_filters['filter-category']=='home' %}selected{% endif %} >Casa</option>
+        <option value="entertainment" {% if transactions_filters and transactions_filters['filter-category']=='entertainment' %}selected{% endif %} >Entretenimento</option>
+        <option value="study" {% if transactions_filters and transactions_filters['filter-category']=='study' %}selected{% endif %} >Estudos</option>
+        <option value="trip" {% if transactions_filters and transactions_filters['filter-category']=='trip' %}selected{% endif %}>Viagem</option>
+      </select>
+
+      <br>
+
+      <label for="filter-date">Pesquisar Entre:</label><br>
+      <input type="date" id="filter-start-date" name="filter-start-date" value="{{ transactions_filters['filter-start-date'] if transactions_filters and transactions_filters['filter-start-date'] else '' }}">
+      <input type="date" id="filter-end-date" name="filter-end-date" value="{{ transactions_filters['filter-end-date'] if transactions_filters and transactions_filters['filter-end-date'] else '' }}">
+
+      <br>
+      
+      <label for="filter-min-amount">Valor Mínimo:</label><br>
+      <input type="text" id="filter-min-amount" name="filter-min-amount" value="{{ transactions_filters['filter-min-amount'] if transactions_filters and transactions_filters['filter-min-amount'] else '' }}">
+
+      <br>
+      
+      <label for="filter-max-amount">Valor Máximo:</label><br>
+      <input type="text" id="filter-max-amount" name="filter-max-amount" value="{{ transactions_filters['filter-max-amount'] if transactions_filters and transactions_filters['filter-max-amount'] else '' }}">
+
+      <br>
+
+      <label for="filter-payment-method">Método de Pagamento</label><br>
+      <select name="filter-payment-method" id="filter-payment-method">
+        <option disabled selected value="" >Selecione o Método de Pagamento</option>
+        <option value="">-</option>
+        <option value="debit" {% if transactions_filters and transactions_filters['filter-payment-method']=='debit' %}selected{% endif %} >Débito</option>
+        <option value="credit" {% if transactions_filters and transactions_filters['filter-payment-method']=='credit' %}selected{% endif %} >Crédito</option>
+        <option value="pix" {% if transactions_filters and transactions_filters['filter-payment-method']=='pix' %}selected{% endif %} >PIX</option>
+        <option value="bank slip" {% if transactions_filters and transactions_filters['filter-payment-method']=='bank slip' %}selected{% endif %} >Boleto Bancário</option>
+        <option value="other" {% if transactions_filters and transactions_filters['filter-payment-method']=='other' %}selected{% endif %} >Outro</option>
+      </select>
+
+      <br>
+      
+      <button type="submit">Aplicar Filtros</button>
+      <button type="submit" id="clearFilters">Limpar Filtros</button>
+      <button type="button" id="closeModal" onclick="closeFilterModal()">Fechar</button>
+    </form>
+  </div>
+</div>
