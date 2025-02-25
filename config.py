@@ -1,18 +1,14 @@
-import os
 from socket import socket
+import psycopg2
 
-BASEDIR = os.path.dirname(os.path.abspath("app.py"))
-
-
-def find_available_port():
-    with socket() as s:
-        s.bind(("", 0))
-        print(s.getsockname())
-        return s.getsockname()[1]
+DB_HOST = "localhost"
+DB_NAME = "moneywise"
+DB_USER = "postgres"
+DB_PASS = "1234"
+DB_PORT = "5432"
 
 
 class Config:
-    FLASK_DEBUG = 1
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_DATABASE_URI = (
         'postgresql://postgres:meritopg@localhost/dashboard'
@@ -23,3 +19,21 @@ class Config:
     )
 
     JWT_SECRET_KEY = SECRET_KEY
+
+    @staticmethod
+    def find_available_port():
+        with socket() as s:
+            s.bind(("", 0))
+            return s.getsockname()[1]
+
+    @staticmethod
+    def get_db_connection():
+        conn = psycopg2.connect(
+            dbname=DB_NAME,
+            user=DB_USER,
+            password=DB_PASS,
+            host=DB_HOST,
+            port=DB_PORT
+        )
+        conn.autocommit = True
+        return conn
