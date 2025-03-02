@@ -6,10 +6,9 @@ body {
 
 nav {
   display: flex;
-  align-items: center;
   justify-content: flex-start;
   position: absolute;
-  gap: 430px;
+  gap: 0px;
   margin-bottom: 20px;
 
   img {
@@ -19,101 +18,82 @@ nav {
 
   ul {
     display: flex;
-    gap: 20px;
     list-style: none;
+    justify-content: center;
     color: #fff;
+    gap: 20px;
 
     li {
-      text-align: center;
-
       a {
         text-decoration: none;
         color: inherit;
-        font-family: Jomhuria;
-        font-size: 64px;
+        font-family: Josefin Sans;
+        font-weight: 300;
+        font-size: 34px;
         line-height: 64px;
-        letter-spacing: 0%;
       }
-    }
-
-    #Entrar {
-      width: 198px;
-      height: 31px;
-    }
-
-    #Sobre {
-      width: 198px;
-      height: 31px;
-    }
-
-    #Contato {
-      width: 198px;
-      height: 31px;
     }
   }
 }
 
 main {
-  display: flex;
-  justify-content: end;
-  align-items: center;
-  min-height: calc(100vh - 200px);
+  #text-container {
+    padding-top: 14%;
+    width: 40%;
 
-  h1 {
-    flex-direction: column;
-    color: #efa23b;
-    width: 372px;
-    height: 104px;
-    font-family: Jomhuria;
-    font-weight: normal;
-    font-size: 128px;
-    margin: 0 !important;
-    line-height: 1.5;
+    h1 {
+      color: #efa23b;
+      font-family: Jomhuria;
+      font-weight: normal;
+      font-size: 128px;
+      margin: 0;
+    }
+
+    p {
+      margin: 0;
+      font-family: Josefin Sans;
+      font-weight: 300;
+      font-size: 36px;
+      color: #fff;
+    }
+
+    #button-container {
+      align-items: start;
+      button {
+        border-radius: 5px;
+        border: none;
+        font-family: Josefin Sans;
+        font-size: 32px;
+        background: #7e9dca;
+        color: #fff;
+        text-decoration: none;
+        cursor: pointer;
+        display: flex;
+        padding: 20px 40px;
+        margin: 20px 0 0 0;
+      }
+
+      button a {
+        text-decoration: none;
+        color: inherit;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+      }
+    }
   }
 
-  p {
-    font-family: Josefin Sans;
-    font-weight: normal;
-    font-style: italic;
-    font-size: 36px;
-    color: #fff;
-    width: 100%;
-    height: 80%;
-  }
-
-  button {
-    width: 313px;
-    border-radius: 5px;
-    font-family: Jomhuria;
-    font-size: 64px;
-    line-height: 64px;
-    letter-spacing: 0%;
-    background: #7e9dca;
-    color: #fff;
-    text-decoration: none;
-    cursor: pointer;
+  #img-container {
+    position: absolute;
+    bottom: 0;
+    right: 0;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px 20px;
-    margin: 20px auto 0;
-  }
+    justify-content: flex-end;
+    align-items: flex-end;
 
-  button a {
-    text-decoration: none;
-    color: inherit;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  img {
-    width: 1036px;
-    height: 665px;
-    margin-bottom: -180px;
-    width: 90%;
-    height: 90%;
+    img {
+      width: 1180px;
+    }
   }
 }
