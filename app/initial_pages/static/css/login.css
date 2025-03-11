@@ -1,3 +1,39 @@
+header {
+    background-color: #333;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+.logo {
+    width: 45px;
+    height: auto;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -5,7 +41,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f0f0f0;
+    background-color: #333;
 }
 
 .container {
@@ -32,18 +68,18 @@ input[type="email"], input[type="password"] {
 }
 
 button {
-    background-color: #4CAF50;
+    background-color: #2f2f2f;
     color: white;
-    padding: 10px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
     margin-top: 10px;
+    margin-bottom: 40px;
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #2196F3;
 }
 
 .container form {
@@ -53,7 +89,21 @@ button:hover {
     height: 100%;
 }
 
-button:last-child {
-    background-color: #2196F3;
+.cadastro-container {
+    display: flex;
+    align-items: center;
     margin-top: 10px;
+}
+
+.cadastro-container span {
+    margin-right: 10px;
+    color: white;
+}
+
+.cadastro-container button {
+    margin-top: 0; 
+}
+
+.cadastro-container button:hover {
+    background-color: #d88f19;
 }

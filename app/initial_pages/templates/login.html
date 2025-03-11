@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MoneyWise</title>
@@ -17,9 +17,20 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="{{ url_for('home.static', filename='css/login.css') }}">
-    <body>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <img src="images/logo.png" alt="logo" class="logo">
+                <li><a href="#">Entrar </a></li>
+                <li><a href="#">Informações</a></li>
+                <li><a href="#">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
         <div class="container">
-            <h1>MoneyWise</h1>
+            <h1>Entre na MoneyWise</h1>
             <form>
                 <label for="email">E-mail:</label>
                 <input type="email" id="email" name="email" required>
@@ -28,7 +39,10 @@
                 <input type="password" id="password" name="password" required>
     
                 <button type="submit">Entrar</button>
-                <button type="button">Cadastrar</button>
+                <div class="cadastro-container">
+                  <span>Não tem uma conta?</span>
+                  <button type="button">Cadastrar</button>
+              </div>     
             </form>
         </div>
     </body>
