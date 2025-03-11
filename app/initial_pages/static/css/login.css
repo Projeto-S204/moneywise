@@ -47,13 +47,13 @@ body {
 .container {
     background-color: #2f2f2f;
     color: white;
-    width: 300px;
+    width: 400px;
     padding: 30px;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 400px;
+    height: 500px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -76,6 +76,7 @@ button {
     font-size: 16px;
     margin-top: 10px;
     margin-bottom: 40px;
+    height: 30px;
 }
 
 button:hover {
@@ -96,12 +97,14 @@ button:hover {
 }
 
 .cadastro-container span {
-    margin-right: 10px;
+    margin-left: 40px;
+    margin-right: 25px;
     color: white;
 }
 
 .cadastro-container button {
-    margin-top: 0; 
+    margin-top: 40px; 
+    margin-left: 45px;
 }
 
 .cadastro-container button:hover {
