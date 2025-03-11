@@ -31,45 +31,57 @@ class TransactionsModal:
                     db_connection.commit()
         except Exception as e:
             print(f"Error {e}")
-        
+
 
     @staticmethod
     def transaction_create(transaction_data: dict):
         try:
+            query = """
+            INSERT INTO transactions (
+                title, 
+                amount, 
+                category, 
+                payment_method, 
+                transaction_date, 
+                transaction_hour, 
+                description, 
+                is_recurring, 
+                start_date, 
+                end_date, 
+                interval, 
+                number_of_payments,
+                transaction_type
+            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            RETURNING transaction_id
+            """
+
+            values = {
+                'title': transaction_data.get('title'),
+                'amount': float(transaction_data['amount']) if transaction_data.get('amount') else None,
+                'category': transaction_data.get('category'),
+                'payment_method': transaction_data.get('payment_method'),
+                'transaction_date': transaction_data.get('transaction_date'),
+                'transaction_hour': transaction_data.get('transaction_hour'),
+                'description': transaction_data.get('description'),
+                'is_recurring': bool(transaction_data['is_recurring']) if 'is_recurring' in transaction_data else None,
+                'start_date': transaction_data['start_date'] if transaction_data.get('start_date') else None,
+                'end_date': transaction_data['end_date'] if transaction_data.get('end_date') else None,
+                'interval': transaction_data['interval'] if transaction_data.get('interval') else None,
+                'number_of_payments': int(transaction_data['number_of_payments']) if transaction_data.get('number_of_payments') else None,
+                'transaction_type': transaction_data.get('transaction_type'),
+            }
+
             with Config.get_db_connection() as db_connection:
                 with db_connection.cursor() as cursor:
-
-                    query = """
-                    INSERT INTO transactions (
-                        title, amount, category, payment_method, 
-                        transaction_date, transaction_hour, description, is_recurring, 
-                        start_date, end_date, interval, number_of_payments, transaction_type
-                    ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-                    RETURNING transaction_id
-                    """
-
-                    cursor.execute(query, (
-                        transaction_data['title'],
-                        float(transaction_data['amount']) if transaction_data.get('amount') else None,
-                        transaction_data['category'],
-                        transaction_data['payment_method'],
-                        transaction_data['transaction_date'] if transaction_data.get('transaction_date') else None,
-                        transaction_data['transaction_hour']if transaction_data.get('transaction_hour') else None,
-                        transaction_data['description'] if transaction_data.get('description') else None,
-                        bool(transaction_data['is_recurring']) if transaction_data.get('is_recurring') is not None else None,
-                        transaction_data['start_date'] if transaction_data.get('start_date') else None,
-                        transaction_data['end_date'] if transaction_data.get('end_date') else None,
-                        transaction_data['interval'] if transaction_data.get('interval') else None,
-                        int(transaction_data['number_of_payments']) if transaction_data.get('number_of_payments') else None,
-                        transaction_data['transaction_type']
-                    ))
-
+                    cursor.execute(query, tuple(values.values()))
                     transaction_id = cursor.fetchone()[0]
                     db_connection.commit()
                     return f"Transação {transaction_id} criada com sucesso!"
+
         except Exception as e:
-            print(f"Error {e}")
+            print(f"Erro ao criar transação: {e}")
             return f"Erro ao criar transação: {e}"
+
 
     @staticmethod
     def transactions_get_list(transactions_filters=None, transaction_id=None):
@@ -102,37 +114,21 @@ class TransactionsModal:
                 params.append(transaction_id)
 
             if transactions_filters:
-                if transactions_filters['search']:
-                    query += " AND title LIKE %s"
-                    params.append(f"%{transactions_filters['search']}%")
+                filters_map = {
+                    'search': "title LIKE %s",
+                    'filter-type': "transaction_type = %s",
+                    'filter-category': "category = %s",
+                    'filter-start-date': "transaction_date >= %s",
+                    'filter-end-date': "transaction_date <= %s",
+                    'filter-min-amount': "amount >= %s",
+                    'filter-max-amount': "amount <= %s",
+                    'filter-payment-method': "payment_method = %s",
+                }
 
-                if transactions_filters['filter-type']:
-                    query += " AND transaction_type = %s"
-                    params.append(transactions_filters['filter-type'])
-
-                if transactions_filters['filter-category']:
-                    query += " AND category = %s"
-                    params.append(transactions_filters['filter-category'])
-
-                if transactions_filters['filter-start-date']:
-                    query += " AND transaction_date <= %s"
-                    params.append(transactions_filters['filter-start-date'])
-
-                if transactions_filters['filter-end-date']:
-                    query += " AND transaction_date <= %s"
-                    params.append(transactions_filters['filter-end-date'])
-                    
-                if transactions_filters['filter-min-amount']:
-                    query += " AND amount >= %s"
-                    params.append(transactions_filters['filter-min-amount'])
-
-                if transactions_filters['filter-max-amount']:
-                    query += " AND amount <= %s"
-                    params.append(transactions_filters['filter-max-amount'])
-
-                if transactions_filters['filter-payment-method']:
-                    query += " AND payment_method >= %s"
-                    params.append(transactions_filters['filter-payment-method'])
+                for key, value in filters_map.items():
+                    if transactions_filters[key]:
+                        query += f' AND {value}'
+                        params.append(transactions_filters[key])
 
             with Config.get_db_connection() as db_connection:
                 with db_connection.cursor() as cursor:
