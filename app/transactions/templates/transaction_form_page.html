@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minhas Transações</title>
+  <link rel="stylesheet" href="{{ url_for('transactions.static', filename='css/transaction_form_page.css') }}">
+</head>
+
+<body>
+  <h1>Nova Transação</h1>
+  {% if transaction %}
+  <form action="{{ url_for('transactions.transaction_edit_page', transaction_id=transaction['transaction_id']) }}" method="POST">
+    {% else %}
+    <form action="{{ url_for('transactions.transaction_create_page') }}" method="POST">
+      {% endif %}
+
+      <input type="text" id="title" name="title" placeholder="Nome da transação"
+        value="{{ transaction['title'] }}" required />
+
+      <br>
+
+      <input type="text" id="amount" name="amount" placeholder="Digite o valor"
+        value="{{ transaction['amount'] }}" required />
+
+      <br>
+
+      <select id="category" name="category" required>
+        <option value="" disabled {% if not transaction %}selected{% endif %}>Selecione uma categoria</option>
+        <option value="home" {% if transaction and transaction['category']=='home' %}selected{% endif %}>Casa</option>
+        <option value="entertainment" {% if transaction and transaction['category']=='entertainment' %}selected{% endif %}>
+          Entretenimento</option>
+        <option value="study" {% if transaction and transaction['category']=='study' %}selected{% endif %}>Estudos</option>
+        <option value="trip" {% if transaction and transaction['category']=='trip' %}selected{% endif %}>Viagem</option>
+      </select>
+
+      <br>
+
+      <select id="payment_method" name="payment_method" required>
+        <option value="" disabled {% if not transaction %}selected{% endif %}>Selecione um método de pagamento</option>
+        <option value="debit" {% if transaction and transaction['payment_method']=='debit' %}selected{% endif %}>Débito</option>
+        <option value="credit" {% if transaction and transaction['payment_method']=='credit' %}selected{% endif %}>Crédito</option>
+        <option value="pix" {% if transaction and transaction['payment_method']=='pix' %}selected{% endif %}>PIX</option>
+        <option value="bank slip" {% if transaction and transaction['payment_method']=='bank slip' %}selected{% endif %}>Boleto
+          Bancário</option>
+        <option value="other" {% if transaction and transaction['payment_method']=='other' %}selected{% endif %}>Outro</option>
+      </select>
+
+      <br>
+
+      <textarea id="description" name="description"
+        placeholder="Digite uma descrição para a transação">{% if transaction and transaction['description'] %}{{ transaction['description'] }}{% endif %}</textarea>
+
+      <br>
+
+      <input type="date" id="transaction_date" name="transaction_date"
+        value="{{ transaction['transaction_date']}}" required>
+      <input type="time" id="transaction_hour" name="transaction_hour"
+        value="{{ transaction['transaction_hour']}}" required>
+
+      <br>
+
+      <label for="is_recurring">
+        <input type="checkbox" id="is_recurring" name="is_recurring" {% if transaction and transaction['is_recurring'] %}checked{%
+          endif %}>
+        Recorrente
+      </label>
+
+      <br>
+
+      <input type="date" id="start_date" name="start_date" value="{% if transaction and transaction['start_date'] %}{{ transaction['start_date'] }}{% endif %}">
+
+      <br>
+
+      <input type="date" id="end_date" name="end_date" value="{% if transaction and transaction['end_date'] %}{{ transaction['end_date'] }}{% endif %}">
+
+      <br>
+
+      <select id="interval" name="interval">
+        <option value="" disabled {% if not transaction %}selected{% endif %}>Selecione um intervalo</option>
+        <option value="0" {% if transaction and transaction['interval']=='0' %}selected{% endif %} >Sem intervalo</option>
+        <option value="daily" {% if transaction and transaction['interval']=='daily' %}selected{% endif %} >Diário</option>
+        <option value="weekly"  {% if transaction and transaction['interval']=='weekly' %}selected{% endif %} >Semanal</option>
+        <option value="monthly" {% if transaction and transaction['interval']=='monthly' %}selected{% endif %} >Mensal</option>
+        <option value="yearly" {% if transaction and transaction['interval']=='yearly' %}selected{% endif %} >Anual</option>
+      </select>
+
+      <br>
+
+      <input type="number" id="number_of_payments" name="number_of_payments" placeholder="Número de parcelas"
+        value="{{ transaction['number_of_payments']}}">
+
+      <br>
+
+      <select id="transaction_type" name="transaction_type" required>
+        <option value="" disabled {% if not transaction %}selected{% endif %}>Selecione o tipo da transação</option>
+        <option value="income" {% if transaction and transaction['transaction_type']=='income' %}selected{% endif %} >Receitas</option>
+        <option value="expense" {% if transaction and transaction['transaction_type']=='expense' %}selected{% endif %} >Despesas
+        </option>
+      </select>
+
+      <br>
+
+      {% if transaction %}
+      <button type="submit">Editar</button>
+      <button type="submit"><a
+          href="{{url_for('transactions.transaction_delete', transaction_id=transaction['transaction_id'])}}">Deletar</a></button>
+      {% else %}
+      <button type="submit">Criar</button>
+      {% endif %}
+    </form>
+
+    <br>
+
+    <a onclick="window.history.back()"">Back</a>
+</body>
+
+</html>
