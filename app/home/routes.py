@@ -12,6 +12,6 @@ home = Blueprint(
 def home_page():
     return render_template('home.html')
 
-@home.route('/login')
-def login_page():
-    return render_template('login.html')  # Certifique-se de ter esse arquivo
+@home.route('/informations')
+def about_page():
+    return render_template('informations.html')

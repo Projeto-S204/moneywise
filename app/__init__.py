@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from .home.routes import home
 
 
 from config import Config
@@ -11,7 +12,6 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
-    from .initial_pages.routes import home
     app.register_blueprint(home, url_prefix='/')
 
     db.init_app(app)
