@@ -1,99 +1,96 @@
 body {
-  margin: 100px;
   background-color: #272827;
-  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
 }
 
 nav {
   display: flex;
-  justify-content: flex-start;
+  align-items: center;
+  margin: 50px;
+}
+
+nav img {
+  width: 55px;
+  height: 87px;
   position: absolute;
-  gap: 0px;
-  margin-bottom: 20px;
+  left: 50px;
+}
 
-  img {
-    width: 55px;
-    height: 87px;
-  }
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 50px;
+  margin: 0;
+}
 
-  ul {
-    display: flex;
-    list-style: none;
-    justify-content: center;
-    color: #fff;
-    gap: 20px;
-
-    li {
-      a {
-        text-decoration: none;
-        color: inherit;
-        font-family: Josefin Sans;
-        font-weight: 300;
-        font-size: 34px;
-        line-height: 64px;
-      }
-    }
-  }
+nav ul li a {
+  text-decoration: none;
+  color: #DADAE0;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 28px;
+  line-height: 64px;
 }
 
 main {
-  #text-container {
-    padding-top: 14%;
-    width: 40%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: auto;
+  height: auto;
+  margin: 50px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
 
-    h1 {
-      color: #efa23b;
-      font-family: Jomhuria;
-      font-weight: normal;
-      font-size: 128px;
-      margin: 0;
-    }
+}
 
-    p {
-      margin: 0;
-      font-family: Josefin Sans;
-      font-weight: 300;
-      font-size: 36px;
-      color: #fff;
-    }
+#text-container {
+  width: 30%;
+}
 
-    #button-container {
-      align-items: start;
-      button {
-        border-radius: 5px;
-        border: none;
-        font-family: Josefin Sans;
-        font-size: 32px;
-        background: #7e9dca;
-        color: #fff;
-        text-decoration: none;
-        cursor: pointer;
-        display: flex;
-        padding: 20px 40px;
-        margin: 20px 0 0 0;
-      }
+#text-container h1 {
+  color: #efa23b;
+  font-family: "Jomhuria", sans-serif;
+  font-size: 128px;
+  font-weight: normal;
+  margin: 0;
+  line-height: 0.5;
+}
 
-      button a {
-        text-decoration: none;
-        color: inherit;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-      }
-    }
-  }
+#text-container p {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 28px;
+  color: #DADAE0;
+  font-weight: lighter;
+  font-style: italic;
+}
 
-  #img-container {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
+#button-container button {
+  background: #7E9DCA ;
+  font-size: 30px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 10px 20px;
+}
 
-    img {
-      width: 1180px;
-    }
-  }
+#button-container button:hover {
+  background: #5F82C0;
+}
+
+#button-container button a {
+  text-decoration: none;
+  color: #DADAE0;
+  font-family: "Josefin Sans", sans-serif;
+}
+
+#img-container {
+  width: 70%;
+}
+
+#img-container img {
+  width: 100%;
 }
