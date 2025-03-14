@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/windows,python,flask,macos,visualstudiocode,pycharm
-# Edit at https://www.toptal.com/developers/gitignore?templates=windows,python,flask,macos,visualstudiocode,pycharm
+# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,windows,macos,python,flask
+# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,windows,macos,python,flask
 
 ### Flask ###
 instance/*
@@ -200,6 +200,8 @@ Temporary Items
 # iCloud generated files
 *.icloud
 
+<<<<<<< HEAD
+=======
 ### PyCharm ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
@@ -313,6 +315,7 @@ fabric.properties
 # https://plugins.jetbrains.com/plugin/8053-azure-toolkit-for-intellij
 .idea/**/azureSettings.xml
 
+>>>>>>> 88ee2feb6bf15119de2b3e973ebfffa465c9fac1
 ### Python ###
 # Byte-compiled / optimized / DLL files
 
@@ -406,7 +409,11 @@ poetry.toml
 pyrightconfig.json
 
 ### VisualStudioCode ###
+<<<<<<< HEAD
+.vscode/*
+=======
 .vscode
+>>>>>>> 88ee2feb6bf15119de2b3e973ebfffa465c9fac1
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
@@ -450,4 +457,8 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+<<<<<<< HEAD
+# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,windows,macos,python,flask
+=======
 # End of https://www.toptal.com/developers/gitignore/api/windows,python,flask,macos,visualstudiocode,pycharm
+>>>>>>> 88ee2feb6bf15119de2b3e973ebfffa465c9fac1
