@@ -3,19 +3,17 @@ from app.users_authentication.models import User
 from app import db
 from datetime import datetime
 from werkzeug.security import check_password_hash
-from app.users_authentication.utils import create_jwt, verify_jwt
+from app.users_authentication.utils import create_jwt
 
 
 users_authentication = Blueprint('users_authentication', __name__)
 
 
-@users_authentication.route('/users', methods=['GET'])
 def get_users():
     users = User.query.all()
     return jsonify([user.to_dict() for user in users])
 
 
-@users_authentication.route('/user/<int:user_id>', methods=['GET'])
 def get_user(user_id):
     user = User.query.get(user_id)
     if not user:
@@ -23,7 +21,6 @@ def get_user(user_id):
     return jsonify(user.to_dict())
 
 
-@users_authentication.route('/register', methods=['POST'])
 def create_user():
     data = request.get_json()
 
@@ -50,7 +47,6 @@ def create_user():
         return jsonify({"error": str(e)}), 500
 
 
-@users_authentication.route('/login', methods=['POST'])
 def login_user():
     data = request.get_json()
 
@@ -66,7 +62,6 @@ def login_user():
         return jsonify({"error": "Invalid email or password"}), 401
 
 
-@users_authentication.route('/update_user/<int:user_id>', methods=['PUT'])
 def update_user(user_id):
     data = request.get_json()
 
@@ -97,7 +92,6 @@ def update_user(user_id):
         return jsonify({"error": str(e)}), 500
 
 
-@users_authentication.route('/delete_user/<int:user_id>', methods=['DELETE'])
 def delete_user(user_id):
     user = User.query.get(user_id)
     if not user:
@@ -113,13 +107,13 @@ def delete_user(user_id):
 
 
 # Rota para teste do token
-@users_authentication.route('/protected', methods=['GET'])
-def protected_route():
-    token = request.headers.get('Authorization')
-    if not token:
-        return jsonify({'error': 'Token is missing'}), 403
+# @users_authentication.route('/protected', methods=['GET'])
+# def protected_route():
+#     token = request.headers.get('Authorization')
+#     if not token:
+#         return jsonify({'error': 'Token is missing'}), 403
 
-    payload = verify_jwt(token)
-    if not payload:
-        return jsonify({'error': 'Token is invalid or expired'}), 403
-    return jsonify({'message': 'Protected content accessed'}), 200
+#     payload = verify_jwt(token)
+#     if not payload:
+#         return jsonify({'error': 'Token is invalid or expired'}), 403
+#     return jsonify({'message': 'Protected content accessed'}), 200
