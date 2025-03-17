@@ -1,0 +1,157 @@
+* {
+  font-family: "Josefin Sans", sans-serif;
+  box-sizing: border-box;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #272827;
+  display: flex;
+  height: auto;
+  margin: 0;
+  padding: 0;
+}
+.sidebar {
+  width: 30%;
+  background-color: #0F0F10;
+  padding: 130px 90px;
+  height: 100vh;
+  box-sizing: border-box;
+  align-items: center;
+  margin: auto;
+  display: block;
+}
+.card {
+  background-color: #444;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 30px;
+}
+.green {
+  background-color: #92CA7E;
+  color: #2A2A2F;
+}
+.red {
+  background-color: #CA7E7E;
+  color: #2A2A2F;
+}
+.blue {
+  background-color: #26262B;
+  color: #7E9DCA;
+}
+.button {
+  background-color: #7E9DCA;
+  color: #26262B;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  display: block;
+  margin: auto;
+  font-size: 25px;
+}
+.button:hover {
+  background-color: #5F82C0;
+}
+
+
+
+.container {
+  width: 70%;
+  padding: 50px 30px;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#search {
+  flex-grow: 1;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #1E1E22;
+  color: #E0E0E0;
+  font-size: 16px;
+}
+
+.filter-button {
+  background-color: transparent;
+  border: 1px solid #EFA23B;
+  color: #EFA23B;
+  padding: 15px 15px 10px 15px;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  margin-right: 1px;
+}
+
+.filter-button:hover {
+  background-color: #EFA23B;
+  color: #272827;
+}
+.transactions {
+  padding: 10px 0;
+  border-radius: 5px;
+}
+.transaction-item {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  align-items: center;
+  background-color: #1F1F23;
+  padding: 15px 30px;
+  border-radius: 5px;
+  color: white;
+  font-size: 24px;
+  margin-bottom: 4px;
+  gap: 20px;
+}
+.transaction-item:hover {
+  background-color: #3A3A40;
+  cursor: pointer;
+}
+
+.transaction-name {
+  text-align: left;
+  line-height: 1;
+  padding-top: 5px;
+}
+
+.transaction-amount {
+  text-align: left;
+  font-weight: bold;
+  line-height: 1;
+  padding-top: 5px;
+}
+
+.transaction-category {
+  text-align: center;
+  background-color: #7E9DCA;
+  color: #1F1F23;
+  padding-top: 5px;
+  border-radius: 5px;
+  line-height: 1;
+  font-weight: bold;
+}
+
+.transaction-date {
+  text-align: right;
+  line-height: 1;
+  padding-top: 5px;
+}
+
+.expense {
+  color: #CA7E7E;
+}
+
+.income {
+  color: #92CA7E;
+}
