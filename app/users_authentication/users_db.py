@@ -1,12 +1,9 @@
-from flask import Blueprint, jsonify, request
+from flask import jsonify, request
 from app.users_authentication.models import User
 from app import db
 from datetime import datetime
 from werkzeug.security import check_password_hash
 from app.users_authentication.utils import create_jwt
-
-
-users_authentication = Blueprint('users_authentication', __name__)
 
 
 def get_users():
@@ -21,7 +18,7 @@ def get_user(user_id):
     return jsonify(user.to_dict())
 
 
-def create_user():
+def create_user(request):
     data = request.get_json()
 
     existing_user = User.query.filter_by(email=data['email']).first()
@@ -47,7 +44,7 @@ def create_user():
         return jsonify({"error": str(e)}), 500
 
 
-def login_user():
+def login_user(request):
     data = request.get_json()
 
     if 'email' not in data or 'password' not in data:
@@ -71,13 +68,7 @@ def update_user(user_id):
 
     if 'name' in data:
         user.name = data['name']
-    if 'birthday' in data:
-        try:
-            user.birthday = datetime.strptime(data['birthday'], '%Y-%m-%d')
-        except ValueError:
-            return jsonify({
-                "error": "Invalid birthday format. Use YYYY-MM-DD."
-            }), 400
+
     if 'avatar' in data:
         user.avatar = data['avatar']
 

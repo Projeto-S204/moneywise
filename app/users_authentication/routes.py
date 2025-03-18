@@ -1,125 +1,41 @@
-from flask import Blueprint, jsonify, request
-from app.users_authentication.models import User
-from app import db
-from datetime import datetime
-from werkzeug.security import check_password_hash
-from app.users_authentication.utils import create_jwt, verify_jwt
-
+from flask import Blueprint, request
+from app.users_authentication.users_db import (
+    get_users as get_users_db,
+    get_user as get_user_db,
+    create_user as create_user_db,
+    login_user as login_user_db,
+    update_user as update_user_db,
+    delete_user as delete_user_db
+)
 
 users_authentication = Blueprint('users_authentication', __name__)
 
 
 @users_authentication.route('/users', methods=['GET'])
 def get_users():
-    users = User.query.all()
-    return jsonify([user.to_dict() for user in users])
+    return get_users_db()
 
 
 @users_authentication.route('/user/<int:user_id>', methods=['GET'])
 def get_user(user_id):
-    user = User.query.get(user_id)
-    if not user:
-        return jsonify({"error": "User not found"}), 404
-    return jsonify(user.to_dict())
+    return get_user_db(user_id)
 
 
 @users_authentication.route('/register', methods=['POST'])
 def create_user():
-    data = request.get_json()
-
-    existing_user = User.query.filter_by(email=data['email']).first()
-    if existing_user:
-        return jsonify({"error": "Email already registered"}), 400
-
-    new_user = User(
-        email=data['email'],
-        name=data['name'],
-        birthday=datetime.strptime(data['birthday'], '%Y-%m-%d'),
-        password=data['password'],
-    )
-
-    try:
-        db.session.add(new_user)
-        db.session.commit()
-        return jsonify(
-            new_user.to_dict(),
-            {'message': 'Usuário Criado com Sucesso'}
-        ), 201
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({"error": str(e)}), 500
+    return create_user_db(request)
 
 
 @users_authentication.route('/login', methods=['POST'])
 def login_user():
-    data = request.get_json()
-
-    if 'email' not in data or 'password' not in data:
-        return jsonify({"error": "Missing email or password"}), 400
-
-    user = User.query.filter_by(email=data['email']).first()
-
-    if user and check_password_hash(user.hashed_password, data['password']):
-        token = create_jwt(user.id)
-        return jsonify({'message': 'Login successful', 'token': token}), 200
-    else:
-        return jsonify({"error": "Invalid email or password"}), 401
+    return login_user_db(request)
 
 
 @users_authentication.route('/update_user/<int:user_id>', methods=['PUT'])
 def update_user(user_id):
-    data = request.get_json()
-
-    user = User.query.get(user_id)
-    if not user:
-        return jsonify({"error": "User not found"}), 404
-
-    if 'name' in data:
-        user.name = data['name']
-    if 'birthday' in data:
-        try:
-            user.birthday = datetime.strptime(data['birthday'], '%Y-%m-%d')
-        except ValueError:
-            return jsonify({
-                "error": "Invalid birthday format. Use YYYY-MM-DD."
-            }), 400
-    if 'avatar' in data:
-        user.avatar = data['avatar']
-
-    try:
-        db.session.commit()
-        return jsonify({
-            "message": "User updated successfully",
-            "user": user.to_dict()
-        }), 200
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({"error": str(e)}), 500
+    return update_user_db(user_id)
 
 
 @users_authentication.route('/delete_user/<int:user_id>', methods=['DELETE'])
 def delete_user(user_id):
-    user = User.query.get(user_id)
-    if not user:
-        return jsonify({"error": "User not found"}), 404
-
-    try:
-        db.session.delete(user)
-        db.session.commit()
-        return jsonify({"message": "User deleted successfully"}), 200
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({"error": str(e)}), 500
-
-
-# Rota para teste do token
-@users_authentication.route('/protected', methods=['GET'])
-def protected_route():
-    token = request.headers.get('Authorization')
-    if not token:
-        return jsonify({'error': 'Token is missing'}), 403
-
-    payload = verify_jwt(token)
-    if not payload:
-        return jsonify({'error': 'Token is invalid or expired'}), 403
-    return jsonify({'message': 'Protected content accessed'}), 200
+    return delete_user_db(user_id)
