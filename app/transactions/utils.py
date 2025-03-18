@@ -1,5 +1,3 @@
-import datetime
-
 def convert_value(transaction_data):
     update_fields = []
     update_values = []

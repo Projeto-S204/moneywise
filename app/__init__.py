@@ -1,12 +1,26 @@
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from config import Config
+from flask_jwt_extended import JWTManager
+from flask_migrate import Migrate
+
 from .home.routes import home
 from .transactions.routes import transactions
-from config import Config
+
+db = SQLAlchemy()
+jwt = JWTManager()
+migrate = Migrate()
+
+from app.users_authentication.routes import users_authentication  # noqa:E402
+
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
+    app.register_blueprint(users_authentication)
     app.register_blueprint(home)
     app.register_blueprint(transactions)
-
+    db.init_app(app)
+    jwt.init_app(app)
+    migrate.init_app(app, db)
     return app
