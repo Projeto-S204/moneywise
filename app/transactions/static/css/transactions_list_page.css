@@ -1,6 +1,10 @@
 * {
   font-family: "Josefin Sans", sans-serif;
   box-sizing: border-box;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+  cursor: default;
 }
 
 html {
@@ -25,6 +29,34 @@ body {
   margin: auto;
   display: block;
 }
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+}
+
+.logo {
+  height: 50px;
+}
+
+.user-info {
+  color: #DADAE0;
+  display: flex;
+  align-items: center;
+  gap: 8px; 
+  font-size: 20px;
+}
+.user-info * {
+  cursor: pointer;
+}
+
+.user-info i {
+  color: #DADAE0;
+  font-size: 30px;
+}
+
 .card {
   background-color: #444;
   padding: 15px;
@@ -43,19 +75,33 @@ body {
   background-color: #26262B;
   color: #7E9DCA;
 }
-.button {
+.card-header {
+  display: flex;
+  font-size: 20px;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+.card h1 {
+  font-size: 50px;
+  font-weight: normal;
+  padding: 0;
+  margin: 10px 0;
+}
+.new-transaction-btn {
   background-color: #7E9DCA;
   color: #26262B;
-  border: none;
   padding: 15px 10px 10px 10px;
   cursor: pointer;
   border-radius: 5px;
   display: block;
-  margin: auto;
   font-size: 25px;
-  line-height: 1;
+  text-decoration: none;
+  text-align: center;
+  width: auto;
 }
-.button:hover {
+.new-transaction-btn:hover {
   background-color: #5F82C0;
 }
 
@@ -72,14 +118,33 @@ body {
   gap: 10px;
 }
 
+.filter-button {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Espaço entre ícone e texto */
+  padding: 10px 15px;
+  font-size: 16px;
+  border: none;
+  background-color: #038FA7; /* Cor do botão */
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.filter-button i {
+  font-size: 18px;
+}
+
+
 #search {
   flex-grow: 1;
-  padding: 10px;
+  padding: 15px 15px 10px 15px;
   border-radius: 5px;
   border: none;
   background-color: #1E1E22;
   color: #E0E0E0;
   font-size: 16px;
+  cursor: text;
 }
 
 .filter-button {
@@ -87,7 +152,6 @@ body {
   border: 1px solid #EFA23B;
   color: #EFA23B;
   padding: 15px 15px 10px 15px;
-  line-height: 1;
   cursor: pointer;
   border-radius: 5px;
   font-size: 16px;
@@ -114,22 +178,23 @@ body {
   font-size: 24px;
   margin-bottom: 4px;
   gap: 20px;
+  cursor: pointer;
 }
 .transaction-item:hover {
   background-color: #3A3A40;
+}
+.transaction-item * {
   cursor: pointer;
 }
 
 .transaction-name {
   text-align: left;
-  line-height: 1;
   padding-top: 5px;
 }
 
 .transaction-amount {
   text-align: left;
   font-weight: bold;
-  line-height: 1;
   padding-top: 5px;
 }
 
@@ -139,13 +204,11 @@ body {
   color: #1F1F23;
   padding-top: 5px;
   border-radius: 5px;
-  line-height: 1;
   font-weight: bold;
 }
 
 .transaction-date {
   text-align: right;
-  line-height: 1;
   padding-top: 5px;
 }
 
