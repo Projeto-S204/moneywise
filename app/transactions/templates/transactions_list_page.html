@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Jomhuria&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;700&display=swap" rel="stylesheet" />
   <script src="{{ url_for('transactions.static', filename='js/filter_modal.js') }}"></script>
-  <script src="{{ url_for('transactions.static', filename='js/search.js') }}"></script>
+  <script src="{{ url_for('transactions.static', filename='js/search_transaction.js') }}"></script>
   <script src="{{ url_for('transactions.static', filename='js/transaction_form_modal.js') }}"></script>
   <link rel="stylesheet" href="{{ url_for('transactions.static', filename='css/filter_modal.css') }}">
   <link rel="stylesheet" href="{{ url_for('transactions.static', filename='css/transactions_list_page.css') }}">
@@ -94,7 +94,7 @@
       {% endif %}
       {% endfor %}
       {% else %}
-      <p style="color: white;">Nenhuma transação encontrada</p>
+      <p style="color: white; text-align: center;">Nenhuma transação encontrada</p>
       {% endif %}
     </div>
   </div>

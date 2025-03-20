@@ -116,11 +116,35 @@ textarea {
 
 .options-container {
   display: flex;
-  justify-content:right;
+  justify-content:space-between;
   align-items: center;
-  gap: 20px;
+  width: 100%;
 }
-.submit-btn {
+.right-buttons {
+  display: flex;
+  gap: 10px;
+}
+.delete-btn{
+  background-color: transparent;
+  border: none;
+}
+.delete-btn a {
+  background-color: transparent;
+  text-decoration: none;
+  border: 1px solid #EFA23B;
+  color: #EFA23B;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+  display: block; 
+}
+.delete-btn a:hover {
+  background-color: #EFA23B;
+  color: #26262B;
+}
+
+.submit-btn, .edit-btn {
   background-color: transparent;
   border: 1px solid #7E9DCA;
   color: #7E9DCA;
@@ -130,7 +154,7 @@ textarea {
   font-size: 20px;
   display: block; 
 }
-.submit-btn:hover {
+.submit-btn:hover, .edit-btn:hover {
   background-color: #7E9DCA;
   color: #26262B;
 }

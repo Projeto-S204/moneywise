@@ -118,24 +118,6 @@ body {
   gap: 10px;
 }
 
-.filter-button {
-  display: flex;
-  align-items: center;
-  gap: 8px; /* Espaço entre ícone e texto */
-  padding: 10px 15px;
-  font-size: 16px;
-  border: none;
-  background-color: #038FA7; /* Cor do botão */
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.filter-button i {
-  font-size: 18px;
-}
-
-
 #search {
   flex-grow: 1;
   padding: 15px 15px 10px 15px;
@@ -157,6 +139,9 @@ body {
   font-size: 16px;
   font-weight: bold;
   margin-right: 1px;
+}
+.filter-button i {
+  font-size: 18px;
 }
 
 .filter-button:hover {

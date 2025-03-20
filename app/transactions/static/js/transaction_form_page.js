@@ -5,24 +5,24 @@ function setTransactionType(type) {
 
 function changeButtonColor(button) {
   document.querySelectorAll('.transaction-type-buttons button').forEach(btn => {
-    btn.classList.remove('active');
-    btn.style.backgroundColor = '';
+      btn.classList.remove('active');
+      btn.style.backgroundColor = '';
+      btn.style.color = btn.classList.contains('income-btn') ? '#92CA7E' : '#CA7E7E';
   });
 
-  document.querySelectorAll('.transaction-type-buttons .income-btn').forEach(btn => {
-    btn.style.color = '#92CA7E';
-  });
-  document.querySelectorAll('.transaction-type-buttons .expense-btn').forEach(btn => {
-    btn.style.color = '#CA7E7E';
-  });
-
-  button.classList.add('active');
-
-  if (button.classList.contains('income-btn')) {
-    button.style.backgroundColor = '#92CA7E';
-    button.style.color = '#18181B';
-  } else if (button.classList.contains('expense-btn')) {
-    button.style.backgroundColor = '#CA7E7E';
-    button.style.color = '#18181B';
+  if (button) {
+      button.classList.add('active');
+      button.style.backgroundColor = button.classList.contains('income-btn') ? '#92CA7E' : '#CA7E7E';
+      button.style.color = '#18181B';
   }
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+  const transactionType = document.getElementById("transaction_type").value.trim();
+
+  if (transactionType === "income") {
+      changeButtonColor(document.getElementById("income-btn"));
+  } else if (transactionType === "expense") {
+      changeButtonColor(document.getElementById("expense-btn"));
+  }
+});
