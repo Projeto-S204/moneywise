@@ -38,4 +38,5 @@ function searchTransaction() {
 
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("search").addEventListener("keyup", searchTransaction);
+  document.getElementById("search").addEventListener("keyup", setTransactionAmount);
 });

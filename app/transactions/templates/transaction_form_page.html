@@ -23,68 +23,89 @@
 
         <form action="{{ url_for('transactions.transaction_create_page') }}" method="POST">
 
+
           <div class="first-input-row">
-            <input type="text" id="title" name="title" placeholder="Título" required value="{{ transaction.title }}" />
-            <select id="payment_method" name="payment_method" required>
-              <option value="" disabled selected>Método de Pagamento</option>
-              <option value="debit" {% if transaction.payment_method=='debit' %} selected {% endif %}>Débito</option>
-              <option value="credit" {% if transaction.payment_method=='credit' %} selected {% endif %}>Crédito</option>
-              <option value="pix" {% if transaction.payment_method=='pix' %} selected {% endif %}>PIX</option>
-              <option value="bank slip" {% if transaction.payment_method=='bank slip' %} selected {% endif %}>Boleto
-                Bancário</option>
-              <option value="other" {% if transaction.payment_method=='other' %} selected {% endif %}>Outro</option>
-            </select>
+            <div class="title-container">
+              <label for="title">Título</label>
+              <input type="text" id="title" name="title" placeholder="Digite um Título" required value="{{ transaction.title }}" />
+            </div>
+      
+            <div class="payment-method-container">
+              <label for="payment_method">Método de Pagamento</label>
+              <select id="payment_method" name="payment_method" required>
+                <option value="" disabled selected>Selecione uma opção</option>
+                <option value="Debito" {% if transaction.payment_method=='Debito' %} selected {% endif %}>Débito</option>
+                <option value="Credito" {% if transaction.payment_method=='Credito' %} selected {% endif %}>Crédito</option>
+                <option value="PIX" {% if transaction.payment_method=='PIX' %} selected {% endif %}>PIX</option>
+                <option value="Boleto" {% if transaction.payment_method=='Boleto' %} selected {% endif %}>Boleto</option>
+                <option value="Outro" {% if transaction.payment_method=='Outro' %} selected {% endif %}>Outro</option>
+              </select>
+            </div>
           </div>
+
 
           <div class="second-input-row">
-            <input type="text" id="amount" name="amount" placeholder="Valor" value="{{ transaction.amount }}"
-              required />
-            <input type="date" id="transaction_date" name="transaction_date" value="{{ transaction.transaction_date }}"
-              required />
-            <select id="category" name="category" required>
-              <option value="" disabled selected>Categoria</option>
-              <option value="home" {% if transaction.category=='home' %} selected {% endif %}>Casa</option>
-              <option value="entertainment" {% if transaction.category=='entertainment' %} selected {% endif %}>
-                Entretenimento</option>
-              <option value="study" {% if transaction.category=='study' %} selected {% endif %}>Estudos</option>
-              <option value="trip" {% if transaction.category=='trip' %} selected {% endif %}>Viagem</option>
-            </select>
+            <div class="amount-container">
+              <label for="amount">Valor</label>
+              <input type="text" id="amount" name="amount" placeholder="Digite um Valor" value="{{ transaction.amount }}" required />
+            </div>
+      
+            <div class="date-container">
+              <label for="transaction_date">Data</label>
+              <input type="date" id="transaction_date" name="transaction_date" value="{{ transaction.transaction_date }}" required />
+            </div>
+      
+            <div class="category-container">
+              <label for="category">Categoria</label>
+              <select id="category" name="category" required>
+                <option value="" disabled selected>Selecione uma opção</option>
+                <option value="Casa" {% if transaction.category=='Casa' %} selected {% endif %}>Casa</option>
+                <option value="Entretenimento" {% if transaction.category=='Entretenimento' %} selected {% endif %}>Entretenimento</option>
+                <option value="Estudos" {% if transaction.category=='Estudos' %} selected {% endif %}>Estudos</option>
+                <option value="Viagem" {% if transaction.category=='Viagem' %} selected {% endif %}>Viagem</option>
+              </select>
+            </div>
           </div>
 
-          <textarea id="description" name="description" placeholder="Descrição">{{ transaction.description }}</textarea>
+          <div class="input-container">
+            <label for="description">Descrição</label>
+            <textarea id="description" name="description" placeholder="Digite uma Descrição para a sua Transação">{{ transaction.description }}</textarea>
+          </div>
 
           <div class="is_recurring_content">
-            <input type="checkbox" id="checkbox" name="is_recurring" {% if transaction.is_recurring %} checked {% endif
-              %}>
-            <p class="checkbox_label">Transação Fixa</p>
+            <div class="left-content">
+              <input type="checkbox" id="checkbox" name="is_recurring" {% if transaction.is_recurring %} checked {%
+                endif %} onchange="toggleNumberOfPayments()">
+              <p class="checkbox_label">Transação Recorrente</p>
+            </div>
+
+            <div style="display: none;" id="number-of-payments-container">
+              <label for="number_of_payments">Número de parcelas</label>
+              <input type="number" id="number_of_payments" name="number_of_payments" placeholder="Número de parcelas" value="{{ transaction.number_of_payments if transaction.number_of_payments else 2 }}">
+            </div>
           </div>
 
-          <input type="date" id="start_date" name="start_date" value="">
+          <!-- <input type="date" id="start_date" name="start_date" value="{{ transaction.start_date }}">
 
-          <input type="date" id="end_date" name="end_date" value="">
+          <input type="date" id="end_date" name="end_date" value="{{ transaction.end_date }}">
 
           <select id="interval" name="interval">
-            <option value="" >Selecione um intervalo</option>
-            <option value="daily">Diário</option>
-            <option value="weekly">Semanal</option>
-            <option value="monthly">Mensal</option>
-            <option value="yearly">Anual</option>
-          </select>
-
-          <input type="number" id="number_of_payments" name="number_of_payments" placeholder="Número de parcelas"
-            value="">
-
+            <option value="">Selecione um intervalo</option>
+            <option value="daily" {% if transaction.interval=='daily' %} selected {% endif %}>Diário</option>
+            <option value="weekly" {% if transaction.interval=='weekly' %} selected {% endif %}>Semanal</option>
+            <option value="monthly" {% if transaction.interval=='monthly' %} selected {% endif %}>Mensal</option>
+            <option value="yearly" {% if transaction.interval=='yearly' %} selected {% endif %}>Anual</option>
+          </select> -->
 
           <div class="transaction-type-buttons">
-            <button type="button" class="income-btn" onclick="setTransactionType('income'); changeButtonColor(this)">
+            <button type="button" id="income-btn" class="income-btn" onclick="setTransactionType('income'); changeButtonColor(this)">
               <i class="bi bi-caret-up-square-fill"></i> Receita
             </button>
-            <button type="button" class="expense-btn" onclick="setTransactionType('expense'); changeButtonColor(this)">
+            <button type="button" id="expense-btn" class="expense-btn" onclick="setTransactionType('expense'); changeButtonColor(this)">
               <i class="bi bi-caret-down-square-fill"></i> Despesa
             </button>
           </div>
           <input type="hidden" id="transaction_type" name="transaction_type" value="{{ transaction.transaction_type }}">
-
 
           <div class="options-container" {% if not transaction %} style="justify-content: right;" {% endif %}>
             {% if transaction %}

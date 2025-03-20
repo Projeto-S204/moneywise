@@ -24,6 +24,9 @@ def convert_value(transaction_data):
 
         if key == 'amount' and value is not None:
             value = float(value)
+        
+        if key == 'description' and value is None:
+            value = ""
 
         update_fields.append(f"{key} = %s")
         update_values.append(value)
