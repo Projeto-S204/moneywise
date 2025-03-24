@@ -18,10 +18,20 @@ def transactions_page():
         'filter-end-date', 'filter-min-amount', 'filter-max-amount', 'filter-payment-method']
     }
 
+    category_colors = {
+        'Casa': '#F7B7B7',
+        'Entretenimento': '#F1D7A7',
+        'Estudos': '#B7D6B5',
+        'Viagem': '#B2D7F6',
+        'Saúde': '#F5D1D1',
+        'Mercado': '#D0E5D7'
+    }
+
     transactions_list = TransactionsModal.transactions_get_list(transactions_filters)
     return render_template('transactions_list_page.html', 
     transactions=transactions_list, 
-    transactions_filters=transactions_filters)
+    transactions_filters=transactions_filters,
+    category_colors=category_colors)
 
 
 @transactions.route('/create', methods=['GET', 'POST'])
