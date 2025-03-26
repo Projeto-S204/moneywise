@@ -63,7 +63,7 @@ body {
 
 .card {
   background-color: #444;
-  padding: 15px;
+  padding: 5px 15px;
   border-radius: 5px;
   margin-bottom: 30px;
 }
@@ -88,7 +88,7 @@ body {
   padding: 0;
 }
 .card h1 {
-  font-size: 50px;
+  font-size: 40px;
   font-weight: normal;
   padding: 0;
   margin: 10px 0;

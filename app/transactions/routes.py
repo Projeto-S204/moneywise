@@ -20,9 +20,9 @@ def transactions_page():
 
     category_colors = {
         'Casa': '#F7B7B7',
+        'Viagem': '#B2D7F6',
         'Entretenimento': '#F1D7A7',
         'Estudos': '#B7D6B5',
-        'Viagem': '#B2D7F6',
         'Saúde': '#F5D1D1',
         'Mercado': '#D0E5D7'
     }
