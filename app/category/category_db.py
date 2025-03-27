@@ -95,3 +95,4 @@ class CategoryCRUD:
             return f"Erro ao deletar categoria: {e}"
         finally:
             session.close()
+print("hello")
