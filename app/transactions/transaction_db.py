@@ -135,8 +135,9 @@ class TransactionsModal:
                     cursor.execute(query, params)
                     column_names = [desc[0] for desc in cursor.description]
                     rows = cursor.fetchall()
-                    result = [dict(zip(column_names, row)) for row in rows]
-                    return result
+                    results = [dict(zip(column_names, row)) for row in rows]
+
+                    return results
 
         except Exception as e:
             print(f"Error: {e}")
