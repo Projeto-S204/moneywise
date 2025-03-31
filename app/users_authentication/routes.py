@@ -6,7 +6,7 @@ from app.users_authentication.services.form_validations import (
     validade_form_on_signin,
 )
 # from app.users_authentication.utils import TokenManager
-from flask_login import logout_user
+from flask_login import logout_user, current_user
 from flask import flash
 from app.users_authentication.models import User
 

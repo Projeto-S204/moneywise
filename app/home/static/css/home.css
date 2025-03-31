@@ -34,6 +34,9 @@ nav ul li a {
   font-size: 28px;
   line-height: 64px;
 }
+nav ul li a:hover {
+  color: #acacb2;
+}
 
 main {
   display: flex;
@@ -48,6 +51,9 @@ main {
 
 #text-container {
   width: 30%;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
 }
 
 #text-container h1 {
