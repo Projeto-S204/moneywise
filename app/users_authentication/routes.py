@@ -1,41 +1,55 @@
-from flask import Blueprint, request
-from app.users_authentication.users_db import (
-    get_users as get_users_db,
-    get_user as get_user_db,
-    create_user as create_user_db,
-    login_user as login_user_db,
-    update_user as update_user_db,
-    delete_user as delete_user_db
+from flask import Blueprint, render_template, redirect, url_for
+from app.users_authentication.services.signin_form import UserSigninForm
+from app.users_authentication.services.signup_form import UserSignupForm
+from app.users_authentication.services.form_validations import (
+    validate_form_on_signup,
+    validade_form_on_signin,
+)
+# from app.users_authentication.utils import TokenManager
+from flask_login import logout_user
+from flask import flash
+from app.users_authentication.models import User
+
+
+user_bp = Blueprint(
+    'users',
+    __name__,
+    static_folder='static',
+    template_folder='templates',
+    static_url_path='',
 )
 
-users_authentication = Blueprint('users_authentication', __name__)
+
+@user_bp.route('/users')
+def show_users():
+    users = User.query.order_by(User.created_at.desc()).all()
+    return render_template("show_users.html", users=users)
 
 
-@users_authentication.route('/users', methods=['GET'])
-def get_users():
-    return get_users_db()
+@user_bp.route('/iniciar')
+def iniciar():
+    return render_template("iniciar.html")
 
 
-@users_authentication.route('/user/<int:user_id>', methods=['GET'])
-def get_user(user_id):
-    return get_user_db(user_id)
+@user_bp.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('users.iniciar'))
 
 
-@users_authentication.route('/register', methods=['POST'])
-def create_user():
-    return create_user_db(request)
+@user_bp.route("/user-signin", methods=["GET", "POST"])
+def customer_signin_page():
+    form = UserSigninForm()
+    if validade_form_on_signin(form):
+        return redirect(url_for("users.iniciar"))
+    return render_template("user_signin_page.html", form=form)
 
 
-@users_authentication.route('/login', methods=['POST'])
-def login_user():
-    return login_user_db(request)
-
-
-@users_authentication.route('/update_user/<int:user_id>', methods=['PUT'])
-def update_user(user_id):
-    return update_user_db(user_id)
-
-
-@users_authentication.route('/delete_user/<int:user_id>', methods=['DELETE'])
-def delete_user(user_id):
-    return delete_user_db(user_id)
+@user_bp.route("/user-signup", methods=["GET", "POST"])
+def customer_signup_page():
+    form = UserSignupForm()
+    print("Chamando validate_form_on_signup")
+    if validate_form_on_signup(form):
+        flash("Conta criada com sucesso! Agora faça login.", "success")
+        return redirect(url_for("users.customer_signin_page"))
+    return render_template("user_signup_page.html", form=form)

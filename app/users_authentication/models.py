@@ -1,9 +1,13 @@
 from datetime import datetime, timezone
+from flask_bcrypt import Bcrypt
+from flask_login import UserMixin
 from app import db
-from werkzeug.security import generate_password_hash
+from app import login_manager
+
+bcrypt = Bcrypt()
 
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -16,27 +20,34 @@ class User(db.Model):
     avatar = db.Column(db.String(255), nullable=True)
 
     def __repr__(self):
-        return (
-            f'<User {self.name} ID {str(self.id)}> name= {self.name} '
-            f'email= {self.email}')
+        return f'<User {self.name} ID {str(self.id)}>'
 
     def __str__(self):
         return f'{self.name}'
 
     def to_dict(self):
-        return {'id': self.id,
-                'avatar': self.avatar,
-                'name': self.name,
-                'email': self.email,
-                'birthday': (self.birthday.strftime('%Y-%m-%d')
-                             if self.birthday else None),
-                'created_at': self.created_at,
-                'updated_at': self.updated_at,
-                'password': self.hashed_password}
+        return {
+            'id': self.id,
+            'avatar': self.avatar,
+            'name': self.name,
+            'email': self.email,
+            'birthday': self.birthday.strftime('%Y-%m-%d'),
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
+        }
 
-    def __init__(self, email, name, password, birthday, avatar=None):
+    def __init__(self, email, name, password, birthday,
+                 avatar=None):
         self.email = email
         self.name = name
-        self.hashed_password = generate_password_hash(password)
+        self.hashed_password = bcrypt.generate_password_hash(
+            password).decode('utf-8')
         self.birthday = birthday
         self.avatar = avatar
+
+    def check_password(self, password):
+        return bcrypt.check_password_hash(self.hashed_password, password)
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(user_id)
