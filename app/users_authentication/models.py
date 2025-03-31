@@ -1,8 +1,7 @@
 from datetime import datetime, timezone
 from flask_bcrypt import Bcrypt
 from flask_login import UserMixin
-from app import db
-from app import login_manager
+from config import db, login_manager
 
 bcrypt = Bcrypt()
 

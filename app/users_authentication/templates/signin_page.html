@@ -23,7 +23,7 @@
             {% endif %}
         {% endwith %} 
 
-        <form action="{{ url_for('users.customer_signin_page') }}" method="POST">
+        <form action="{{ url_for('users.signin_page') }}" method="POST">
             {{ form.hidden_tag() }}
             <div class="form-group">
                 {{ form.email.label(class="form-label") }}
@@ -37,7 +37,7 @@
                 {{ form.submit(class="btn btn-primary btn-block") }}
             </div>
             <div class="text-center">
-                <p>Não tem uma conta? <a href="{{ url_for('users.customer_signup_page') }}">Registrar-se</a></p>
+                <p>Não tem uma conta? <a href="{{ url_for('users.signup_page') }}">Registrar-se</a></p>
             </div>
         </form>
     </div>

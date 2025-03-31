@@ -1,7 +1,7 @@
 from flask import flash
 from app.users_authentication.models import User
 from flask_login import login_user
-from app import db
+from config import db
 # from app.users_authentication.utils import TokenManager
 
 
