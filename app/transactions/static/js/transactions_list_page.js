@@ -1,3 +1,18 @@
+function toggleMenu(event) {
+  event.stopPropagation();
+  const menu = document.getElementById("user-menu");
+  menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+}
+
+document.addEventListener("click", function (event) {
+  const menu = document.getElementById("user-menu");
+  const userInfo = document.querySelector(".user-info");
+  
+  if (!userInfo.contains(event.target)) {
+      menu.style.display = "none";
+  }
+});
+
 function setTransactionAmount() {
   const transactionItems = document.querySelectorAll('.transaction-item');
   const incomeField = document.getElementById('income-value');
