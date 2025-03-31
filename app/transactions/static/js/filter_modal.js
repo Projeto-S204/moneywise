@@ -5,7 +5,7 @@ function closeFilterModal(event) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById("filterBtn").addEventListener("click", function () {
+    document.getElementById("filter-button").addEventListener("click", function () {
       document.getElementById("filterModal").style.display = "block";
     });
 
