@@ -15,7 +15,7 @@
     <nav>
       <img src="images/logo.png" alt="Logo MoneyWise" id="logo" />
       <ul>
-        <li><a href="#" id="entrar">Entrar</a></li>
+        <li><a href="{{ url_for('users.signin_page') }}" id="entrar">Entrar</a></li>
         <li><a href="#" id="sobre">Informações</a></li>
         <li><a href="#" id="contato">Contato</a></li>
       </ul>
@@ -28,7 +28,7 @@
       <p id="main-description">Transforme suas finanças em algo simples e inteligente. Controle gastos, alcance metas e
         viva com mais tranquilidade!</p>
       <div id="button-container">
-        <button id="start-button"><a href="{{ url_for('transactions.transactions_page') }}">Comece Agora!</a></button>
+        <button id="start-button"><a href="{{ url_for('users.signup_page') }}">Comece Agora!</a></button>
       </div>
     </div>
 

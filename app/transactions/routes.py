@@ -1,5 +1,6 @@
 from flask import Blueprint, redirect, render_template, request, url_for, flash
 from .transaction_db import TransactionsModal
+from flask_login import current_user, login_required
 
 TransactionsModal.create_transaction_table()
 
@@ -12,7 +13,9 @@ transactions = Blueprint(
 )
 
 @transactions.route('/', methods=['GET'])
+@login_required
 def transactions_page():
+    
     transactions_filters = {key: request.args.get(key) for key in [
         'search', 'filter-type', 'filter-category', 'filter-start-date', 
         'filter-end-date', 'filter-min-amount', 'filter-max-amount', 'filter-payment-method']
@@ -27,7 +30,7 @@ def transactions_page():
         'Mercado': '#D0E5D7'
     }
 
-    transactions_list = TransactionsModal.transactions_get_list(transactions_filters)
+    transactions_list = TransactionsModal.transactions_get_list(transactions_filters, user_id=current_user.id)
     return render_template('transactions_list_page.html', 
     transactions=transactions_list, 
     transactions_filters=transactions_filters,
@@ -35,6 +38,7 @@ def transactions_page():
 
 
 @transactions.route('/create', methods=['GET', 'POST'])
+@login_required
 def transaction_create_page():
 
     if request.method == 'POST':
@@ -45,7 +49,7 @@ def transaction_create_page():
                 'end_date', 'interval', 'number_of_payments', 'transaction_type']
             }
 
-            TransactionsModal.transaction_create(transaction_data)
+            TransactionsModal.transaction_create(transaction_data, user_id=current_user.id)
 
             flash('Criada com sucesso.', 'success')
             return redirect(url_for('transactions.transactions_page'))
@@ -57,6 +61,7 @@ def transaction_create_page():
 
 
 @transactions.route('/edit/<int:transaction_id>', methods=['GET', 'POST'])
+@login_required
 def transaction_edit_page(transaction_id):
 
     if request.method == 'GET':
@@ -83,6 +88,7 @@ def transaction_edit_page(transaction_id):
 
 
 @transactions.route('/delete/<int:transaction_id>', methods=['GET'])
+@login_required 
 def transaction_delete(transaction_id):
     try:
         TransactionsModal.transaction_delete(transaction_id)
