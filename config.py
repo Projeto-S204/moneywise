@@ -27,12 +27,6 @@ class Config:
     )
 
     @staticmethod
-    def find_available_port():
-        with socket() as s:
-            s.bind(("", 0))
-            return s.getsockname()[1]
-
-    @staticmethod
     def get_db_connection():
         conn = psycopg2.connect(
             dbname=DB_NAME,
@@ -43,3 +37,9 @@ class Config:
         )
         conn.autocommit = True
         return conn
+
+    @staticmethod
+    def find_available_port():
+        with socket() as s:
+            s.bind(("", 0))
+            return s.getsockname()[1]

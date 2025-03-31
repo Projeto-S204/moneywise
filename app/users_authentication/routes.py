@@ -19,15 +19,6 @@ users = Blueprint(
     static_url_path='',
 )
 
-@users.route('/users')
-def show_users():
-    users = User.query.order_by(User.created_at.desc()).all()
-    return render_template("show_users.html", users=users)
-
-@users.route("/logout")
-def logout():
-    logout_user()
-    return redirect(url_for('home.home_page'))
 
 @users.route("/signin", methods=["GET", "POST"])
 def signin_page():
@@ -44,3 +35,8 @@ def signup_page():
         flash("Conta criada com sucesso! Agora faça login.", "success")
         return redirect(url_for("users.signin_page"))
     return render_template("signup_page.html", form=form)
+
+@users.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('home.home_page'))
