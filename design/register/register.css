@@ -1,0 +1,120 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    background-color: #272827;
+    color: white;
+    font-family: 'Josefin Sans', sans-serif;
+    display: flex;
+    justify-content: center; 
+    align-items: center;     
+    min-height: 100vh;        
+}
+
+.side__container {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+    width: 25%;
+}
+
+
+
+
+.logo {
+    width: 4rem;
+    height: auto;
+  }
+
+#title__container{
+    color: #EFA23B;
+    font-family: Jomhuria;
+    font-size: 4rem;
+}
+
+.container__cadastro {
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: #1F1F23;
+    height: 70vh;
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    align-items: center;
+}
+
+.container__cadastro p {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: white;
+    font-size: 1rem;
+}
+
+
+h1 {
+    margin-top: auto;
+    font-size: 2rem;
+    color: #EFA23B;
+    margin-bottom: 1rem;
+}
+
+.input__data {
+    display: grid;
+    grid-template-columns: 1fr; /* Cada label e input ocupa uma linha */
+    gap: 1rem; /* Espaço entre os campos */
+    width: 80%;
+}
+
+.input__data label {
+    font-size: 1.2rem;
+    padding-bottom: 0.3rem; /* Espaço entre label e input */
+    text-align: left; /* Alinhando corretamente */
+}
+
+.input__data input {
+    width: 100%;
+    padding: 0.6rem;
+    border: 0.1rem solid #ccc;
+    border-radius: 5px;
+    background-color: #333;
+    color: white;
+    font-size: 1rem;
+}
+
+
+#button__cadastro {
+    margin-top: 1rem;
+    margin-bottom: auto;
+    padding: 0.7rem 1.2rem;
+    background-color: transparent; /* Fundo transparente */
+    border: 2px solid #EFA23B; /* Borda amarela */
+    color: #EFA23B; /* Texto amarelo */
+    font-size: 1rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    transition: background-color 0.4s ease-in-out, color 0.3s ease-in-out;
+}
+
+#button__cadastro:hover {
+    background-color: #EFA23B;
+    color: #000; 
+}
+
+
+#link__login {
+    color: #7E9DCA;
+    text-decoration: none;
+    font-size: 1.2rem;
+    margin-top: 1rem;
+}
