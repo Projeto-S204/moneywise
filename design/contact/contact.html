@@ -1,11 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contato</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jomhuria&family=Josefin+Sans:wght@300;400;700&display=swap">
+    <title>Contato | MoneyWise</title>
+    <link rel="stylesheet" href="contact.css">
 </head>
 <body>
-    
+    <header class="header__container">
+        <img class="mini__logo" src="logo.png" alt="Logo">
+        <nav class="header__nav">
+            <a href="#" class="nav__link">Entrar</a>
+            <a href="#" class="nav__link">Informações</a>
+            <a href="#" class="nav__link">Contato</a>
+        </nav>
+    </header>
+
+    <main class="main__container">
+        <section class="form__container">
+            <h1 class="form__title">Fale com a gente!</h1>
+            <form class="input__data">
+                <main class = "container__cadastro">
+                         <div class = "input__data">
+                             <label for="name">Nome</label>
+                             <input type="text" id="name" name="name" required>
+                             <label for="email">E-mail</label>
+                             <input type="email" id="email" name="email" required>
+                             <label for="Telefone">Telefone</label>
+                             <input type="tel" id="phone" name="phone" required>
+                             <label for="text" >Como podemos te ajudar?</label>
+                             <input  class= "question" type="textarea" id="textarea" name="text" required>
+                         </div>
+                         <button type="submit" id = "button__submit">Enviar</button>
+                 </main>
+            </form>
+        </section>
+
+        <section class="info__container">
+            <h2 class="info__title">Endereço</h2>
+            <p class="info__text">Rua Adelino Carneiro Pinto 80 Loja 05</p>
+            <p class="info__text">Minas Gerais, 37540-973</p>
+            <p class="info__text">contato@moneywise</p>
+            <p class="info__phone">+55 14 9999-9999</p>
+        </section>
+    </main>
 </body>
 </html>

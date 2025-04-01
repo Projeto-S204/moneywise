@@ -1,0 +1,111 @@
+body {
+    font-family: 'Jomhuria', sans-serif;
+    background-color: #272827;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+.header__container, .mini__logo {
+    display: relative;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 3rem;
+    background-color: #272827;
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.mini__logo {
+    width: 3rem;
+    height: auto;
+}
+
+.header__nav .nav__link {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 1rem;
+    font-size: 1.2rem;
+}
+
+h1{
+    margin-left: 7rem;
+    font-size: 4rem;
+    font-weight: 500;
+    text-align: left;
+    margin-top: 5rem;
+    color: #EFA23B;
+}
+
+.input__data {
+    margin-left: 3rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem; 
+    width: 60%;
+}
+
+.input__data label {
+    font-family: Josefins Sans, sans-serif;
+    font-size: 1.2rem;
+    padding-bottom: 0.3rem;
+    text-align: left;
+}
+
+.input__data input {
+    font-family: Josefins Sans, sans-serif;
+    width: 100%;
+    padding: 0.6rem;
+    border: 0.1rem solid #ccc;
+    border-radius: 5px;
+    background-color: #1F1F23;
+    color: white;
+    font-weight: 300;
+    font-size: 1.6rem;
+}
+
+
+#button__submit {
+    margin-top: 1rem;
+    margin-bottom: auto;
+    margin-left: 10rem;
+    padding: 0.7rem 1.2rem;
+    background-color: transparent; /* Fundo transparente */ 
+    border: 2px solid #7E9DCA;
+    color: #7E9DCA;
+    font-size: 1rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    width: 20%;
+    transition: background-color 0.4s ease-in-out, color 0.3s ease-in-out;
+}
+
+#button__submit:hover {
+    background-color: #7E9DCA;
+    color: #000; 
+}
+
+.info__container {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.1rem;
+    flex-direction: column;
+    margin-top: 2rem;
+    font-weight: 300; 
+    text-align: left; 
+}
+
+.question {
+    width: 100%;
+    height: 8rem; /* Altura maior para a caixa de texto */
+    padding: 0.6rem;
+    border: 0.1rem solid #ccc;
+    border-radius: 5px;
+    background-color: #333;
+    color: white;
+    font-size: 0.8rem;
+    resize: vertical; 
+    text-align: left;
+}
