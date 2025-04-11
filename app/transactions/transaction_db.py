@@ -10,6 +10,7 @@ class TransactionsModal:
                 with db_connection.cursor() as cursor:
                     query = """
                     CREATE TABLE IF NOT EXISTS transactions (
+                        user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
                         transaction_id SERIAL PRIMARY KEY,
                         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                         title VARCHAR(255) NOT NULL,
@@ -34,10 +35,11 @@ class TransactionsModal:
 
 
     @staticmethod
-    def transaction_create(transaction_data: dict):
+    def transaction_create(transaction_data: dict, user_id=None):
         try:
             query = """
             INSERT INTO transactions (
+                user_id,
                 title, 
                 amount, 
                 category, 
@@ -51,11 +53,12 @@ class TransactionsModal:
                 interval, 
                 number_of_payments,
                 transaction_type
-            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             RETURNING transaction_id
             """
 
             values = {
+                'user_id': user_id,
                 'title': transaction_data.get('title'),
                 'amount': float(transaction_data['amount']) if transaction_data.get('amount') else None,
                 'category': transaction_data.get('category'),
@@ -84,9 +87,9 @@ class TransactionsModal:
 
 
     @staticmethod
-    def transactions_get_list(transactions_filters=None, transaction_id=None):
+    def transactions_get_list(transactions_filters=None, transaction_id=None, user_id=None):
         try:
-            query = """
+            query = f"""
             SELECT 
                 transaction_id, 
                 title, 
@@ -108,6 +111,10 @@ class TransactionsModal:
                 1 = 1
             """
             params = []
+
+            if user_id:
+                query += " AND user_id = %s"
+                params.append(user_id)
 
             if transaction_id:
                 query += " AND transaction_id = %s"
@@ -135,8 +142,9 @@ class TransactionsModal:
                     cursor.execute(query, params)
                     column_names = [desc[0] for desc in cursor.description]
                     rows = cursor.fetchall()
-                    result = [dict(zip(column_names, row)) for row in rows]
-                    return result
+                    results = [dict(zip(column_names, row)) for row in rows]
+
+                    return results
 
         except Exception as e:
             print(f"Error: {e}")
