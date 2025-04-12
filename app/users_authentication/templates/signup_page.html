@@ -25,11 +25,13 @@
     <div id="tela">
       <div id="caixa">
         <div id="esquerda">
-          <img
-            src="{{ url_for('home.static', filename='images/logo.png') }}"
-            alt="Logo"
-            class="logo"
-          />
+          <a href="{{ url_for('home.home_page') }}">
+            <img
+              src="{{ url_for('home.static', filename='images/logo.png') }}"
+              alt="Logo"
+              class="logo"
+            />
+          </a>
           <h2>MoneyWise</h2>
           <p>Gestão financeira simples<br />e eficiente</p>
         </div>

@@ -36,8 +36,16 @@ body {
   justify-content: center;
 }
 
-#esquerda img {
+.logo {
   width: 77px;
+  margin-bottom: 20px;
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.logo:hover {
+  transform: scale(1.05);
 }
 
 #esquerda h2 {
