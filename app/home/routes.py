@@ -17,3 +17,8 @@ def home_page():
 @home.route('/informations')
 def about_page():
     return render_template('informations.html')
+
+@home.route('/contact')
+def contact_page():
+    return render_template("contact.html")
+
