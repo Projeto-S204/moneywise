@@ -7,36 +7,32 @@ function toggleMenu(event) {
 document.addEventListener("click", function (event) {
   const menu = document.getElementById("user-menu");
   const userInfo = document.querySelector(".user-info");
-
+  
   if (!userInfo.contains(event.target)) {
-    menu.style.display = "none";
+      menu.style.display = "none";
   }
 });
 
 function setTransactionAmount() {
-  const transactionItems = document.querySelectorAll(".transaction-item");
-  const incomeField = document.getElementById("income-value");
-  const expenseField = document.getElementById("expense-value");
-  const totalField = document.getElementById("total-value");
+  const transactionItems = document.querySelectorAll('.transaction-item');
+  const incomeField = document.getElementById('income-value');
+  const expenseField = document.getElementById('expense-value');
+  const totalField = document.getElementById('total-value');
 
   let incomeValue = 0;
   let expenseValue = 0;
 
-  transactionItems.forEach((item) => {
+  transactionItems.forEach(item => {
     console.log(item.style.display);
     if (item.style.display !== "none") {
-      const transactionType = item.querySelector(".transaction-type");
-      const transactionAmount = item.querySelector(".transaction-amount");
+      const transactionType = item.querySelector('.transaction-type');
+      const transactionAmount = item.querySelector('.transaction-amount');
 
-      const amount = parseFloat(
-        transactionAmount.textContent.trim().replace(/[^0-9.-]+/g, "")
-      );
+      const amount = parseFloat(transactionAmount.textContent.trim().replace(/[^0-9.-]+/g, ''));
 
-      if (transactionType.textContent.trim().toLowerCase() === "income") {
+      if (transactionType.textContent.trim().toLowerCase() === 'income') {
         incomeValue += amount;
-      } else if (
-        transactionType.textContent.trim().toLowerCase() === "expense"
-      ) {
+      } else if (transactionType.textContent.trim().toLowerCase() === 'expense') {
         expenseValue += amount;
       }
     }
@@ -49,6 +45,6 @@ function setTransactionAmount() {
   totalField.textContent = `R$ ${totalFieldValue.toFixed(2)}`;
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
   setTransactionAmount();
 });

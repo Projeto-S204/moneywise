@@ -21,7 +21,13 @@
   <body>
     <header>
       <nav>
-        <img src="images/logo.png" alt="Logo MoneyWise" id="logo" />
+        <a href="{{ url_for('home.home_page') }}">
+          <img
+            src="{{ url_for('home.static', filename='images/logo.png') }}"
+            alt="Logo"
+            class="logo"
+          />
+        </a>
         <ul>
           <li>
             <a href="{{ url_for('users.signin_page') }}" id="entrar">Entrar</a>
