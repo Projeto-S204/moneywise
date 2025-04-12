@@ -31,7 +31,7 @@ body {
   gap: 20px;
 }
 
-.filter-first-row>* {
+.filter-first-row > * {
   width: 100%;
 }
 
@@ -40,7 +40,7 @@ body {
   flex-direction: column;
 }
 
-.filter-second-row>* {
+.filter-second-row > * {
   display: flex;
   justify-content: space-between;
   gap: 20px;
@@ -64,7 +64,7 @@ select {
   margin: 8px 0;
   border-radius: 5px;
   border: none;
-  background-color: #18181B;
+  background-color: #18181b;
   text-decoration: none;
   color: #9a9a9a;
   font-size: 20px;
@@ -73,7 +73,7 @@ select {
 
 .modal-content input:focus,
 select:focus {
-  outline: 2px solid #7E9DCA;
+  outline: 2px solid #7e9dca;
 }
 
 .options-container {
@@ -84,8 +84,8 @@ select:focus {
 
 .apply-btn {
   background-color: transparent;
-  border: 1px solid #7E9DCA;
-  color: #7E9DCA;
+  border: 1px solid #7e9dca;
+  color: #7e9dca;
   padding: 10px;
   border-radius: 5px;
   cursor: pointer;
@@ -94,14 +94,14 @@ select:focus {
 }
 
 .apply-btn:hover {
-  background-color: #7E9DCA;
-  color: #26262B;
+  background-color: #7e9dca;
+  color: #26262b;
 }
 
 .clear-btn {
   background-color: transparent;
-  border: 1px solid #C3C3C3;
-  color: #C3C3C3;
+  border: 1px solid #c3c3c3;
+  color: #c3c3c3;
   padding: 10px;
   border-radius: 5px;
   cursor: pointer;
@@ -112,6 +112,6 @@ select:focus {
 }
 
 .clear-btn:hover {
-  background-color: #C3C3C3;
-  color: #26262B;
+  background-color: #c3c3c3;
+  color: #26262b;
 }
