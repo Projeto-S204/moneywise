@@ -66,28 +66,23 @@
             {{ form.hidden_tag() }}
             <div class="form-group">
               {{ form.username.label(class="form-label") }} {{
-              form.username(class="form-control", placeholder="Digite seu nome")
-              }}
+              form.username(class="form-control") }}
             </div>
             <div class="form-group">
               {{ form.email_address.label(class="form-label") }} {{
-              form.email_address(class="form-control", placeholder="Digite seu
-              email") }}
+              form.email_address(class="form-control") }}
             </div>
             <div class="form-group">
               {{ form.password.label(class="form-label") }} {{
-              form.password(class="form-control", placeholder="Digite sua
-              senha") }}
+              form.password(class="form-control") }}
             </div>
             <div class="form-group">
               {{ form.confirm_password.label(class="form-label") }} {{
-              form.confirm_password(class="form-control", placeholder="Confirmar
-              senha") }}
+              form.confirm_password(class="form-control") }}
             </div>
             <div class="form-group">
               {{ form.birthday.label(class="form-label") }} {{
-              form.birthday(class="form-control", placeholder="Escolha sua data
-              de nascimento") }}
+              form.birthday(class="form-control") }}
             </div>
             <div class="form-group">
               {{ form.submit(class="btn btn-success") }}
