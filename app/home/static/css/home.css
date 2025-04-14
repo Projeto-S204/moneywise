@@ -17,6 +17,12 @@ nav {
   img {
     width: 55px;
     height: 87px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+
+  img:hover {
+    transform: scale(1.05);
   }
 
   ul {

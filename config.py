@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
 from flask_migrate import Migrate
 from flask_login import LoginManager
+from flask_mail import Mail
 
 DB_HOST = "localhost"
 DB_NAME = "moneywise"
@@ -15,16 +16,23 @@ db = SQLAlchemy()
 login_manager = LoginManager()
 jwt = JWTManager()
 migrate = Migrate()
+mail = Mail()
 
 class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_DATABASE_URI = (
-        f'postgresql://postgres:{DB_PASS}@localhost/{DB_NAME}'
-    )
+    SQLALCHEMY_DATABASE_URI = f'postgresql://postgres:{DB_PASS}@localhost/{DB_NAME}'
     SECRET_KEY = (
         "k\x8d-\xbd\xb9\x05\xeax\x92\xd9{H\xf0\x9c\xf9\xde\x91\xc6\xe6"
         "\xa8\x14\xf9\x89t"
     )
+    # Configurações de email para produção com Gmail
+    MAIL_SERVER = 'smtp.gmail.com'
+    MAIL_PORT = 587
+    MAIL_USE_TLS = True
+    MAIL_USE_SSL = False
+    MAIL_USERNAME = 'vasconcelosp43@gmail.com'  # Coloque seu email
+    MAIL_PASSWORD = 'xbqbdetimcpvzqbm'            # Coloque sua senha ou senha de app
+    MAIL_DEFAULT_SENDER = 'vasconcelosp43@gmail.com'
 
     @staticmethod
     def get_db_connection():
