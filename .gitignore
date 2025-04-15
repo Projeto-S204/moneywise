@@ -462,3 +462,10 @@ $RECYCLE.BIN/
 =======
 # End of https://www.toptal.com/developers/gitignore/api/windows,python,flask,macos,visualstudiocode,pycharm
 >>>>>>> 88ee2feb6bf15119de2b3e973ebfffa465c9fac1
+
+# Playwright
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
