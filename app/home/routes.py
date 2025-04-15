@@ -38,7 +38,7 @@ def contact_page():
 
         try:
             msg = Message(subject='Nova mensagem de contato',
-                          recipients=['lauraschiavon00@gmail.com'],  # Troque pelo email de destino
+                          recipients=['c0ntat0mw123@gmail.com'],  # Troque pelo email de destino
                           body=corpo_email)
             mail.send(msg)
             return redirect(url_for('home.sucesso'))

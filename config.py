@@ -30,9 +30,9 @@ class Config:
     MAIL_PORT = 587
     MAIL_USE_TLS = True
     MAIL_USE_SSL = False
-    MAIL_USERNAME = 'vasconcelosp43@gmail.com'  # Coloque seu email
-    MAIL_PASSWORD = 'xbqbdetimcpvzqbm'            # Coloque sua senha ou senha de app
-    MAIL_DEFAULT_SENDER = 'vasconcelosp43@gmail.com'
+    MAIL_USERNAME = 'suportemw011@gmail.com'  # Coloque seu email
+    MAIL_PASSWORD = 'krofvxeymfmvsjwx'            # Coloque sua senha ou senha de app
+    MAIL_DEFAULT_SENDER = 'suportemw011@gmail.com'
 
     @staticmethod
     def get_db_connection():
