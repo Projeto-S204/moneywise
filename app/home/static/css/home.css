@@ -1,4 +1,7 @@
+/* 📌 NAVBAR */
 body {
+  margin: 0;
+  padding: 0;
   background-color: #272827;
   margin: 0;
   height: 100vh;
@@ -63,10 +66,8 @@ main {
 
 #text-container {
   width: 30%;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
   margin: auto;
+  justify-content: center;
 }
 
 #text-container h1 {

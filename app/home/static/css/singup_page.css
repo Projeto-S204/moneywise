@@ -23,6 +23,7 @@ body {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
 }
 
+/* Lado esquerdo */
 #esquerda {
   flex: 1;
   background-color: #0f0f10;
@@ -122,5 +123,4 @@ body {
 .btn-success:hover {
   background-color: #efa23b;
   color: #000000;
-  border: none;
 }
