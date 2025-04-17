@@ -123,4 +123,5 @@ body {
 .btn-success:hover {
   background-color: #efa23b;
   color: #000000;
+  border: none;
 }
