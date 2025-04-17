@@ -12,6 +12,7 @@ transactions = Blueprint(
     template_folder='templates'
 )
 
+
 @transactions.route('/', methods=['GET'])
 @login_required
 def transactions_page():
