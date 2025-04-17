@@ -1,12 +1,12 @@
 body {
-  background-color: #0f1113;
+  background-color: #272827;
   color: white;
-  font-family: "Poppins", sans-serif;
   height: 100vh;
   margin: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: "Josefin Sans", sans-serif;
 }
 
 .container {
@@ -16,6 +16,18 @@ body {
   padding: 40px;
   max-width: 400px;
   width: 100%;
+}
+
+.logo {
+  width: 58px;
+  margin-bottom: 20px;
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.logo:hover {
+  transform: scale(1.05);
 }
 
 h2 {
@@ -32,7 +44,7 @@ h2 {
 }
 
 .form-control {
-  background-color: white;
+  background-color: #d9d9d9;
   border: none;
   border-radius: 5px;
   margin-bottom: 20px;
@@ -43,16 +55,43 @@ h2 {
 
 .btn-primary {
   background-color: transparent;
-  color: #6ea8fe;
-  border: 1px solid #6ea8fe;
+  color: #7e9dca;
+  border: 1px solid#7E9DCA;
   transition: 0.3s ease;
   border-radius: 6px;
   font-weight: 500;
 }
 
 .btn-primary:hover {
-  background-color: #6ea8fe;
+  background-color: #7e9dca;
   color: #0f1113;
+}
+
+.remember-forgot-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.remember-me-container {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 5px;
+}
+
+.remember-me-container input {
+  accent-color: #7E9DCA;
+}
+
+.remember-me-container label {
+  margin: 0;
+  line-height: 1;
+}
+
+.forgot-password-container a {
+  color: #7e9dca;
 }
 
 .alert {
@@ -61,7 +100,7 @@ h2 {
 }
 
 .text-center a {
-  color: #6ea8fe;
+  color: #7e9dca;
   text-decoration: none;
 }
 
