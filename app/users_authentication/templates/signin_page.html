@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+<<<<<<< HEAD
 
 <head>
     <meta charset="UTF-8">
@@ -15,9 +16,41 @@
             color: white;
         }
     </style>
+=======
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('home.static', filename='css/singin_page.css') }}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jomhuria&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+>>>>>>> 1dc492d1edc0ba7e02a542c00a5f1d212b0d0ccf
     <div class="container mt-5">
-        <h2>Login</h2>
+      <a href="{{ url_for('home.home_page') }}">
+        <img
+          src="{{ url_for('home.static', filename='images/logo.png') }}"
+          alt="Logo"
+          class="logo"
+        />
+      </a>
+      <h2>Entrar no MoneyWise</h2>
 
+<<<<<<< HEAD
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
         {% for category, message in messages %}
@@ -28,30 +61,57 @@
         {% endfor %}
         {% endif %}
         {% endwith %}
+=======
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %}
+      <div
+        class="alert alert-{{ category }} alert-dismissible fade show"
+        role="alert"
+      >
+        {{ message }}
+        <button
+          type="button"
+          class="close"
+          data-dismiss="alert"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {% endfor %} {% endif %} {% endwith %}
+>>>>>>> 1dc492d1edc0ba7e02a542c00a5f1d212b0d0ccf
 
-        <form action="{{ url_for('users.signin_page') }}" method="POST">
-            {{ form.hidden_tag() }}
-            <div class="form-group">
-                {{ form.email.label(class="form-label") }}
-                {{ form.email(class="form-control", placeholder="Digite seu email") }}
-            </div>
-            <div class="form-group">
-                {{ form.password.label(class="form-label") }}
-                {{ form.password(class="form-control", placeholder="Digite sua senha") }}
-            </div>
-            <div class="form-group">
-                {{ form.submit(class="btn btn-primary btn-block") }}
-            </div>
-            <div class="text-center">
-                <p>Não tem uma conta? <a href="{{ url_for('users.signup_page') }}">Registrar-se</a></p>
-            </div>
-        </form>
+      <form action="{{ url_for('users.signin_page') }}" method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+          {{ form.email.label(class="form-label") }} {{
+          form.email(class="form-control", placeholder="Digite seu email") }}
+        </div>
+        <div class="form-group">
+          {{ form.password.label(class="form-label") }} {{
+          form.password(class="form-control", placeholder="Digite sua senha") }}
+        </div>
+        <div class="form-group">
+          {{ form.submit(class="btn btn-primary btn-block") }}
+        </div>
+        <div class="text-center">
+          <p>
+            Não tem uma conta?
+            <a href="{{ url_for('users.signup_page') }}">Registrar-se</a>
+          </p>
+        </div>
+      </form>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<<<<<<< HEAD
 
 </body>
 
 </html>
+=======
+  </body>
+</html>
+>>>>>>> 1dc492d1edc0ba7e02a542c00a5f1d212b0d0ccf
