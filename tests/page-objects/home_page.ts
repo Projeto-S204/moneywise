@@ -1,4 +1,4 @@
-import { expect, type Locator, type Page } from '@playwright/test';
+import { Page } from '@playwright/test';
 import dotenv from 'dotenv';
 dotenv.config();
 
