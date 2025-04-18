@@ -6,42 +6,14 @@ body {
   font-family: "Josefin Sans", sans-serif;
 }
 
-nav {
-  display: flex;
-  align-items: center;
-  padding: 20px 40px;
-}
-
-nav img {
-  width: 55px;
-  height: 87px;
-}
-
-nav ul {
-  display: flex;
-  list-style: none;
-  gap: 20px;
-  padding: 0;
-  margin-left: 20px;
-}
-
-nav ul li a {
-  font-size: 34px;
-  text-decoration: none;
-  color: white;
-  font-weight: 300;
-}
-
 main {
   display: flex;
+  margin: 50px 90px;
   justify-content: center;
-  align-items: flex-start;
-  padding: 20px 10%;
 }
 
-#formulario-contato {
+#form-contact {
   display: flex;
-  justify-content: space-between;
   gap: 60px;
   width: 100%;
 }
@@ -75,7 +47,7 @@ form textarea {
   border-radius: 8px;
 }
 
-#formulario button {
+#form-input button {
   background-color: transparent;
   color: #7e9dca;
   border: 1px solid #7e9dca;
@@ -88,7 +60,7 @@ form textarea {
   margin-top: 20px;
 }
 
-#formulario button:hover {
+#form-input button:hover {
   background-color: #7e9dca;
   color: #0f1113;
 }
@@ -104,9 +76,8 @@ form textarea {
   margin-bottom: 20px;
 }
 
-/* Responsividade básica */
 @media (max-width: 900px) {
-  #formulario-contato {
+  #form-contact {
     flex-direction: column;
   }
 

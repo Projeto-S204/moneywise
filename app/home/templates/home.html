@@ -19,16 +19,7 @@
   </head>
 
 <body>
-  <header>
-    <nav>
-      <img src="{{ url_for('home.static', filename='images/logo.png') }}" class="logo" alt="Logo MoneyWise" />
-      <ul class="nav-links">
-        <li><a href="{{ url_for('users.signin_page') }}">Entrar</a></li>
-        <li><a href="#">Informações</a></li>
-        <li><a href="#">Contato</a></li>
-      </ul>
-    </nav>
-  </header>
+  {% include 'navbar.html' %}
 
   <main>
     <div id="text-container">
