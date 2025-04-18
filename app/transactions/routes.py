@@ -36,6 +36,10 @@ def transactions_page():
     transactions_filters=transactions_filters,
     category_colors=category_colors)
 
+@transactions.route('/profile', methods=['GET'])
+@login_required
+def profile_page():
+    return render_template('profile.html', user=current_user)
 
 @transactions.route('/create', methods=['GET', 'POST'])
 @login_required
