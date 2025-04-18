@@ -1,88 +1,51 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contato - MoneyWise</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('home.static', filename='css/contact.css') }}"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Jomhuria&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;700&display=swap"
-      rel="stylesheet"
-    />
-  </head>
 
-  <body>
-    <header>
-      <nav>
-        <a href="{{ url_for('home.home_page') }}">
-          <img
-            src="{{ url_for('home.static', filename='images/logo.png') }}"
-            alt="Logo"
-            class="logo"
-          />
-        </a>
-        <ul>
-          <li>
-            <a href="{{ url_for('users.signin_page') }}" id="entrar">Entrar</a>
-          </li>
-          <li>
-            <a href="{{ url_for('home.informations_page') }}" id="sobre"
-              >Informações</a
-            >
-          </li>
-          <li>
-            <a href="{{ url_for('home.contact_page') }}" id="contato"
-              >Contato</a
-            >
-          </li>
-        </ul>
-      </nav>
-    </header>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contato - MoneyWise</title>
+  <link rel="stylesheet" href="{{ url_for('home.static', filename='css/contact.css') }}" />
+  <link href="https://fonts.googleapis.com/css2?family=Jomhuria&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;700&display=swap" rel="stylesheet" />
+</head>
 
-    <main>
-      <section id="formulario-contato">
-        <div class="form-container">
-          <h1>Fale com a gente!</h1>
-          <form id="formulario" method="POST">
-            <label for="nome">Nome</label>
-            <input type="text" id="nome" name="nome" required />
+<body>
+  {% include 'navbar.html' %}
 
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required />
+  <main>
+    <section id="form-contact">
+      <div class="form-container">
+        <h1>Fale com a gente!</h1>
+        <form id="form-input" method="POST">
+          <label for="name">Nome</label>
+          <input type="text" id="name" name="name" required />
 
-            <label for="telefone">Telefone</label>
-            <input type="tel" id="telefone" name="telefone" />
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required />
 
-            <label for="mensagem">Como podemos te ajudar?</label>
-            <textarea
-              id="mensagem"
-              name="mensagem"
-              rows="5"
-              required
-            ></textarea>
+          <label for="phone">Telefone</label>
+          <input type="tel" id="phone" name="phone" />
 
-            <button type="submit">Enviar</button>
-          </form>
-        </div>
+          <label for="message">Como podemos te ajudar?</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
 
-        <div class="info-container">
-          <p><strong>Telefone</strong><br />+55 35 99999-9999</p>
-          <p><strong>E-mail</strong><br />contato@moneywise.com</p>
-          <p>
-            <strong>Endereço</strong><br />
-            MoneyWise<br />
-            Rua Adelino Carneiro Pinto 80 Loja 05<br />
-            Brasil - Minas Gerais, 37540-973
-          </p>
-        </div>
-      </section>
-    </main>
-  </body>
+          <button type="submit">Enviar</button>
+        </form>
+      </div>
+
+      <div class="info-container">
+        <p><strong>Telefone</strong><br />+55 35 99999-9999</p>
+        <p><strong>E-mail</strong><br />contato@moneywise.com</p>
+        <p>
+          <strong>Endereço</strong><br />
+          MoneyWise<br />
+          Santa Rita do Sapucaí<br />
+          Brasil - Minas Gerais, 37540-973
+        </p>
+      </div>
+    </section>
+  </main>
+</body>
+
 </html>
