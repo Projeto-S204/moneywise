@@ -32,19 +32,24 @@ document.addEventListener("DOMContentLoaded", () => {
   saveBtn.addEventListener("click", () => {
     const [name, email, birthday] = [...inputs].map((input) => input.value);
 
+    // Converte a data de nascimento para o formato adequado (YYYY-MM-DD) para o backend
+    const formattedBirthday = new Date(birthday.split("/").reverse().join("-"))
+      .toISOString()
+      .split("T")[0];
+
     // Envia os dados para a rota do servidor
-    fetch("/profile", {
+    fetch("/transactions/profile/update", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name, email, birthday }),
+      body: JSON.stringify({ name, email, birthday: formattedBirthday }),
     })
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
           alert("Perfil atualizado com sucesso!");
-          cancelBtn.click();
+          location.reload();
         } else {
           alert("Erro ao atualizar perfil.");
         }

@@ -95,5 +95,69 @@
         </div>
       </div>
     </div>
+
+    <script>
+      const nameInput = document.getElementById("name");
+      const phoneInput = document.getElementById("phone");
+      const editBtn = document.getElementById("edit-btn");
+      const saveBtn = document.getElementById("save-btn");
+      const cancelBtn = document.getElementById("cancel-btn");
+
+      const originalValues = {
+        name: nameInput.value,
+        phone: phoneInput.value,
+      };
+
+      editBtn.addEventListener("click", () => {
+        nameInput.disabled = false;
+        phoneInput.disabled = false;
+
+        editBtn.style.display = "none";
+        saveBtn.style.display = "inline-block";
+        cancelBtn.style.display = "inline-block";
+      });
+
+      cancelBtn.addEventListener("click", () => {
+        nameInput.value = originalValues.name;
+        phoneInput.value = originalValues.phone;
+        nameInput.disabled = true;
+        phoneInput.disabled = true;
+
+        editBtn.style.display = "inline-block";
+        saveBtn.style.display = "none";
+        cancelBtn.style.display = "none";
+      });
+
+      saveBtn.addEventListener("click", async () => {
+        const updatedData = {
+          name: nameInput.value,
+          phone: phoneInput.value,
+        };
+
+        const response = await fetch("/transactions/profile/update", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedData),
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          originalValues.name = updatedData.name;
+          originalValues.phone = updatedData.phone;
+
+          nameInput.disabled = true;
+          phoneInput.disabled = true;
+          editBtn.style.display = "inline-block";
+          saveBtn.style.display = "none";
+          cancelBtn.style.display = "none";
+          alert(result.message);
+        } else {
+          alert(result.message);
+        }
+      });
+    </script>
   </body>
 </html>

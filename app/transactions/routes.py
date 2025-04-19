@@ -1,7 +1,10 @@
-from flask import Blueprint, redirect, render_template, request, url_for, flash
+from flask import Blueprint, redirect, render_template, request, url_for, flash, jsonify
 from .transaction_db import TransactionsModal
 from flask_login import current_user, login_required
+from datetime import datetime
 
+
+# Criação da tabela ao carregar
 TransactionsModal.create_transaction_table()
 
 transactions = Blueprint(
@@ -15,7 +18,6 @@ transactions = Blueprint(
 @transactions.route('/', methods=['GET'])
 @login_required
 def transactions_page():
-    
     transactions_filters = {key: request.args.get(key) for key in [
         'search', 'filter-type', 'filter-category', 'filter-start-date', 
         'filter-end-date', 'filter-min-amount', 'filter-max-amount', 'filter-payment-method']
@@ -32,9 +34,10 @@ def transactions_page():
 
     transactions_list = TransactionsModal.transactions_get_list(transactions_filters, user_id=current_user.id)
     return render_template('transactions_list_page.html', 
-    transactions=transactions_list, 
-    transactions_filters=transactions_filters,
-    category_colors=category_colors)
+        transactions=transactions_list, 
+        transactions_filters=transactions_filters,
+        category_colors=category_colors
+    )
 
 @transactions.route('/profile', methods=['GET'])
 @login_required
@@ -44,7 +47,6 @@ def profile_page():
 @transactions.route('/create', methods=['GET', 'POST'])
 @login_required
 def transaction_create_page():
-
     if request.method == 'POST':
         try:
             transaction_data = {key: request.form.get(key) for key in [
@@ -63,11 +65,9 @@ def transaction_create_page():
     
     return render_template('transaction_form_page.html', transaction=None)
 
-
 @transactions.route('/edit/<int:transaction_id>', methods=['GET', 'POST'])
 @login_required
 def transaction_edit_page(transaction_id):
-
     if request.method == 'GET':
         transaction = TransactionsModal.transactions_get_list(transaction_id=transaction_id)[0]
     
@@ -79,7 +79,7 @@ def transaction_edit_page(transaction_id):
                 'start_date', 'end_date', 'interval', 'number_of_payments', 'transaction_type']
             }
             transaction_data['transaction_id'] = transaction_id
-    
+
             TransactionsModal.transaction_edit(transaction_data)
 
             flash('Editado com sucesso.', 'success')
@@ -89,7 +89,6 @@ def transaction_edit_page(transaction_id):
             print(f"Error: {e}")
     
     return render_template('transaction_form_page.html', transaction=transaction)
-
 
 @transactions.route('/delete/<int:transaction_id>', methods=['GET'])
 @login_required 
@@ -102,3 +101,28 @@ def transaction_delete(transaction_id):
         print(f"Error: {e}")
 
     return redirect(url_for('transactions.transactions_page'))
+
+# ✅ NOVA ROTA PARA SALVAR PERFIL VIA JS
+@transactions.route('/profile/update', methods=['POST'])
+@login_required
+def update_profile():
+    try:
+        data = request.json
+        print(data)  # Verifica se os dados estão chegando
+
+        current_user.name = data.get('name')
+        current_user.email = data.get('email')
+
+        # Atualiza a data de nascimento
+        birthday_str = data.get('birthday')
+        if birthday_str:
+            try:
+                current_user.birthday = datetime.strptime(birthday_str, '%Y-%m-%d').date()
+            except ValueError:
+                return jsonify({'success': False, 'message': 'Formato de data inválido. Use YYYY-MM-DD.'}), 400
+        from app import db
+        db.session.commit()
+        return jsonify({'success': True, 'message': 'Dados atualizados com sucesso.'})
+    except Exception as e:
+        print(f"Erro ao atualizar perfil: {e}")
+        return jsonify({'success': False, 'message': 'Erro ao atualizar perfil.'}), 500
