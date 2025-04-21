@@ -4,7 +4,7 @@ import os
 
 
 app = create_app()
-port = int(os.getenv("AVAILABLE_PORT", 5000))
+port = Config.find_available_port()
 
 if __name__ == "__main__":
     app.run(debug=False, port=port)
