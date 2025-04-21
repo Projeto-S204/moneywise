@@ -73,9 +73,9 @@ export default defineConfig({
   ],
 
   /* Run your local dev server before starting the tests */
-  webServer: {
-    command: 'python app.py',
-    url: `http://127.0.0.1:${process.env.AVAILABLE_PORT}`,
-    reuseExistingServer: !process.env.CI,
-  },
+  // webServer: {
+  //   command: 'python app.py',
+  //   url: `http://127.0.0.1:${process.env.AVAILABLE_PORT}`,
+  //   reuseExistingServer: !process.env.CI,
+  // },
 });

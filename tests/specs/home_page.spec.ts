@@ -1,5 +1,28 @@
 import { test } from "../fixtures/fixtures"
 
-test("should go to home page", async ({ homePage }) => {
-  await homePage.goto();
+
+test.describe("should go to pages", () => {
+  test.afterEach(async ({ homePage }) => {
+    await homePage.returnToHomePage();
+  });
+  
+  test("should go to informations page", async ({ baseSetup, homePage }) => {
+    await homePage.gotoInformationsPage();
+    await baseSetup.expectURL('/informations')
+  });
+
+  test("should go to contact page", async ({ baseSetup, homePage }) => {
+    await homePage.gotoContactPage();
+    await baseSetup.expectURL('/contact')
+  });
+
+  test("should go to login page", async ({ baseSetup, homePage }) => {
+    await homePage.gotoLoginPage();
+    await baseSetup.expectURL('/signin')
+  });
+
+  test("should go to register page", async ({ baseSetup, homePage }) => {
+    await homePage.gotoRegisterPage();
+    await baseSetup.expectURL('/signup');
+  });
 });
