@@ -39,11 +39,6 @@ def transactions_page():
         category_colors=category_colors
     )
 
-@transactions.route('/profile', methods=['GET'])
-@login_required
-def profile_page():
-    return render_template('profile.html', user=current_user)
-
 @transactions.route('/create', methods=['GET', 'POST'])
 @login_required
 def transaction_create_page():
@@ -101,28 +96,3 @@ def transaction_delete(transaction_id):
         print(f"Error: {e}")
 
     return redirect(url_for('transactions.transactions_page'))
-
-# ✅ NOVA ROTA PARA SALVAR PERFIL VIA JS
-@transactions.route('/profile/update', methods=['POST'])
-@login_required
-def update_profile():
-    try:
-        data = request.json
-        print(data)  # Verifica se os dados estão chegando
-
-        current_user.name = data.get('name')
-        current_user.email = data.get('email')
-
-        # Atualiza a data de nascimento
-        birthday_str = data.get('birthday')
-        if birthday_str:
-            try:
-                current_user.birthday = datetime.strptime(birthday_str, '%Y-%m-%d').date()
-            except ValueError:
-                return jsonify({'success': False, 'message': 'Formato de data inválido. Use YYYY-MM-DD.'}), 400
-        from app import db
-        db.session.commit()
-        return jsonify({'success': True, 'message': 'Dados atualizados com sucesso.'})
-    except Exception as e:
-        print(f"Erro ao atualizar perfil: {e}")
-        return jsonify({'success': False, 'message': 'Erro ao atualizar perfil.'}), 500

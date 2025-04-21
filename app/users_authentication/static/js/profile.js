@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
   saveBtn.textContent = "Salvar";
   saveBtn.classList.add("btn-salvar");
 
+  // Lógica de cancelar edição
   cancelBtn.addEventListener("click", () => {
     title.firstChild.textContent = "Perfil";
     inputs.forEach((input, i) => {
@@ -29,6 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
     editBtn.style.display = "inline";
   });
 
+  // Lógica de salvar as alterações
   saveBtn.addEventListener("click", () => {
     const [name, email, birthday] = [...inputs].map((input) => input.value);
 
@@ -38,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .split("T")[0];
 
     // Envia os dados para a rota do servidor
-    fetch("/transactions/profile/update", {
+    fetch("/profile/update", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -56,6 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   });
 
+  // Lógica de editar perfil
   editBtn.addEventListener("click", () => {
     title.firstChild.textContent = "Editar Perfil";
     editBtn.style.display = "none";
@@ -74,4 +77,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.querySelector(".info").appendChild(buttonWrapper);
   });
+
+  // Lógica de deletar a conta com confirmação
+  const deleteBtn = document.getElementById("delete-account-btn");
+
+  if (deleteBtn) {
+    deleteBtn.addEventListener("click", async (e) => {
+      e.preventDefault();
+
+      // Pop-up de confirmação
+      const confirmDelete = confirm(
+        "Tem certeza que deseja deletar sua conta? Esta ação é irreversível!"
+      );
+
+      if (confirmDelete) {
+        // Se confirmar, envia a requisição para deletar a conta
+        const response = await fetch("/delete_account", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          alert("Conta deletada com sucesso!");
+          window.location.href = "/"; // Redireciona para a tela inicial (Home)
+        } else {
+          alert("Erro ao deletar conta: " + result.message);
+        }
+      }
+    });
+  }
 });
