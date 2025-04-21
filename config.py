@@ -34,8 +34,9 @@ class Config:
     # Coloquei o Headers apenas pra testar no postman
     JWT_TOKEN_LOCATION = ["headers", "cookies"]
     JWT_COOKIE_SECURE = False
-    JWT_COOKIE_CSRF_PROTECT = True
-    JWT_ACCESS_COOKIE_PATH = '/api/'
+    JWT_COOKIE_CSRF_PROTECT = False
+    JWT_COOKIE_NAME = "access_token_cookie"
+    JWT_ACCESS_COOKIE_PATH = '/'
     JWT_REFRESH_COOKIE_PATH = '/auth/refresh'
     # JWT_COOKIE_SAMESITE = "Lax" # Ou "Strict" ou "None" (requer Secure=True)
 

@@ -21,31 +21,26 @@ def validade_form_on_signin(form):
 
 
 def validate_form_on_signup(form):
+    if not form.validate_on_submit():
+        for err_msgs in form.errors.values():
+            for msg in err_msgs:
+                flash(msg, category="danger")
+                print(f"Flash: Erro ao criar conta: {msg}")
+        return False
 
-    if form.validate_on_submit():
-        try:
-            user_to_create = User(
-                email=form.email_address.data,
-                name=form.username.data,
-                password=form.password.data,
-                birthday=form.birthday.data,
-                # avatar=form.avatar.data
-            )
-            db.session.add(user_to_create)
-            db.session.commit()
-            login_user(user_to_create)
-            flash("Conta criada com sucesso!", category="success")
-            return user_to_create
+    try:
+        user_to_create = User(
+            email=form.email_address.data,
+            name=form.username.data,
+            password=form.password.data,
+            birthday=form.birthday.data,
+        )
+        db.session.add(user_to_create)
+        db.session.commit()
+        return user_to_create
 
-        except Exception as e:
-            db.session.rollback()
-            flash("Erro ao criar conta. Tente novamente.", category="danger")
-            print(f"Flash: Erro ao criar conta: {e}")
-            return False
-
-    if form.errors:
-        for err_msg in form.errors.values():
-            flash(f"Ocorreu um erro ao criar a conta: {err_msg}",
-                  category="danger")
-            print(f"Flash: Erro ao criar conta: {err_msg}")
-    return False
+    except Exception as e:
+        db.session.rollback()
+        flash("Erro ao criar conta. Tente novamente.", category="danger")
+        print(f"Flash: Erro ao criar conta: {e}")
+        return False

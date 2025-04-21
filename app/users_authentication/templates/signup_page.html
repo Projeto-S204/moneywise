@@ -1,35 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<<<<<<< HEAD
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrar Conta</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-
-<body>
-    <style>
-        body {
-            background-color: #272827;
-            color: white;
-        }
-    </style>
-    <div class="container mt-5">
-        <h2>Criar Conta</h2>
-
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        {% for category, message in messages %}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
-=======
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -72,7 +42,6 @@
               <a href="{{ url_for('users.signin_page') }}">Entrar</a></span
             >
           </div>
->>>>>>> 1dc492d1edc0ba7e02a542c00a5f1d212b0d0ccf
 
           <h4>Crie sua Conta</h4>
           {% with messages = get_flashed_messages(with_categories=true) %} {% if
@@ -102,23 +71,19 @@
             </div>
             <div class="form-group">
               {{ form.email_address.label(class="form-label") }} {{
-              form.email_address(class="form-control", placeholder="Digite seu
-              email") }}
+              form.email_address(class="form-control", placeholder="Digite seu email") }}
             </div>
             <div class="form-group">
               {{ form.password.label(class="form-label") }} {{
-              form.password(class="form-control", placeholder="Digite sua
-              senha") }}
+              form.password(class="form-control", placeholder="Digite sua senha") }}
             </div>
             <div class="form-group">
               {{ form.confirm_password.label(class="form-label") }} {{
-              form.confirm_password(class="form-control", placeholder="Confirmar
-              senha") }}
+              form.confirm_password(class="form-control", placeholder="Confirmar senha") }}
             </div>
             <div class="form-group">
               {{ form.birthday.label(class="form-label") }} {{
-              form.birthday(class="form-control", placeholder="Escolha sua data
-              de nascimento") }}
+              form.birthday(class="form-control", placeholder="Escolha sua data de nascimento") }}
             </div>
             <div class="form-group">
               {{ form.submit(class="btn btn-success") }}
@@ -129,11 +94,5 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<<<<<<< HEAD
-</body>
-
-</html>
-=======
   </body>
 </html>
->>>>>>> 1dc492d1edc0ba7e02a542c00a5f1d212b0d0ccf

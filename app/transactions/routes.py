@@ -1,6 +1,8 @@
 from flask import Blueprint, redirect, render_template, request, url_for, flash
 from .transaction_db import TransactionsModal
-from flask_login import current_user, login_required
+from flask_login import current_user, login_required, logout_user
+from flask_jwt_extended import verify_jwt_in_request
+
 
 TransactionsModal.create_transaction_table()
 
@@ -16,10 +18,17 @@ transactions = Blueprint(
 @transactions.route('/', methods=['GET'])
 @login_required
 def transactions_page():
-    
+    try:
+        verify_jwt_in_request()
+    except Exception:
+        logout_user()
+        flash("Sessão expirada. Faça login novamente.", category="warning")
+        return redirect(url_for("users.signin_page"))
+
     transactions_filters = {key: request.args.get(key) for key in [
-        'search', 'filter-type', 'filter-category', 'filter-start-date', 
-        'filter-end-date', 'filter-min-amount', 'filter-max-amount', 'filter-payment-method']
+        'search', 'filter-type', 'filter-category', 'filter-start-date',
+        'filter-end-date', 'filter-min-amount', 'filter-max-amount',
+        'filter-payment-method']
     }
 
     category_colors = {
@@ -31,11 +40,15 @@ def transactions_page():
         'Mercado': '#D0E5D7'
     }
 
-    transactions_list = TransactionsModal.transactions_get_list(transactions_filters, user_id=current_user.id)
-    return render_template('transactions_list_page.html', 
-    transactions=transactions_list, 
-    transactions_filters=transactions_filters,
-    category_colors=category_colors)
+    transactions_list = TransactionsModal.transactions_get_list(
+        transactions_filters, user_id=current_user.id
+    )
+    return render_template(
+        'transactions_list_page.html',
+        transactions=transactions_list,
+        transactions_filters=transactions_filters,
+        category_colors=category_colors
+    )
 
 
 @transactions.route('/create', methods=['GET', 'POST'])
