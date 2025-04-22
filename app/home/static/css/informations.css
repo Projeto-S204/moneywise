@@ -2,132 +2,51 @@ body {
   margin: 0;
   padding: 0;
   background-color: #272827;
-  color: white;
-  font-family: "Josefin Sans", sans-serif;
-}
-
-nav {
+  margin: 0;
+  height: 100vh;
   display: flex;
-  align-items: center;
-  padding: 20px 40px;
+  flex-direction: column;
 }
 
-nav img {
-  width: 55px;
-  height: 87px;
-  cursor: pointer;
-  transition: transform 0.2s ease-in-out;
-}
-
-nav img:hover {
-  transform: scale(1.05);
-}
-
-nav ul {
-  display: flex;
-  list-style: none;
-  gap: 20px;
-  padding: 0;
-  margin-left: 20px;
-}
-
-nav ul li a {
-  font-size: 34px;
-  text-decoration: none;
-  color: white;
-  font-weight: 300;
-}
 
 main {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 100px 10%;
-  gap: 60px;
-  flex-wrap: wrap;
+  margin-bottom: auto;
+  height: auto;
+  margin: 50px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
 }
 
 #text-container {
-  flex: 1;
-  min-width: 320px;
-  max-width: 600px;
+  width: 30%;
+  margin: auto;
+  justify-content: center;
 }
 
 #text-container h1 {
-  font-size: 128px;
-  font-family: "Jomhuria", sans-serif;
   color: #efa23b;
-  margin: 0 0 20px 0;
+  font-family: "Jomhuria", sans-serif;
+  font-size: 128px;
   font-weight: normal;
+  margin: 0;
+  line-height: 0.5;
 }
 
 #text-container p {
+  font-family: "Josefin Sans", sans-serif;
   font-size: 28px;
-  font-weight: 300;
-  line-height: 1.5;
+  color: #dadae0;
+  font-weight: lighter;
+  line-height: 1.2;
 }
 
 #img-container {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  min-width: 650px;
-  max-width: 600px;
+  width: 65%;
 }
 
 #img-container img {
   width: 100%;
-  max-width: 100%;
-  height: auto;
-  object-fit: contain;
-}
-
-/* Responsivo */
-@media (max-width: 1024px) {
-  main {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  #text-container h1 {
-    font-size: 100px;
-  }
-
-  #text-container p {
-    font-size: 28px;
-  }
-
-  #img-container {
-    margin-top: 30px;
-  }
-}
-
-@media (max-width: 768px) {
-  nav {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  nav ul {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  #text-container h1 {
-    font-size: 80px;
-  }
-
-  #text-container p {
-    font-size: 22px;
-  }
-}
-
-@media (max-width: 480px) {
-  #text-container h1 {
-    font-size: 60px;
-  }
-
-  #text-container p {
-    font-size: 18px;
-  }
 }
