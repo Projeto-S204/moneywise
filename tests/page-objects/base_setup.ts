@@ -1,4 +1,8 @@
 import { expect, type Page } from "@playwright/test";
+import dotenv from 'dotenv';
+dotenv.config();
+
+let URL = 'http://127.0.0.1:' + process.env.CURRENT_PORT;
 
 export class BaseSetup {
   private readonly page: Page;
@@ -11,8 +15,11 @@ export class BaseSetup {
     return this.page;
   }
 
-  async goto(url: string) {
-    await this.page.goto(url);
+  async goto() {
+    console.log('BaseSetup: Goto URL:', URL);
+    console.log("PORTA:", process.env.CURRENT_PORT); // debug temporário
+
+    await this.page.goto(URL);
   }
 
   async expectURL(currentPage: string) {

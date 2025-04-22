@@ -6,12 +6,6 @@ import { SignupPage } from "../page-objects/signup_page"
 import { TransactionsPage } from "../page-objects/transactions_page"
 import { ProfilePage } from "../page-objects/profile_page"
 
-import dotenv from 'dotenv';
-dotenv.config();
-
-const URL = 'http://127.0.0.1:' + process.env.AVAILABLE_PORT;
-
-
 type MyFixtures = {
     baseSetup: BaseSetup,
     homePage: HomePage,
@@ -28,14 +22,13 @@ export const test = base.extend<MyFixtures>({
     },
 
     homePage: async ({ baseSetup }, use) => {
-        await baseSetup.goto(URL);
+        await baseSetup.goto();
         const homePage = new HomePage(baseSetup.getPage());
         await use(homePage);
     },
 
-    signinPage: async ({ homePage }, use) => {
-        await homePage.gotoSigninPage();
-        const signinPage = new SigninPage(homePage.getPage());
+    signinPage: async ({ page }, use) => {
+        const signinPage = new SigninPage(page);
         await use(signinPage);
     },
 
@@ -45,9 +38,8 @@ export const test = base.extend<MyFixtures>({
         await use(signupPage);
     },
 
-    transactionsPage: async ({ signinPage }, use) => {
-        await signinPage.login('test@test.com', '12345678')
-        const transactionsPage = new TransactionsPage(signinPage.getPage());
+    transactionsPage: async ({ page }, use) => {
+        const transactionsPage = new TransactionsPage(page);
         await use(transactionsPage);
     },
 

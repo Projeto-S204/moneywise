@@ -7,4 +7,4 @@ port = Config.find_available_port()
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
-    app.run(debug=True, port=Config.find_available_port())
+    app.run(debug=False, port=Config.find_available_port())

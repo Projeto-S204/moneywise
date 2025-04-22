@@ -53,9 +53,9 @@ class Config:
     def find_available_port():
         with socket() as s:
             s.bind(("", 0))
-            available_port = s.getsockname()[1]
+            current_port = s.getsockname()[1]
 
-        os.environ["AVAILABLE_PORT"] = str(available_port)
+        os.environ["CURRENT_PORT"] = str(current_port)
 
         env_path = ".env"
         lines = []
@@ -64,16 +64,16 @@ class Config:
         if os.path.exists(env_path):
             with open(env_path, "r") as f:
                 for line in f:
-                    if line.startswith("AVAILABLE_PORT="):
-                        lines.append(f"AVAILABLE_PORT={available_port}\n")
+                    if line.startswith("CURRENT_PORT="):
+                        lines.append(f"CURRENT_PORT={current_port}\n")
                         found = True
                     else:
                         lines.append(line)
         
         if not found:
-            lines.append(f"AVAILABLE_PORT={available_port}\n")
+            lines.append(f"CURRENT_PORT={current_port}\n")
 
         with open(env_path, "w") as f:
             f.writelines(lines)
 
-        return available_port
+        return current_port

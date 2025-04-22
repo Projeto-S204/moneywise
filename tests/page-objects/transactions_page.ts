@@ -53,4 +53,9 @@ export class TransactionsPage {
       await expect(this.page.getByText(TRANSACTION_TITLE)).toBeVisible();
     }
   }
+
+  async gotoProfilePage() {
+    await this.page.getByText('test').click();
+    await this.page.getByRole('link', { name: 'Perfil' }).click();
+  }
 }
