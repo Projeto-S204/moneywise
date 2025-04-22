@@ -1,196 +1,71 @@
-/* 📌 NAVBAR */
 body {
   margin: 0;
   padding: 0;
   background-color: #272827;
-  color: white;
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+
+main {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: auto;
+  height: auto;
+  margin: 50px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
+#text-container {
+  width: 30%;
+  margin: auto;
+  justify-content: center;
+}
+
+#text-container h1 {
+  color: #efa23b;
+  font-family: "Jomhuria", sans-serif;
+  font-size: 128px;
+  font-weight: normal;
+  margin: 0;
+  line-height: 0.5;
+}
+
+#text-container p {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 28px;
+  color: #dadae0;
+  font-weight: lighter;
+  font-style: italic;
+}
+
+#button-container button {
+  background: #7e9dca;
+  font-size: 30px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 10px 20px;
+}
+
+#button-container button:hover {
+  background: #5f82c0;
+}
+
+#button-container button a {
+  text-decoration: none;
+  color: #dadae0;
   font-family: "Josefin Sans", sans-serif;
 }
 
-/* 📌 NAVBAR */
-nav {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start; /* Alinha tudo à esquerda */
-  padding: 20px 40px;
-
-  img {
-    width: 55px;
-    height: 87px;
-    cursor: pointer;
-    transition: transform 0.2s ease-in-out;
-  }
-
-  img:hover {
-    transform: scale(1.05);
-  }
-
-  ul {
-    display: flex;
-    list-style: none;
-    gap: 20px;
-    padding: 0;
-    margin-left: 20px; /* Aproxima os itens da logo */
-
-    li {
-      a {
-        font-size: 34px; /* Ajustado para corresponder ao código antigo */
-        text-decoration: none;
-        color: white;
-        font-weight: 300; /* Garantido que não fique em negrito */
-      }
-    }
-  }
+#img-container {
+  width: 65%;
 }
 
-/* 📌 MAIN */
-main {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  padding: 100px 10%;
-  position: relative;
-
-  #text-container {
-    max-width: 40%;
-    z-index: 2;
-
-    h1 {
-      font-size: 128px; /* Mantido o tamanho original */
-      font-family: "Jomhuria", sans-serif;
-      color: #efa23b;
-      margin: 0;
-      font-weight: normal; /* Garantido que não fique em negrito */
-      word-wrap: break-word; /* Garante que o texto se ajuste na tela */
-    }
-
-    p {
-      font-size: 36px; /* Ajustado para corresponder ao código antigo */
-      font-weight: 300;
-      margin-top: 10px;
-    }
-
-    #button-container {
-      button {
-        background: #7e9dca;
-        border: none;
-        padding: 20px 40px; /* Ajustado para corresponder ao código antigo */
-        font-size: 32px; /* Ajustado para corresponder ao código antigo */
-        cursor: pointer;
-        color: white;
-        border-radius: 5px;
-        margin-top: 20px;
-
-        a {
-          color: white;
-          text-decoration: none;
-        }
-      }
-    }
-  }
-
-  /* 📌 IMAGEM */
-  #img-container {
-    position: absolute;
-    bottom: -215px; /* Ajuste para garantir que a imagem fique na posição correta */
-    right: 0;
-    display: flex;
-    justify-content: center; /* Alinha a imagem ao centro */
-    width: 65%; /* Garante que o contêiner ocupe 100% da largura da tela */
-    z-index: 1; /* A imagem ficará atrás do texto */
-
-    img {
-      width: 100%; /* Garante que a imagem ocupe 100% da largura do contêiner */
-      height: auto; /* Ajusta a altura proporcionalmente */
-      object-fit: contain; /* Faz a imagem se ajustar sem distorção */
-    }
-  }
-}
-
-/* 📱 MEDIA QUERIES (TELAS MENORES) */
-@media (max-width: 1024px) {
-  main {
-    flex-direction: column;
-    text-align: center;
-    align-items: center;
-  }
-
-  #text-container {
-    max-width: 80%;
-  }
-
-  #img-container {
-    max-width: 80%;
-    position: static;
-    justify-content: center;
-  }
-
-  h1 {
-    font-size: 100px; /* Ajustado para telas menores */
-  }
-
-  p {
-    font-size: 24px; /* Ajustado para telas menores */
-  }
-
-  #img-container img {
-    max-width: 100%; /* Garante que a imagem ocupe a tela corretamente */
-    max-height: 600px; /* Limita a altura em telas menores */
-  }
-}
-
-@media (max-width: 768px) {
-  nav {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  nav ul {
-    flex-direction: column;
-    gap: 10px;
-    display: none; /* Esconde o menu normal */
-  }
-
-  /* Menu sanduíche */
-  .menu-toggle {
-    display: block;
-    cursor: pointer;
-  }
-
-  .menu-toggle.active + ul {
-    display: flex;
-  }
-
-  h1 {
-    font-size: 80px; /* Ajustado para telas muito pequenas */
-  }
-
-  p {
-    font-size: 20px; /* Ajustado para telas muito pequenas */
-  }
-
-  #text-container {
-    max-width: 100%;
-  }
-
-  #img-container {
-    max-width: 100%; /* Ajuste para 100% da largura em telas pequenas */
-  }
-
-  #img-container img {
-    max-width: 300px; /* Ajuste para a largura da imagem em telas menores */
-    max-height: 400px; /* Limita a altura da imagem */
-  }
-}
-
-@media (max-width: 480px) {
-  h1 {
-    font-size: 60px; /* Ajustado para telas menores */
-  }
-
-  p {
-    font-size: 18px; /* Ajustado para telas menores */
-  }
+#img-container img {
+  width: 100%;
 }

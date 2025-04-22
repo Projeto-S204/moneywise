@@ -19,7 +19,8 @@ body {
 }
 
 .logo {
-  width: 58px;
+  width: 82.5px;
+  height: 130.5px;
   margin-bottom: 20px;
   height: auto;
   cursor: pointer;
@@ -53,18 +54,48 @@ h2 {
   padding-left: 10px;
 }
 
-.btn-primary {
+.btn-submit {
   background-color: transparent;
+  border: 1px solid #7E9DCA;
   color: #7e9dca;
-  border: 1px solid#7E9DCA;
-  transition: 0.3s ease;
-  border-radius: 6px;
-  font-weight: 500;
+  font-size: 20px;
+  padding: 15px 10px 10px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  text-decoration: none;
+  width: 100%;
 }
 
-.btn-primary:hover {
+.btn-submit:hover {
   background-color: #7e9dca;
   color: #0f1113;
+}
+
+.remember-forgot-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.remember-me-container {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 5px;
+}
+
+.remember-me-container input {
+  accent-color: #7E9DCA;
+}
+
+.remember-me-container label {
+  margin: 0;
+  line-height: 1;
+}
+
+.forgot-password-container a {
+  color: #7e9dca;
 }
 
 .alert {
