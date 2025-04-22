@@ -25,13 +25,13 @@ class Config:
         "k\x8d-\xbd\xb9\x05\xeax\x92\xd9{H\xf0\x9c\xf9\xde\x91\xc6\xe6"
         "\xa8\x14\xf9\x89t"
     )
-    # Configurações de email para produção com Gmail
+    
     MAIL_SERVER = 'smtp.gmail.com'
     MAIL_PORT = 587
     MAIL_USE_TLS = True
     MAIL_USE_SSL = False
-    MAIL_USERNAME = 'suportemw011@gmail.com'  # Coloque seu email
-    MAIL_PASSWORD = 'krofvxeymfmvsjwx'            # Coloque sua senha ou senha de app
+    MAIL_USERNAME = 'suportemw011@gmail.com'  
+    MAIL_PASSWORD = 'krofvxeymfmvsjwx'            
     MAIL_DEFAULT_SENDER = 'suportemw011@gmail.com'
 
     @staticmethod

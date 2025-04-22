@@ -18,4 +18,6 @@ def create_app():
     migrate.init_app(app, db)
     mail.init_app(app)
 
+    from app.users_authentication.models import User  # <-- Importa aqui!
+
     return app
