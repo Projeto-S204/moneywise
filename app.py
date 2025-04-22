@@ -1,10 +1,10 @@
 from app import create_app
-from config import Config
-import os
-
+from config import Config,db
 
 app = create_app()
 port = Config.find_available_port()
 
 if __name__ == "__main__":
-    app.run(debug=False, port=port)
+    with app.app_context():
+        db.create_all()
+    app.run(debug=True, port=Config.find_available_port())
