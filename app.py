@@ -1,10 +1,18 @@
-from app import create_app, db
-from config import Config
+from flask import Flask
+from app import db
+from app.transactions.routes import transactions_bp
 
+def create_app():
+    app = Flask(__name__)
+    app.config.from_pyfile('config.py')
+
+    db.init_app(app)
+
+    app.register_blueprint(transactions_bp, url_prefix='/transactions')
+
+    return app
 
 app = create_app()
 
-if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()
-    app.run(debug=False, port=Config.find_available_port())
+if __name__ == '__main__':
+    app.run(debug=True)
