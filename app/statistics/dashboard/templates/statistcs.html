@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="statistics.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src = 'statistics_script.js'></script>
+    <title>Estátisticas</title>
+</head>
+<body>
+    <header>
+        <nav class="bar">
+            <img src = "mini_logo.png" alt="Logo miniatura" class="logo">
+            <div class = "logo_container">
+                <img src = "chartBar.png" alt="Indicador de página de Estátisticas" class="statistic_logo">
+                <p class="title">Estatísticas</p>
+            </div>    
+        </nav>     
+    </header>
+
+    <main>
+        <main>
+            <div class="dashboard">
+              <div class="info_container">
+                <div class="filters-panel">
+                  <div class="summary-card green">
+                    <span class="summary-title">Diário</span>
+                    <span class="summary-value">R$ 680,00</span>
+                  </div>
+                  <div class="summary-card red">
+                    <span class="summary-title">Semanal</span>
+                    <span class="summary-value">R$ 2.100,00</span>
+                  </div>
+                  <div class="summary-card dark">
+                    <span class="summary-title">Mensal</span>
+                    <span class="summary-value">R$ 5.320,00</span>
+                  </div>
+          
+                  <div class="date-range">
+                    <p class="date_choice">Escolha as datas para conferir:</p>
+                    <div class="date-inputs">
+                      <input type="text" placeholder="DD/MM" maxlength="5">
+                      <span>-</span>
+                      <input type="text" placeholder="DD/MM" maxlength="5">
+                    </div>
+                    <button class="verify-button">Verificar</button>
+                  </div>
+                </div>
+              </div>
+          
+              <div class="chart_zone">
+                <figure class="chart_container">
+                  <div class="pie_donut_chart"></div>
+                  <figcaption class="legend">
+                    <span>Entretenimento</span>
+                    <span>Casa</span>
+                    <span>Salário</span>
+                    <span>Itens</span>
+                    <span>Outros</span>
+                  </figcaption>
+                </figure>
+          
+                <div class="automatic_chart">
+                  <canvas id="donutChart"></canvas>
+                  <canvas id="myChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </main>
+          
+    </main>
+</body>
+</html>
