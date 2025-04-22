@@ -8,6 +8,7 @@
       rel="stylesheet"
       href="{{ url_for('home.static', filename='css/home.css') }}"
     />
+    <script src ="{{ url_for('home.scripts', filename='js/home_script.js') }}"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Jomhuria&display=swap"
       rel="stylesheet"
@@ -29,11 +30,16 @@
       <div id="button-container">
         <button id="start-button"><a href="{{ url_for('users.signup_page') }}">Comece Agora!</a></button>
       </div>
-    </div>
-
-      <div id="img-container">
-        <img src="images/home_image.png" alt="image" id="home-image" />
+      <div id="carousel-dots">
+        <span class="dot active" onclick="changeSlide(0)"></span>
+        <span class="dot" onclick="changeSlide(1)"></span>
+        <span class="dot" onclick="changeSlide(2)"></span>
       </div>
+  </div>
+
+  <div id="img-container">
+    <img id="carousel-image" src="images/home_image.png" alt="imagem do carrossel" />
+  </div>
     </main>
   </body>
 </html>
