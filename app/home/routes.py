@@ -44,7 +44,7 @@ def contact_page():
         try:
             msg = Message(
                 subject='Nova mensagem de contato',
-                recipients=['thomasvictor2909@gmail.com'],  # Change to your email
+                recipients=['joaomarcos.jm@ges.inatel.br'],  # Change to your email
                 html=email_body
             )
             mail.send(msg)
