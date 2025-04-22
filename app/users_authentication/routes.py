@@ -24,7 +24,7 @@ from app.users_authentication.services.form_validations import (
     validade_form_on_signin,
 )
 from flask_login import logout_user, current_user
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 
 
 users = Blueprint(
@@ -95,21 +95,22 @@ def token_expires():
     Verifica o tempo restante até a expiração do token JWT atual.
     """
     try:
-
         jwt_payload = get_jwt()
-
         exp_timestamp = jwt_payload.get('exp')
 
         if not exp_timestamp:
             return jsonify({
                 "error": "Token não contém informação de expiração ('exp')."
             }), 400
-        exp_datetime = datetime.fromtimestamp(exp_timestamp, tz=timezone.utc)
 
-        now_datetime = datetime.now(timezone.utc)
+        brasilia_tz = timezone(timedelta(hours=-3))
 
-        time_remaining = exp_datetime - now_datetime
+        now = datetime.now(timezone.utc).astimezone(brasilia_tz)
+        exp = datetime.fromtimestamp(
+            exp_timestamp, tz=timezone.utc
+        ).astimezone(brasilia_tz)
 
+        time_remaining = exp - now
         if time_remaining.total_seconds() < 0:
             return jsonify({"message": "Token já expirou."}), 401
 
@@ -125,8 +126,8 @@ def token_expires():
             human_readable = f"{minutes}m {seconds}s"
 
         return jsonify({
-            "expires_at": exp_datetime.isoformat(),
-            "current_time": now_datetime.isoformat(),
+            "current_time": now.strftime("%Y-%m-%d %H:%M:%S"),
+            "expires_at": exp.strftime("%Y-%m-%d %H:%M:%S"),
             "time_remaining_seconds": total_seconds,
             "time_remaining_human": human_readable
         })
