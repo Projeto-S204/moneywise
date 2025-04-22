@@ -17,12 +17,12 @@ test.describe("should go to pages", () => {
   });
 
   test("should go to login page", async ({ baseSetup, homePage }) => {
-    await homePage.gotoLoginPage();
+    await homePage.gotoSigninPage();
     await baseSetup.expectURL('/signin')
   });
 
   test("should go to register page", async ({ baseSetup, homePage }) => {
-    await homePage.gotoRegisterPage();
+    await homePage.gotoSignupPage();
     await baseSetup.expectURL('/signup');
   });
 });

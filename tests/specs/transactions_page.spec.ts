@@ -14,6 +14,7 @@ test.describe("CRUD Methods", () => {
     };
 
     await transactionsPage.createTransaction(transactionData);
+    await transactionsPage.expectTransactionToBeCreated(transactionData);
   });
 
   test("should be able to read a transaction", async ({ baseSetup, transactionsPage }) => {

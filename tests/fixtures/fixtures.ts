@@ -4,6 +4,7 @@ import { HomePage } from "../page-objects/home_page"
 import { SigninPage } from "../page-objects/signin_page"
 import { SignupPage } from "../page-objects/signup_page"
 import { TransactionsPage } from "../page-objects/transactions_page"
+import { ProfilePage } from "../page-objects/profile_page"
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -16,7 +17,8 @@ type MyFixtures = {
     homePage: HomePage,
     signinPage: SigninPage,
     signupPage: SignupPage,
-    transactionsPage: TransactionsPage
+    transactionsPage: TransactionsPage,
+    profilePage: ProfilePage
 }
 
 export const test = base.extend<MyFixtures>({
@@ -47,5 +49,10 @@ export const test = base.extend<MyFixtures>({
         await signinPage.login('test@test.com', '12345678')
         const transactionsPage = new TransactionsPage(signinPage.getPage());
         await use(transactionsPage);
-    }
+    },
+
+    profilePage: async ({ page }, use) => {
+        const profilePage = new ProfilePage(page);
+        await use(profilePage);
+    },
 });

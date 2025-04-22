@@ -1,4 +1,4 @@
-import type { Locator, Page } from "@playwright/test";
+import { expect, type Locator, type Page } from "@playwright/test";
 
 export class TransactionsPage {
   private readonly page: Page;
@@ -47,4 +47,10 @@ export class TransactionsPage {
     await this.submitButton.click();
   }
 
+  async expectTransactionToBeCreated(transactionData: any) {
+    for (let i = 1; i <= transactionData.installments; i++) {
+      const TRANSACTION_TITLE = transactionData.title + ' ' + i + '/' + transactionData.installments;
+      await expect(this.page.getByText(TRANSACTION_TITLE)).toBeVisible();
+    }
+  }
 }
