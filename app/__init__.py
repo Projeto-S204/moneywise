@@ -2,7 +2,7 @@ from flask import Flask
 from .home.routes import home
 from .transactions.routes import transactions
 from app.users_authentication.routes import users
-from config import Config, db, login_manager, jwt, migrate
+from config import Config, db, login_manager, jwt, migrate, mail
 
 
 def create_app():
@@ -17,5 +17,6 @@ def create_app():
     login_manager.init_app(app)
     jwt.init_app(app)
     migrate.init_app(app, db)
+    mail.init_app(app)
 
     return app

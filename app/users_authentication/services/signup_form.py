@@ -29,7 +29,7 @@ class UserSignupForm(FlaskForm):
         ],
     )
     birthday = DateField(
-        "Birthday:", format="%Y-%m-%d", validators=[DataRequired()]
+        "Aniversário:", format="%Y-%m-%d", validators=[DataRequired()]
     )
 
     submit = SubmitField(label="Criar Conta")

@@ -6,6 +6,7 @@ from flask import (
     jsonify,
     flash,
     make_response,
+    request
 )
 from flask_jwt_extended import (
     create_access_token,
@@ -13,8 +14,7 @@ from flask_jwt_extended import (
     unset_jwt_cookies,
     jwt_required,
     # verify_jwt_in_request,
-    get_jwt_identity,
-    get_jwt
+    get_jwt,
     # create_refresh_token,
 )
 from app.users_authentication.services.signin_form import UserSigninForm
@@ -23,7 +23,7 @@ from app.users_authentication.services.form_validations import (
     validate_form_on_signup,
     validade_form_on_signin,
 )
-from flask_login import logout_user, current_user
+from flask_login import logout_user, current_user, login_required
 from datetime import datetime, timezone, timedelta
 
 
@@ -32,7 +32,7 @@ users = Blueprint(
     __name__,
     static_folder='static',
     template_folder='templates',
-    static_url_path='',
+    static_url_path='/users/static',
 )
 
 
@@ -78,22 +78,10 @@ def logout():
     return response
 
 
-# Rota Teste JWT
-@users.route("/protected", methods=["GET"])
-@jwt_required()
-def protected():
-    current_user_id = get_jwt_identity()
-    print(f"[PROTECTED] Acesso com user_id: {current_user_id}")
-    return jsonify(msg="Acesso autorizado!", user_id=current_user_id)
-
-
-# Rota teste para verificar a validade do token JWT
 @users.route("/token/expires", methods=["GET"])
 @jwt_required()
 def token_expires():
-    """
-    Verifica o tempo restante até a expiração do token JWT atual.
-    """
+
     try:
         jwt_payload = get_jwt()
         exp_timestamp = jwt_payload.get('exp')
@@ -136,4 +124,65 @@ def token_expires():
         print(f"Erro ao verificar expiração do token: {e}")
         return jsonify({
             "error": "Erro ao processar a expiração do token."
+        }), 500
+
+
+@users.route("/profile", methods=["GET"])
+@login_required
+def profile_page():
+    return render_template("profile.html", user=current_user)
+
+
+@users.route("/profile/update", methods=["POST"])
+@login_required
+def update_profile():
+    from app import db
+    try:
+        data = request.json
+        current_user.name = data.get('name')
+        current_user.email = data.get('email')
+
+        birthday_str = data.get('birthday')
+        if birthday_str:
+            try:
+                current_user.birthday = datetime.strptime(
+                    birthday_str, '%Y-%m-%d'
+                ).date()
+            except ValueError:
+                return jsonify({
+                    'success': False,
+                    'message': 'Formato de data inválido. Use YYYY-MM-DD.'
+                }), 400
+
+        db.session.commit()
+        return jsonify({
+            'success': True,
+            'message': 'Dados atualizados com sucesso.'
+        })
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'message': f'Erro ao atualizar perfil: {str(e)}'
+        }), 500
+
+
+@users.route("/delete_account", methods=["POST"])
+@login_required
+def delete_account():
+    from app import db
+    try:
+
+        db.session.delete(current_user)
+        db.session.commit()
+
+        logout_user()
+        response = make_response(redirect(url_for("users.signin_page")))
+        unset_jwt_cookies(response)
+        flash("Conta deletada com sucesso!", "success")
+        return response
+
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'message': f'Erro ao deletar conta: {str(e)}'
         }), 500
