@@ -33,7 +33,7 @@ export class TransactionsPage {
     this.backButton = page.getByText('Voltar');
   }
 
-  async createTransaction(transactionData: any) {
+  async fillTransactionFields(transactionData: any) {
     await this.newTransactionBtn.click();
     await this.transactionTitleInput.fill(transactionData.title);
     await this.paymentMethodSelect.selectOption(transactionData.paymentMethod);
@@ -41,17 +41,32 @@ export class TransactionsPage {
     await this.transactionDateInput.fill(transactionData.date);
     await this.categorySelect.selectOption(transactionData.category);
     await this.transactionDescriptionInput.fill(transactionData.description);
-    await this.transactionCheckbox.check();
-    await this.transactionInstallmentsInput.fill(transactionData.installments);
+
+    if (transactionData.is_recurring) {
+      await this.transactionCheckbox.check();
+      await this.transactionInstallmentsInput.fill(transactionData.installments);
+    }
+
     await this.page.getByRole('button', { name: transactionData.type }).click();
     await this.submitButton.click();
   }
 
-  async expectTransactionToBeCreated(transactionData: any) {
+  async expectTransactionToBeViewed(transactionData: any) {
     for (let i = 1; i <= transactionData.installments; i++) {
       const TRANSACTION_TITLE = transactionData.title + ' ' + i + '/' + transactionData.installments;
       await expect(this.page.getByText(TRANSACTION_TITLE)).toBeVisible();
     }
+  }
+
+  async viewTransaction(transactionTitle: string) {
+    await this.page.getByText(transactionTitle).click();  }
+
+  async deleteTransaction(transactionTitle: string) {
+    await this.page.getByRole('link', { name: 'Deletar' }).click();
+  }
+
+  async expectTransactionNotToExist(transactionTitle: string) {
+    await expect(this.page.getByText(transactionTitle)).not.toBeVisible();
   }
 
   async gotoProfilePage() {

@@ -7,19 +7,9 @@ export class ProfilePage {
     this.page = page;
   }
 
-  async deleteUser() {
-    this.page.once('dialog', async (dialog) => {
-      expect(dialog.type()).toBe('confirm');
-      expect(dialog.message()).toContain('Tem certeza que deseja deletar sua conta? Esta ação é irreversível!');
-      await dialog.accept();
-    });
-
-    this.page.once('dialog', async (dialog) => {
-      expect(dialog.type()).toBe('alert');
-      expect(dialog.message()).toContain('Conta deletada com sucesso!');
-      await dialog.accept();
-    });
-
+  async deleteUser(password: string) {
     await this.page.getByRole('link', { name: 'Deletar Conta' }).click();
+    await this.page.getByRole('textbox', { name: 'Confirme sua senha:' }).fill(password);
+    await this.page.getByRole('button', { name: 'Excluir' }).click();
   }
 }

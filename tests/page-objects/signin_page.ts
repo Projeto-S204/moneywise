@@ -25,6 +25,6 @@ export class SigninPage {
   }
 
   async expectError() {
-    await expect(this.page.getByText('Credenciais inválidas! Tente')).toBeVisible();
+    await expect(this.page.getByText('Email ou senha inválidos')).toBeVisible();
   }
 }

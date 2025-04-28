@@ -1,14 +1,14 @@
 import { test } from "../fixtures/fixtures"
 
 test.describe("Registration Methods", () => {
-  // test.afterEach(async ({ signinPage, transactionsPage, profilePage }) => {
-  //   await signinPage.login('test@test.com', '12345678');
-  //   await transactionsPage.gotoProfilePage();
-  //   await profilePage.deleteUser();
-  // });
+  test.afterEach(async ({ signinPage, transactionsPage, profilePage }) => {
+    await signinPage.login('test@test.com', '!Test12345678');
+    await transactionsPage.gotoProfilePage();
+    await profilePage.deleteUser('!Test12345678');
+  });
 
   test("should be able to register with valid credentials", async ({ baseSetup, signupPage }) => {
-    await signupPage.register('test', 'test@test.com', '12345678', '12345678', '2002-09-29');
+    await signupPage.register('test', 'test@test.com', '!Test12345678', '!Test12345678', '2002-09-29');
     await baseSetup.expectURL('/signin');
   });
 

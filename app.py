@@ -2,7 +2,6 @@ from app import create_app
 from config import Config, db
 
 app = create_app()
-port = Config.find_available_port()
 
 if __name__ == "__main__":
     with app.app_context():

@@ -30,10 +30,10 @@ export class SignupPage {
   }
 
   async emailError() {
-    await expect(this.page.getByText('Ocorreu um erro ao criar a conta: [\'Invalid email address.\'] ×')).toBeVisible();
+    await expect(this.page.getByText('Invalid email address. ×')).toBeVisible();
   }
 
   async passwordError() {
-    await expect(this.page.getByText('Ocorreu um erro ao criar a conta: [\'Field must be equal to password.\'] ×')).toBeVisible();
+    await expect(this.page.getByText('As senhas não coincidem.')).toBeVisible();
   }
 }
