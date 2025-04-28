@@ -37,6 +37,7 @@
             <i class="bi bi-trash" style="font-size: 1.5rem;"></i>
             <a href="#" id="delete-account-btn">Deletar Conta</a>
           </li>
+          
           <li class="logout-option-contenct">
             <i class="bi bi-box-arrow-left"></i>
             <a href="{{ url_for('users.logout') }}">Logout</a>
@@ -73,6 +74,38 @@
       </div>
     </div>
   </div>
+
+  <div id="delete-confirm-modal" class="modal">
+    <div class="modal-content">
+      <h3>Deseja realmente excluir sua conta?</h3>
+      <p>Essa ação é irreversível!</p>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          {% if category == 'danger' %}
+            <div class="flash-message flash-{{ category }}" style="color: #f44336; margin-bottom: 10px;">
+              {{ message }}
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+      <form id="delete-account-confirm-form" method="POST" action="/delete_account">
+        {{ form.hidden_tag() }}
+        
+        <label for="password">Confirme sua senha:</label>
+        {{ form.password }}
+        <span id="delete-error-message" style="color: #f44336; margin-top: 10px; display: none;"></span>
+        
+        <div class="modal-buttons">
+          <button type="submit" id="confirm-delete-btn">Excluir</button>
+          <button type="button" id="cancel-delete-btn">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+
 </body>
 
 </html>

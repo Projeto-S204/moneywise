@@ -4,6 +4,7 @@ from .transactions.routes import transactions
 from app.users_authentication.routes import users
 from config import Config, db, login_manager, jwt, migrate, mail
 
+
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
@@ -17,7 +18,5 @@ def create_app():
     jwt.init_app(app)
     migrate.init_app(app, db)
     mail.init_app(app)
-
-    from app.users_authentication.models import User  # <-- Importa aqui!
 
     return app

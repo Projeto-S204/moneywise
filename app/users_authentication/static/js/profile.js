@@ -78,36 +78,37 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector(".info").appendChild(buttonWrapper);
   });
 
-  // Lógica de deletar a conta com confirmação
+  
   const deleteBtn = document.getElementById("delete-account-btn");
+  const deleteModal = document.getElementById("delete-confirm-modal");
+  const cancelDeleteBtn = document.getElementById("cancel-delete-btn");
+  const flashMessage = document.querySelector(".flash-message");
+  const deleteErrorMessage = document.querySelector("delete-error-message");
+   
+  
+  if (flashMessage) {
+     deleteModal.style.display = "block";
+   }
 
   if (deleteBtn) {
-    deleteBtn.addEventListener("click", async (e) => {
+    deleteBtn.addEventListener("click", (e) => {
       e.preventDefault();
+    
+      deleteModal.style.display = "block";
+    });
 
-      // Pop-up de confirmação
-      const confirmDelete = confirm(
-        "Tem certeza que deseja deletar sua conta? Esta ação é irreversível!"
-      );
-
-      if (confirmDelete) {
-        // Se confirmar, envia a requisição para deletar a conta
-        const response = await fetch("/delete_account", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-
-        const result = await response.json();
-
-        if (result.success) {
-          alert("Conta deletada com sucesso!");
-          window.location.href = "/"; // Redireciona para a tela inicial (Home)
-        } else {
-          alert("Erro ao deletar conta: " + result.message);
-        }
+    cancelDeleteBtn.addEventListener("click", () => {
+      deleteModal.style.display = "none";
+      
+      if (deleteErrorMessage) {
+        deleteErrorMessage.style.display = "none";
       }
+
+      if(passwordField){
+        passwordField.value = "";
+      }
+
     });
   }
 });
+

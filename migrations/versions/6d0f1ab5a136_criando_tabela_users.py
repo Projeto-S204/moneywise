@@ -1,8 +1,8 @@
-"""Initial migration
+"""Criando tabela users
 
-Revision ID: aa952b6b21d6
+Revision ID: 6d0f1ab5a136
 Revises: 
-Create Date: 2025-03-31 17:18:41.042727
+Create Date: 2025-04-01 13:02:22.500782
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'aa952b6b21d6'
+revision = '6d0f1ab5a136'
 down_revision = None
 branch_labels = None
 depends_on = None

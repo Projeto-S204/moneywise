@@ -10,13 +10,16 @@ home = Blueprint(
     static_folder='static'
 )
 
+
 @home.route('/')
 def home_page():
     return render_template('home.html')
 
+
 @home.route('/informations')
 def informations_page():
     return render_template('informations.html')
+
 
 @home.route('/contact', methods=['GET', 'POST'])
 def contact_page():
@@ -28,7 +31,8 @@ def contact_page():
 
         email_body = f"""
         <html>
-        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+        <body style="font-family: Arial, sans-serif; line-height: 1.6;
+                     color: #333;">
             <h2 style="color: #4CAF50;">📩 Nova Mensagem de Contato</h2>
             <p><strong>Nome:</strong> {name}</p>
             <p><strong>Email:</strong> {email}</p>
@@ -36,7 +40,9 @@ def contact_page():
             <p><strong>Mensagem:</strong></p>
             <p style="margin-left: 20px; font-style: italic;">"{message}"</p>
             <hr>
-            <p style="font-size: 12px; color: #777;">Recebido via formulário do site MoneyWise</p>
+            <p style="font-size: 12px; color: #777;">
+                Recebido via formulário do site MoneyWise
+            </p>
         </body>
         </html>
         """
@@ -44,7 +50,9 @@ def contact_page():
         try:
             msg = Message(
                 subject='Nova mensagem de contato',
-                recipients=['joaomarcos.jm@ges.inatel.br'],  # Change to your email
+                recipients=[
+                    'joaomarcos.jm@ges.inatel.br'
+                ],
                 html=email_body
             )
             mail.send(msg)
@@ -52,10 +60,14 @@ def contact_page():
             return redirect(url_for('home.sucesso'))
         except Exception as e:
             print(f"Erro ao enviar email: {e}")
-            flash("Erro ao enviar e-mail. Tente novamente mais tarde.", "danger")
+            flash(
+                "Erro ao enviar e-mail. Tente novamente mais tarde.",
+                "danger"
+            )
             return redirect(url_for('home.contact_page'))
 
     return render_template('contact.html')
+
 
 @home.route('/sucesso')
 def sucesso():
