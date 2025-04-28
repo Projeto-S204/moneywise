@@ -13,7 +13,7 @@ main {
   display: flex;
   justify-content: space-between;
   margin-bottom: auto;
-  height: auto;
+  height: 70%;
   margin: 50px;
   position: fixed;
   bottom: 0;
@@ -53,5 +53,5 @@ main {
 }
 
 #img-container img {
-  max-width: 100vh;
+  max-width: 100%;
 }

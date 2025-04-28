@@ -4,6 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
 from flask_migrate import Migrate
 from flask_login import LoginManager
+import os
+from dotenv import load_dotenv
 from flask_mail import Mail
 
 DB_HOST = "localhost"
@@ -61,8 +63,32 @@ class Config:
         conn.autocommit = True
         return conn
 
+    # If you are using playwright, please make sure to set debug=False
     @staticmethod
     def find_available_port():
         with socket() as s:
             s.bind(("", 0))
-            return s.getsockname()[1]
+            current_port = s.getsockname()[1]
+
+        os.environ["CURRENT_PORT"] = str(current_port)
+
+        env_path = ".env"
+        lines = []
+        found = False
+
+        if os.path.exists(env_path):
+            with open(env_path, "r") as f:
+                for line in f:
+                    if line.startswith("CURRENT_PORT="):
+                        lines.append(f"CURRENT_PORT={current_port}\n")
+                        found = True
+                    else:
+                        lines.append(line)
+        
+        if not found:
+            lines.append(f"CURRENT_PORT={current_port}\n")
+
+        with open(env_path, "w") as f:
+            f.writelines(lines)
+
+        return current_port

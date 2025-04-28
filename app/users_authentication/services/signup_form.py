@@ -12,17 +12,17 @@ from app.users_authentication.models import User
 
 class UserSignupForm(FlaskForm):
     username = StringField(
-        label="UserName:",
+        label="Usuário:",
         validators=[Length(min=3, max=30), DataRequired()],
     )
     email_address = StringField(
         label="Email:", validators=[Email(), DataRequired()],
     )
     password = PasswordField(
-        label="Password:", validators=[DataRequired()],
+        label="Senha:", validators=[DataRequired()],
     )
     confirm_password = PasswordField(
-        label="Confirm Password:",
+        label="Confirmar Senha:",
         validators=[
             EqualTo("password", message="As senhas não coincidem."),
             DataRequired(),
