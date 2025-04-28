@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const deleteModal = document.getElementById("delete-confirm-modal");
   const cancelDeleteBtn = document.getElementById("cancel-delete-btn");
   const flashMessage = document.querySelector(".flash-message");
-  const deleteErrorMessage = document.querySelector(".delete-error-message");
+  const deleteErrorMessage = document.querySelector("delete-error-message");
    
   
   if (flashMessage) {
@@ -99,7 +99,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     cancelDeleteBtn.addEventListener("click", () => {
       deleteModal.style.display = "none";
-      deleteErrorMessage.style.display = "none";
+      
+      if (deleteErrorMessage) {
+        deleteErrorMessage.style.display = "none";
+      }
+
+      if(passwordField){
+        passwordField.value = "";
+      }
+
     });
   }
 });
