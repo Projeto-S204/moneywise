@@ -5,13 +5,12 @@ from flask_jwt_extended import JWTManager
 from flask_migrate import Migrate
 from flask_login import LoginManager
 import os
-from dotenv import load_dotenv
 from flask_mail import Mail
 
 DB_HOST = "localhost"
 DB_NAME = "moneywise"
 DB_USER = "postgres"
-DB_PASS = "1234"
+DB_PASS = "meritopg"
 DB_PORT = "5432"
 
 db = SQLAlchemy()
@@ -84,7 +83,6 @@ class Config:
                         found = True
                     else:
                         lines.append(line)
-        
         if not found:
             lines.append(f"CURRENT_PORT={current_port}\n")
 
