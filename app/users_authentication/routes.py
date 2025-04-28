@@ -19,6 +19,8 @@ from flask_jwt_extended import (
 )
 from app.users_authentication.services.signin_form import UserSigninForm
 from app.users_authentication.services.signup_form import UserSignupForm
+from app.users_authentication.services.delete_form import UserDeleteForm
+from app.users_authentication.services.user_service import delete_user_logic
 from app.users_authentication.services.form_validations import (
     validate_form_on_signup,
     validade_form_on_signin,
@@ -127,10 +129,11 @@ def token_expires():
         }), 500
 
 
-@users.route("/profile", methods=["GET"])
+@users.route("/profile")
 @login_required
 def profile_page():
-    return render_template("profile.html", user=current_user)
+    form = UserDeleteForm()
+    return render_template("profile.html", user=current_user, form=form)
 
 
 @users.route("/profile/update", methods=["POST"])
@@ -169,20 +172,21 @@ def update_profile():
 @users.route("/delete_account", methods=["POST"])
 @login_required
 def delete_account():
-    from app import db
-    try:
+    print("🚨 Rota /delete_account acionada!")
+    form = UserDeleteForm()
+    if form.is_submitted():
+        success = delete_user_logic(current_user, form.password.data)
 
-        db.session.delete(current_user)
-        db.session.commit()
+        if success:
+            logout_user()
+            response = make_response(redirect(url_for("users.signin_page")))
+            unset_jwt_cookies(response)
+            flash("Conta excluída com sucesso.", category="success")
+            return response
+        else:
+            flash(
+                "Senha incorreta. Conta não foi excluída.",
+                category="danger"
+            )
 
-        logout_user()
-        response = make_response(redirect(url_for("users.signin_page")))
-        unset_jwt_cookies(response)
-        flash("Conta deletada com sucesso!", "success")
-        return response
-
-    except Exception as e:
-        return jsonify({
-            'success': False,
-            'message': f'Erro ao deletar conta: {str(e)}'
-        }), 500
+    return redirect(url_for("users.profile_page"))

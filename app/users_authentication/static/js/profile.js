@@ -82,23 +82,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const deleteBtn = document.getElementById("delete-account-btn");
   const deleteModal = document.getElementById("delete-confirm-modal");
   const cancelDeleteBtn = document.getElementById("cancel-delete-btn");
-  const confirmDeleteBtn = document.getElementById("confirm-delete-btn");
+  const flashMessage = document.querySelector(".flash-message");
+  const deleteErrorMessage = document.querySelector(".delete-error-message");
+   
+  
+  if (flashMessage) {
+     deleteModal.style.display = "block";
+   }
 
   if (deleteBtn) {
     deleteBtn.addEventListener("click", (e) => {
       e.preventDefault();
-      // Exibe o modal de confirmação de exclusão
+    
       deleteModal.style.display = "block";
     });
 
-    // Cancelar a exclusão
     cancelDeleteBtn.addEventListener("click", () => {
-      deleteModal.style.display = "none"; // Fecha o modal
-    });
-
-    // Confirmar a exclusão
-    confirmDeleteBtn.addEventListener("click", () => {
-      document.getElementById("delete-account-form").submit(); // Envia o formulário para deletar a conta
+      deleteModal.style.display = "none";
+      deleteErrorMessage.style.display = "none";
     });
   }
 });
+

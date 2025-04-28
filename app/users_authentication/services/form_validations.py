@@ -1,6 +1,6 @@
 from flask import flash
 from app.users_authentication.models import User
-from flask_login import login_user
+from flask_login import login_user  # current_user
 from config import db
 
 
@@ -44,3 +44,15 @@ def validate_form_on_signup(form):
         flash("Erro ao criar conta. Tente novamente.", category="danger")
         print(f"Flash: Erro ao criar conta: {e}")
         return False
+
+
+# def validade_delete_user_form(form):
+#     if form.validate_on_submit():
+#         if current_user.check_password(form.password.data):
+#             user = User.query.get(current_user.id)
+#             db.session.delete(user)
+#             db.session.commit()
+#             return True
+#         else:
+#             flash("Senha incorreta. Tente novamente.", category="danger")
+#     return False

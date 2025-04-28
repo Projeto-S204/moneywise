@@ -1,3 +1,4 @@
+/* RESET GERAL */
 * {
   font-family: "Josefin Sans", sans-serif;
   box-sizing: border-box;
@@ -24,7 +25,6 @@ body {
 .sidebar {
   background-color: #2b2b30;
   width: 200px;
-  /* padding: 20px; */
   position: fixed;
   height: 100vh;
   display: flex;
@@ -191,31 +191,30 @@ i {
   font-size: 30px;
 }
 
-.menu-topo>*>* {
+.menu-topo > * > * {
   padding: 1px 20px;
 }
 
-.menu-rodape>*>* {
+.menu-rodape > * > * {
   padding: 1px 20px;
 }
 
-/* Estilo do Modal */
+
+/* ==== MODAL DE EXCLUSÃO ==== */
 .modal {
-  display: none; /* Inicialmente escondido */
+  display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 9999; /* traz o modal para frente */
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgb(0, 0, 0); /* Cor de fundo preta com opacidade */
-  background-color: rgba(0, 0, 0, 0.4); /* Cor de fundo semitransparente */
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
-/* O conteúdo do Modal */
 .modal-content {
-  background-color: #fefefe;
+  background-color: #1d1c1c;
   margin: 15% auto;
   padding: 20px;
   border: 1px solid #888;
@@ -223,32 +222,55 @@ i {
   max-width: 400px;
   border-radius: 8px;
   text-align: center;
+  color: white;
 }
 
-/* Botões dentro do Modal */
 .modal-buttons {
   margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }
 
 .modal-buttons button {
   padding: 10px 20px;
   font-size: 16px;
   border: none;
-  background-color: #4CAF50;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: 0.3s ease;
+}
+
+/* Botão de excluir dentro do modal */
+#confirm-delete-btn {
+  background-color: #47e639;
   color: white;
   cursor: pointer;
-  margin: 0 10px;
+  padding: 10px 20px;
   border-radius: 5px;
+  border: none;
+  font-size: 16px;
+  text-align: center;
+  transition: background-color 0.3s ease;
 }
 
-.modal-buttons button:hover {
-  background-color: #45a049;
+#confirm-delete-btn:hover {
+  background-color: #3cc42f;
 }
 
-.modal-buttons #cancel-delete-btn {
-  background-color: #f44336; /* Cor para o botão de cancelar */
+/* Botão de cancelar dentro do modal */
+#cancel-delete-btn {
+  background-color: #f44336;
+  color: white;
+  cursor: pointer;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  font-size: 16px;
+  text-align: center;
+  transition: background-color 0.3s ease;
 }
 
-.modal-buttons #cancel-delete-btn:hover {
+#cancel-delete-btn:hover {
   background-color: #e41e1e;
 }
