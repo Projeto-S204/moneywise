@@ -172,7 +172,6 @@ def update_profile():
 @users.route("/delete_account", methods=["POST"])
 @login_required
 def delete_account():
-    print("🚨 Rota /delete_account acionada!")
     form = UserDeleteForm()
     if form.is_submitted():
         success = delete_user_logic(current_user, form.password.data)
