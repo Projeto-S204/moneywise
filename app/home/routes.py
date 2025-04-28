@@ -51,13 +51,13 @@ def contact_page():
             msg = Message(
                 subject='Nova mensagem de contato',
                 recipients=[
-                    'joaomarcos.jm@ges.inatel.br'
+                    'suportemw011@gmail.com'
                 ],
                 html=email_body
             )
             mail.send(msg)
             flash("Mensagem enviada com sucesso!", "success")
-            return redirect(url_for('home.sucesso'))
+            return redirect(url_for('home.contact_page'))
         except Exception as e:
             print(f"Erro ao enviar email: {e}")
             flash(
@@ -67,8 +67,3 @@ def contact_page():
             return redirect(url_for('home.contact_page'))
 
     return render_template('contact.html')
-
-
-@home.route('/sucesso')
-def sucesso():
-    return 'Email enviado com sucesso!'

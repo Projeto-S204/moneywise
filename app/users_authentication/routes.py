@@ -25,6 +25,7 @@ from app.users_authentication.services.form_validations import (
 )
 from flask_login import logout_user, current_user, login_required
 from datetime import datetime, timezone, timedelta
+from app.email_utils import enviar_email
 
 
 users = Blueprint(
@@ -186,3 +187,66 @@ def delete_account():
             'success': False,
             'message': f'Erro ao deletar conta: {str(e)}'
         }), 500
+
+@users.route('/reset_password', methods=['GET', 'POST'])
+def reset_password():
+    if request.method == 'POST':
+        email = request.form['email']
+
+        # Monta o link para redefinir a senha
+        link_redefinir = 'http://127.0.0.1:58958/changing_password'  # ou o seu domínio real
+
+        # Envia o email de recuperação
+        assunto = 'Recuperação de Senha - MoneyWise'
+        corpo = f'''
+        <h2>Recuperação de Senha - MoneyWise</h2>
+        <p>Olá!</p>
+        <p>Recebemos uma solicitação para redefinir a sua senha. Se você pediu essa alteração, clique no botão abaixo:</p>
+        <br>
+        <a href="{link_redefinir}" style="padding: 10px 20px; background-color: #7E9DCA; color: white; text-decoration: none; border-radius: 5px;">Redefinir Senha</a>
+        <br><br>
+        <p>Se você não solicitou a redefinição, pode ignorar este email. Sua senha continuará a mesma.</p>
+        <p>Atenciosamente,<br><strong>Equipe MoneyWise</strong></p>
+        '''
+        enviar_email(email, assunto, corpo)
+
+        flash('Um email de recuperação foi enviado!', 'success')
+        return redirect(url_for('users.signin_page')) 
+
+    return render_template('reset_password_page.html')
+
+
+@users.route('/reset_password/<token>', methods=['GET', 'POST'])
+def reset_password_token(token):
+    if request.method == 'POST':
+        nova_senha = request.form['nova_senha']
+        confirmar_senha = request.form['confirmar_senha']
+
+        if nova_senha != confirmar_senha:
+            flash('As senhas não coincidem.', 'danger')
+            return redirect(request.url)
+
+        # Aqui no futuro: validar o token e alterar a senha do usuário no banco de dados
+
+        flash('Senha alterada com sucesso! Faça login.', 'success')
+        return redirect(url_for('users.signin_page'))
+
+    return render_template('changing_password_page.html')
+
+@users.route('/changing_password', methods=['GET', 'POST'])
+def changing_password():
+    if request.method == 'POST':
+        nova_senha = request.form['nova_senha']
+        confirmar_senha = request.form['confirmar_senha']
+
+        if nova_senha != confirmar_senha:
+            flash('As senhas não coincidem!', 'danger')
+            return redirect(url_for('users.changing_password'))
+
+        # Aqui você salvaria a nova senha no banco de dados (depois configuramos isso)
+        
+        flash('Senha alterada com sucesso!', 'success')
+        return redirect(url_for('users.signin_page'))
+
+    return render_template('changing_password_page.html')
+
