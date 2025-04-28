@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector(".info").appendChild(buttonWrapper);
   });
 
-  // Lógica de deletar a conta com confirmação
+  
   const deleteBtn = document.getElementById("delete-account-btn");
   const deleteModal = document.getElementById("delete-confirm-modal");
   const cancelDeleteBtn = document.getElementById("cancel-delete-btn");
