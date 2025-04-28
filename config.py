@@ -20,21 +20,36 @@ jwt = JWTManager()
 migrate = Migrate()
 mail = Mail()
 
+
 class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_DATABASE_URI = f'postgresql://postgres:{DB_PASS}@localhost/{DB_NAME}'
+    SQLALCHEMY_DATABASE_URI = (
+        f'postgresql://postgres:{DB_PASS}@localhost/{DB_NAME}'
+    )
     SECRET_KEY = (
         "k\x8d-\xbd\xb9\x05\xeax\x92\xd9{H\xf0\x9c\xf9\xde\x91\xc6\xe6"
         "\xa8\x14\xf9\x89t"
     )
-    
+
     MAIL_SERVER = 'smtp.gmail.com'
     MAIL_PORT = 587
     MAIL_USE_TLS = True
     MAIL_USE_SSL = False
-    MAIL_USERNAME = 'suportemw011@gmail.com'  
-    MAIL_PASSWORD = 'krofvxeymfmvsjwx'            
+    MAIL_USERNAME = 'suportemw011@gmail.com'
+    MAIL_PASSWORD = 'krofvxeymfmvsjwx'
     MAIL_DEFAULT_SENDER = 'suportemw011@gmail.com'
+
+    JWT_SECRET_KEY = (
+        "k\x8d-\xbd\xb9\x04\xfax\x92\xd9{H\xf0\x9c\xf9\xde\x91\xc6\xe6"
+        "\xa8\x14\xf9\x89t"
+    )
+
+    JWT_TOKEN_LOCATION = ["headers", "cookies"]
+    JWT_COOKIE_SECURE = False
+    JWT_COOKIE_CSRF_PROTECT = False
+    JWT_COOKIE_NAME = "access_token_cookie"
+    JWT_ACCESS_COOKIE_PATH = '/'
+    JWT_REFRESH_COOKIE_PATH = '/auth/refresh'
 
     @staticmethod
     def get_db_connection():
