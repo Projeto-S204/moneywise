@@ -1,6 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
-// import dotenv from 'dotenv';
-// dotenv.config();
+
 
 export default defineConfig({
   testDir: './tests',
@@ -11,8 +10,8 @@ export default defineConfig({
   reporter: 'html',
   use: {
     baseURL: 'http://127.0.0.1:' + process.env.AVAILABLE_PORT,
-
-    trace: 'on-first-retry',
+    trace: 'on',
+    video: 'on'
   },
 
   projects: [
@@ -20,19 +19,8 @@ export default defineConfig({
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
-
-    // {
-    //   name: 'firefox',
-    //   use: { ...devices['Desktop Firefox'] },
-    // },
-
-    // {
-    //   name: 'webkit',
-    //   use: { ...devices['Desktop Safari'] },
-    // },
   ],
 
-  /* Run your local dev server before starting the tests */
   // webServer: {
   //   command: 'python app.py',
   //   url: `http://127.0.0.1:${process.env.AVAILABLE_PORT}`,

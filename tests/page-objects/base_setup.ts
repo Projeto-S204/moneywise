@@ -16,9 +16,6 @@ export class BaseSetup {
   }
 
   async goto() {
-    console.log('BaseSetup: Goto URL:', URL);
-    console.log("PORTA:", process.env.CURRENT_PORT); // debug temporário
-
     await this.page.goto(URL);
   }
 
