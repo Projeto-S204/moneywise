@@ -8,7 +8,7 @@ body {
 
 main {
   display: flex;
-  margin: -150px 90px 30px 90px;
+  margin-left: 75px;
   justify-content: center;
 }
 
