@@ -19,8 +19,8 @@
       href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;700&display=swap"
       rel="stylesheet"
     />
-    <script src="{{ url_for('statistics.static', filename='js/statistics.js') }}"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="{{ url_for('statistics.static', filename='js/statistics.js') }}"></script>
   </head>
   <body>
     <div class="container">
@@ -87,15 +87,20 @@
         </div>
         <div class="grafico">
           <p class="titulo">Top 5 maiores despesas</p>
-          <div id="graficoTopDespesas"></div>
+          <div id="graficoTop5Despesas"></div>
         </div>
       </section>
     </div>
     <script>
-      const receitasPorCategoria = {{ receitas_por_categoria | tojson }};
-      const despesasPorCategoria = {{ despesas_por_categoria | tojson }};
-      console.log("RECEITAS:", receitasPorCategoria);
-      console.log("DESPESAS:", despesasPorCategoria);
+      const receitasPorCategoria = {{ receitas_por_categoria|tojson }};
+      const despesasPorCategoria = {{ despesas_por_categoria|tojson }};
+      const saldoEvolucao = {{ meses|tojson }}.map((mes, i) => [mes, {{ saldos_mensais|tojson }}[i]]);
+      const comparativoMensal = {{ meses|tojson }}.map((mes, i) => [
+        mes,
+        {{ receitas_mensais|tojson }}[i],
+        {{ despesas_mensais|tojson }}[i]
+      ]);
+      const top5Despesas = {{ top5Despesas|tojson }};
     </script>
   </body>
 </html>
