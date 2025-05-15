@@ -1,7 +1,7 @@
 body {
   margin: 0;
   font-family: Josefin Sans, sans-serif;
-  background-color: #1f1f23;
+  background-color: #272827;
   color: #fff;
 }
 
@@ -116,6 +116,6 @@ header h1 {
 
 .grafico .titulo {
   margin-bottom: 10px;
-  font-size: 14px;
+  font-size: 18px;
   color: #ddd;
 }

@@ -19,7 +19,8 @@
       href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;700&display=swap"
       rel="stylesheet"
     />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('statistics.static', filename='js/statistics.js') }}"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   </head>
   <body>
     <div class="container">
@@ -38,59 +39,63 @@
       <section class="cards">
         <div class="card green">
           <div class="card-header">
-            <p>Receitas</p>
+            <p>Receita dos últimos 6 meses</p>
             <i class="bi bi-caret-up-square-fill"></i>
           </div>
-          <h1 id="income-value">R$ 0</h1>
+          <h1 id="receita-value">R$ {{ receitas | round(2) }}</h1>
         </div>
 
         <div class="card red">
           <div class="card-header">
-            <p>Despesas</p>
+            <p>Despesas dos últimos 6 meses</p>
             <i class="bi bi-caret-down-square-fill"></i>
           </div>
-          <h1 id="expense-value">R$ 0</h1>
+          <h1 id="despesa-value">R$ {{ despesas | round(2) }}</h1>
         </div>
 
         <div class="card blue">
           <div class="card-header">
-            <p>Total</p>
+            <p>Total nos últimos 6 meses</p>
             <i class="bi bi-currency-dollar"></i>
           </div>
-          <h1 id="total-value">R$ 0</h1>
+          <h1 id="total-value">R$ {{ total | round(2) }}</h1>
         </div>
       </section>
 
       <section class="graficos-linha">
         <div class="grafico">
           <p class="titulo">Receitas por Categoria</p>
-          <canvas id="graficoReceitasCategoria"></canvas>
+          <div id="graficoReceitasCategoria"></div>
         </div>
         <div class="grafico">
           <p class="titulo">Despesas por Categoria</p>
-          <canvas id="graficoDespesasCategoria"></canvas>
+          <div id="graficoDespesasCategoria"></div>
         </div>
       </section>
 
       <section class="graficos-linha">
         <div class="grafico">
           <p class="titulo">Evolução do saldo nos últimos 6 meses</p>
-          <canvas id="graficoEvolucaoSaldo"></canvas>
+          <div id="graficoEvolucaoSaldo"></div>
         </div>
       </section>
 
       <section class="graficos-linha">
         <div class="grafico">
           <p class="titulo">Receitas × Despesas nos últimos 6 meses</p>
-          <canvas id="graficoComparativo"></canvas>
+          <div id="graficoComparativo"></div>
         </div>
         <div class="grafico">
           <p class="titulo">Top 5 maiores despesas</p>
-          <canvas id="graficoTopDespesas"></canvas>
+          <div id="graficoTopDespesas"></div>
         </div>
       </section>
     </div>
-
-    <script src="{{ url_for('statistics.static', filename='js/statistics.js') }}"></script>
+    <script>
+      const receitasPorCategoria = {{ receitas_por_categoria | tojson }};
+      const despesasPorCategoria = {{ despesas_por_categoria | tojson }};
+      console.log("RECEITAS:", receitasPorCategoria);
+      console.log("DESPESAS:", despesasPorCategoria);
+    </script>
   </body>
 </html>
