@@ -129,6 +129,47 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   );
 
+
+  
+  // === 4.1 Gráfico de linha - Receita, Despesa e Lucro ao longo do tempo ===
+  const lucrosMes = receitasMes.map((receita, index) => receita - despesasMes[index]);
+
+  Plotly.newPlot(
+  "graficoInvestimento",
+  [
+    {
+      x: meses,
+      y: receitasMes,
+      name: "Receitas",
+      type: "scatter",
+      mode: "lines+markers",
+      line: { shape: "spline", color: "#00C49F", width: 3 },
+    },
+    {
+      x: meses,
+      y: despesasMes,
+      name: "Despesas",
+      type: "scatter",
+      mode: "lines+markers",
+      line: { shape: "spline", color: "#FF4444", width: 3 },
+    },
+    {
+      x: meses,
+      y: lucrosMes,
+      name: "Lucro",
+      type: "scatter",
+      mode: "lines+markers",
+      line: { shape: "spline", color: "#FFD700", width: 4, dash: "dashdot" },
+    },
+  ],
+  {
+    ...layoutTemplate,
+    title: "Desempenho Financeiro: Receita, Despesa e Lucro",
+    xaxis: { ...layoutTemplate.xaxis, title: "Mês" },
+    yaxis: { ...layoutTemplate.yaxis, title: "Valor (R$)" },
+  }
+);
+
   // === 5. Gráfico de barra horizontal - Top 5 maiores despesas ===
   const top5Labels = top5Despesas.map((item) => item[0]);
   const top5Valores = top5Despesas.map((item) => parseFloat(item[1]));
