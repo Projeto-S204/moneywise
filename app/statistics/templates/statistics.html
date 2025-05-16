@@ -55,7 +55,7 @@
 
         <div class="card blue">
           <div class="card-header">
-            <p>Total nos últimos 6 meses</p>
+            <p>Saldo nos últimos 6 meses</p>
             <i class="bi bi-currency-dollar"></i>
           </div>
           <h1 id="total-value">R$ {{ total | round(2) }}</h1>
@@ -90,15 +90,14 @@
           <div id="graficoTop5Despesas"></div>
         </div>
       </section>
-      
-    <!-- Nova seção de gráfico de linha despesa x receita x lucro -->
-    <section class="graficos-linha">
-      <div class="grafico">
-        <p class="titulo">Receitas, Despesas e Lucro</p>
-        <div id="graficoInvestimento"></div>
-      </div>
-    </section>
 
+      <!-- Nova seção de gráfico de linha despesa x receita x lucro -->
+      <section class="graficos-linha">
+        <div class="grafico">
+          <p class="titulo">Receitas, Despesas e Saldo</p>
+          <div id="graficoInvestimento"></div>
+        </div>
+      </section>
     </div>
     <script>
       const receitasPorCategoria = {{ receitas_por_categoria|tojson }};

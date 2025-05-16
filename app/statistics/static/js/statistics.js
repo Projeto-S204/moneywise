@@ -37,7 +37,14 @@ document.addEventListener("DOMContentLoaded", function () {
         textinfo: "label+percent",
         hole: 0.4,
         marker: {
-          colors: ["#F2DF85", "#9F1631", "#F97E94", "#822C39"],
+          colors: [
+            "#F7B7B7",
+            "#F1D7A7",
+            "#B7D6B5",
+            "#B2D7F6",
+            "#F5D1D1",
+            "#D0E5D7",
+          ],
         },
       },
     ],
@@ -63,7 +70,14 @@ document.addEventListener("DOMContentLoaded", function () {
         textinfo: "label+percent",
         hole: 0.4,
         marker: {
-          colors: ["#F2DF85", "#9F1631", "#F97E94", "#822C39"],
+          colors: [
+            "#F7B7B7",
+            "#F1D7A7",
+            "#B7D6B5",
+            "#B2D7F6",
+            "#F5D1D1",
+            "#D0E5D7",
+          ],
         },
       },
     ],
@@ -85,8 +99,8 @@ document.addEventListener("DOMContentLoaded", function () {
         y: saldos,
         type: "scatter",
         mode: "lines+markers",
-        line: { shape: "linear", color: "#004FFF" },
-        marker: { color: "#004FFF" },
+        line: { shape: "linear", color: "#038FA7" },
+        marker: { color: "#038FA7" },
       },
     ],
     {
@@ -110,14 +124,24 @@ document.addEventListener("DOMContentLoaded", function () {
         y: receitasMes,
         name: "Receitas",
         type: "bar",
-        marker: { color: "#F2DF85" },
+        marker: {
+          color: "#92CA7E",
+          line: {
+            color: "#92CA7E",
+          },
+        },
       },
       {
         x: meses,
         y: despesasMes,
         name: "Despesas",
         type: "bar",
-        marker: { color: "#9F1631" },
+        marker: {
+          color: "#CA7E7E", // nova cor
+          line: {
+            color: "#CA7E7E",
+          },
+        },
       },
     ],
     {
@@ -129,50 +153,55 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   );
 
-
-  
   // === 4.1 Gráfico de linha - Receita, Despesa e Lucro ao longo do tempo ===
-  const lucrosMes = receitasMes.map((receita, index) => receita - despesasMes[index]);
+  const lucrosMes = receitasMes.map(
+    (receita, index) => receita - despesasMes[index]
+  );
 
   Plotly.newPlot(
-  "graficoInvestimento",
-  [
+    "graficoInvestimento",
+    [
+      {
+        x: meses,
+        y: receitasMes,
+        name: "Receitas",
+        type: "scatter",
+        mode: "lines+markers",
+        line: { shape: "spline", color: "#92CA7E", width: 3 },
+      },
+      {
+        x: meses,
+        y: despesasMes,
+        name: "Despesas",
+        type: "scatter",
+        mode: "lines+markers",
+        line: { shape: "spline", color: "#CA7E7E", width: 3 },
+      },
+      {
+        x: meses,
+        y: lucrosMes,
+        name: "Saldo",
+        type: "scatter",
+        mode: "lines+markers",
+        line: { shape: "spline", color: "#038FA7", width: 4, dash: "dashdot" },
+      },
+    ],
     {
-      x: meses,
-      y: receitasMes,
-      name: "Receitas",
-      type: "scatter",
-      mode: "lines+markers",
-      line: { shape: "spline", color: "#00C49F", width: 3 },
-    },
-    {
-      x: meses,
-      y: despesasMes,
-      name: "Despesas",
-      type: "scatter",
-      mode: "lines+markers",
-      line: { shape: "spline", color: "#FF4444", width: 3 },
-    },
-    {
-      x: meses,
-      y: lucrosMes,
-      name: "Lucro",
-      type: "scatter",
-      mode: "lines+markers",
-      line: { shape: "spline", color: "#FFD700", width: 4, dash: "dashdot" },
-    },
-  ],
-  {
-    ...layoutTemplate,
-    title: "Desempenho Financeiro: Receita, Despesa e Lucro",
-    xaxis: { ...layoutTemplate.xaxis, title: "Mês" },
-    yaxis: { ...layoutTemplate.yaxis, title: "Valor (R$)" },
-  }
-);
+      ...layoutTemplate,
+      title: "Desempenho Financeiro: Receita, Despesa e Saldo",
+      xaxis: { ...layoutTemplate.xaxis, title: "Mês" },
+      yaxis: { ...layoutTemplate.yaxis, title: "Valor (R$)" },
+    }
+  );
 
   // === 5. Gráfico de barra horizontal - Top 5 maiores despesas ===
-  const top5Labels = top5Despesas.map((item) => item[0]);
-  const top5Valores = top5Despesas.map((item) => parseFloat(item[1]));
+  const top5Ordenado = top5Despesas
+    .slice() // faz uma cópia para não alterar o original
+    .sort((a, b) => parseFloat(b[1]) - parseFloat(a[1]))
+    .reverse();
+
+  const top5Labels = top5Ordenado.map((item) => item[0]);
+  const top5Valores = top5Ordenado.map((item) => parseFloat(item[1]));
 
   Plotly.newPlot(
     "graficoTop5Despesas",
@@ -182,7 +211,7 @@ document.addEventListener("DOMContentLoaded", function () {
         x: top5Valores,
         type: "bar",
         orientation: "h",
-        marker: { color: "#004FFF" },
+        marker: { color: "#CA7E7E" },
       },
     ],
     {
