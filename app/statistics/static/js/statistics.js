@@ -50,7 +50,6 @@ document.addEventListener("DOMContentLoaded", function () {
     ],
     {
       ...layoutTemplate,
-      title: "Receitas por Categoria",
     }
   );
 
@@ -83,7 +82,6 @@ document.addEventListener("DOMContentLoaded", function () {
     ],
     {
       ...layoutTemplate,
-      title: "Despesas por Categoria",
     }
   );
 
@@ -105,7 +103,6 @@ document.addEventListener("DOMContentLoaded", function () {
     ],
     {
       ...layoutTemplate,
-      title: "Evolução do Saldo",
       xaxis: { ...layoutTemplate.xaxis, title: "Data" },
       yaxis: { ...layoutTemplate.yaxis, title: "Saldo (R$)" },
     }
@@ -147,7 +144,6 @@ document.addEventListener("DOMContentLoaded", function () {
     {
       ...layoutTemplate,
       barmode: "group",
-      title: "Comparativo: Receitas x Despesas",
       xaxis: { ...layoutTemplate.xaxis, title: "Mês" },
       yaxis: { ...layoutTemplate.yaxis, title: "Valor (R$)" },
     }
@@ -188,7 +184,6 @@ document.addEventListener("DOMContentLoaded", function () {
     ],
     {
       ...layoutTemplate,
-      title: "Desempenho Financeiro: Receita, Despesa e Saldo",
       xaxis: { ...layoutTemplate.xaxis, title: "Mês" },
       yaxis: { ...layoutTemplate.yaxis, title: "Valor (R$)" },
     }
@@ -216,7 +211,6 @@ document.addEventListener("DOMContentLoaded", function () {
     ],
     {
       ...layoutTemplate,
-      title: "Top 5 Maiores Despesas",
       xaxis: { ...layoutTemplate.xaxis, title: "Valor (R$)" },
     }
   );

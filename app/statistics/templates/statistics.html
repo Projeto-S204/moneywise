@@ -42,7 +42,7 @@
             <p>Receita dos últimos 6 meses</p>
             <i class="bi bi-caret-up-square-fill"></i>
           </div>
-          <h1 id="receita-value">R$ {{ receitas | round(2) }}</h1>
+          <h1 id="receita-value">R$ {{ '{:.2f}'.format(receitas) }}</h1>
         </div>
 
         <div class="card red">
@@ -50,7 +50,7 @@
             <p>Despesas dos últimos 6 meses</p>
             <i class="bi bi-caret-down-square-fill"></i>
           </div>
-          <h1 id="despesa-value">R$ {{ despesas | round(2) }}</h1>
+          <h1 id="despesa-value">R$ {{ '{:.2f}'.format(despesas) }}</h1>
         </div>
 
         <div class="card blue">
@@ -58,7 +58,7 @@
             <p>Saldo nos últimos 6 meses</p>
             <i class="bi bi-currency-dollar"></i>
           </div>
-          <h1 id="total-value">R$ {{ total | round(2) }}</h1>
+          <h1 id="total-value">R$ {{ '{:.2f}'.format(total) }}</h1>
         </div>
       </section>
 
