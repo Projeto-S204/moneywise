@@ -108,8 +108,10 @@ def transaction_edit_page(transaction_id):
         try:
             transaction_data = {key: request.form.get(key) for key in [
                 'title', 'amount', 'category', 'payment_method', 'description',
-                'start_date', 'end_date', 'interval',
-                'number_of_payments', 'transaction_type']
+                'transaction_date', 'transaction_hour', 'is_recurring',
+                'start_date',
+                'end_date', 'interval', 'number_of_payments',
+                'transaction_type']
             }
             transaction_data['transaction_id'] = transaction_id
 

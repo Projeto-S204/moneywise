@@ -33,8 +33,19 @@ export class TransactionsPage {
     this.backButton = page.getByText('Voltar');
   }
 
-  async fillTransactionFields(transactionData: any) {
+  async clickNewTransactionBtn() {
     await this.newTransactionBtn.click();
+  }
+
+  async submitCreateForm() {
+    await this.submitButton.click();
+  }
+
+  async submitEditForm() {
+    await this.page.getByRole('button', { name: 'Editar' }).click();
+  }
+
+  async fillTransactionFields(transactionData: any) {
     await this.transactionTitleInput.fill(transactionData.title);
     await this.paymentMethodSelect.selectOption(transactionData.paymentMethod);
     await this.transactionValueInput.fill(transactionData.value);
@@ -48,7 +59,6 @@ export class TransactionsPage {
     }
 
     await this.page.getByRole('button', { name: transactionData.type }).click();
-    await this.submitButton.click();
   }
 
   async expectTransactionToBeViewed(transactionData: any) {
