@@ -1,10 +1,9 @@
 from flask import flash
 from app.users_authentication.models import User
-from flask_login import login_user  # current_user
 from config import db
 
 
-def validade_form_on_signin(form):
+def validate_form_on_signin(form):
 
     if form.validate_on_submit():
         attempted_user = User.query.filter_by(email=form.email.data).first()
@@ -12,7 +11,6 @@ def validade_form_on_signin(form):
             attempted_user
             and attempted_user.check_password(form.password.data)
         ):
-            login_user(attempted_user)
             return attempted_user
         else:
             flash("Email ou senha inválidos", category="danger")

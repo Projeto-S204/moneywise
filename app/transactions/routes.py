@@ -1,7 +1,11 @@
 from flask import Blueprint, redirect, render_template, request, url_for, flash
+from app.users_authentication.models import User
 from .transaction_db import TransactionsModal
-from flask_login import current_user, login_required, logout_user
-from flask_jwt_extended import verify_jwt_in_request
+from flask_jwt_extended import (
+    verify_jwt_in_request,
+    get_jwt_identity,
+    jwt_required
+)
 
 
 TransactionsModal.create_transaction_table()
@@ -16,14 +20,19 @@ transactions = Blueprint(
 
 
 @transactions.route('/', methods=['GET'])
-@login_required
 def transactions_page():
     try:
         verify_jwt_in_request()
     except Exception:
-        logout_user()
-        flash("Sessão expirada. Faça login novamente.", category="warning")
+        flash(
+            "Sessão expirada. Faça login novamente.",
+            category="token_expired"
+        )
         return redirect(url_for("users.signin_page"))
+
+    user_id = get_jwt_identity()
+
+    user = User.query.get(user_id)
 
     transactions_filters = {key: request.args.get(key) for key in [
         'search', 'filter-type', 'filter-category', 'filter-start-date',
@@ -41,10 +50,11 @@ def transactions_page():
     }
 
     transactions_list = TransactionsModal.transactions_get_list(
-        transactions_filters, user_id=current_user.id
+        transactions_filters, user_id=user_id
     )
     return render_template(
         'transactions_list_page.html',
+        user=user,
         transactions=transactions_list,
         transactions_filters=transactions_filters,
         category_colors=category_colors
@@ -52,8 +62,9 @@ def transactions_page():
 
 
 @transactions.route('/create', methods=['GET', 'POST'])
-@login_required
+@jwt_required()
 def transaction_create_page():
+    user_id = get_jwt_identity()
     if request.method == 'POST':
         try:
             transaction_data = {key: request.form.get(key) for key in [
@@ -65,21 +76,29 @@ def transaction_create_page():
             }
 
             TransactionsModal.transaction_create(
-                transaction_data, user_id=current_user.id
+                transaction_data, user_id=user_id
             )
 
-            flash('Criada com sucesso.', 'success')
+            flash('Criada com sucesso.', category='success')
             return redirect(url_for('transactions.transactions_page'))
         except Exception as e:
-            flash('Ocorreu um erro ao criar, tente novamente.', 'error')
+            flash(
+                'Ocorreu um erro ao criar, tente novamente.',
+                category='error'
+            )
             print(f"Error: {e}")
 
     return render_template('transaction_form_page.html', transaction=None)
 
 
 @transactions.route('/edit/<int:transaction_id>', methods=['GET', 'POST'])
-@login_required
 def transaction_edit_page(transaction_id):
+
+    try:
+        verify_jwt_in_request()
+    except Exception:
+        return redirect(url_for("users.signin_page"))
+
     if request.method == 'GET':
         transaction = TransactionsModal.transactions_get_list(
             transaction_id=transaction_id
@@ -97,11 +116,12 @@ def transaction_edit_page(transaction_id):
             transaction_data['transaction_id'] = transaction_id
 
             TransactionsModal.transaction_edit(transaction_data)
-
-            flash('Editado com sucesso.', 'success')
             return redirect(url_for('transactions.transactions_page'))
         except Exception as e:
-            flash('Ocorreu um erro ao editar, tente novamente.', 'error')
+            flash(
+                'Ocorreu um erro ao editar, tente novamente.',
+                category='error'
+            )
             print(f"Error: {e}")
 
     return render_template(
@@ -111,13 +131,17 @@ def transaction_edit_page(transaction_id):
 
 
 @transactions.route('/delete/<int:transaction_id>', methods=['GET'])
-@login_required
 def transaction_delete(transaction_id):
+
+    try:
+        verify_jwt_in_request()
+    except Exception:
+        return redirect(url_for("users.signin_page"))
+
     try:
         TransactionsModal.transaction_delete(transaction_id)
-        flash('Deletado com sucesso.', 'success')
     except Exception as e:
-        flash('Ocorreu um erro ao deletar', 'error')
+        flash('Ocorreu um erro ao deletar', category='error')
         print(f"Error: {e}")
 
     return redirect(url_for('transactions.transactions_page'))

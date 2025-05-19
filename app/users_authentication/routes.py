@@ -15,6 +15,8 @@ from flask_jwt_extended import (
     jwt_required,
     # verify_jwt_in_request,
     get_jwt,
+    get_jwt_identity,
+    verify_jwt_in_request
     # create_refresh_token,
 )
 from app.users_authentication.services.signin_form import UserSigninForm
@@ -23,11 +25,12 @@ from app.users_authentication.services.delete_form import UserDeleteForm
 from app.users_authentication.services.user_service import delete_user_logic
 from app.users_authentication.services.form_validations import (
     validate_form_on_signup,
-    validade_form_on_signin,
+    validate_form_on_signin,
 )
-from flask_login import logout_user, current_user, login_required
+from flask_jwt_extended.exceptions import NoAuthorizationError
+from jwt import ExpiredSignatureError
+from app.users_authentication.models import User
 from datetime import datetime, timezone, timedelta
-
 
 users = Blueprint(
     'users',
@@ -40,12 +43,22 @@ users = Blueprint(
 
 @users.route("/signin", methods=["GET", "POST"])
 def signin_page():
-    if current_user.is_authenticated:
-        return redirect(url_for("transactions.transactions_page"))
+    try:
+        verify_jwt_in_request(optional=True)
+        user_id = get_jwt_identity()
+        if user_id:
+            return redirect(url_for("transactions.transactions_page"))
+    except ExpiredSignatureError:
+        flash("Sua sessão expirou. Faça login novamente.", category="auth")
+        response = make_response(redirect(url_for("users.signin_page")))
+        unset_jwt_cookies(response)
+        return response
+    except NoAuthorizationError:
+        pass
 
     form = UserSigninForm()
     if form.is_submitted():
-        user = validade_form_on_signin(form)
+        user = validate_form_on_signin(form)
         if user:
             access_token = create_access_token(identity=str(user.id))
             print(f"[ROTA] Token com Flask-JWT-Extended: {access_token}")
@@ -65,18 +78,17 @@ def signup_page():
     if form.is_submitted():
         user = validate_form_on_signup(form)
         if user:
-            flash("Conta criada com sucesso. Faça login.", category="success")
+            flash("Conta criada com sucesso. Faça login.", category="auth")
             return redirect(url_for("users.signin_page"))
 
     return render_template("signup_page.html", form=form)
 
 
-@users.route("/logout")
+@users.route("/logout", methods=["GET"])
 def logout():
-    logout_user()
     response = make_response(redirect(url_for("users.signin_page")))
     unset_jwt_cookies(response)
-    flash("Logout realizado com sucesso!", "success")
+    flash("Logout realizado com sucesso!", category="auth")
     return response
 
 
@@ -130,25 +142,29 @@ def token_expires():
 
 
 @users.route("/profile")
-@login_required
+@jwt_required()
 def profile_page():
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
     form = UserDeleteForm()
-    return render_template("profile.html", user=current_user, form=form)
+    return render_template("profile.html", user=user, form=form)
 
 
 @users.route("/profile/update", methods=["POST"])
-@login_required
+@jwt_required()
 def update_profile():
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
     from app import db
     try:
         data = request.json
-        current_user.name = data.get('name')
-        current_user.email = data.get('email')
+        user.name = data.get('name')
+        user.email = data.get('email')
 
         birthday_str = data.get('birthday')
         if birthday_str:
             try:
-                current_user.birthday = datetime.strptime(
+                user.birthday = datetime.strptime(
                     birthday_str, '%Y-%m-%d'
                 ).date()
             except ValueError:
@@ -170,17 +186,18 @@ def update_profile():
 
 
 @users.route("/delete_account", methods=["POST"])
-@login_required
+@jwt_required()
 def delete_account():
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
     form = UserDeleteForm()
     if form.is_submitted():
-        success = delete_user_logic(current_user, form.password.data)
+        success = delete_user_logic(user, form.password.data)
 
         if success:
-            logout_user()
             response = make_response(redirect(url_for("users.signin_page")))
             unset_jwt_cookies(response)
-            flash("Conta excluída com sucesso.", category="success")
+            flash("Conta excluída com sucesso.", category="auth")
             return response
         else:
             flash(
