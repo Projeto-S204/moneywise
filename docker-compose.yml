@@ -1,0 +1,39 @@
+
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: moneywise-app
+        ports:
+            - "3000:3000"
+        environment:
+            DATABASE_URL: postgres://postgres:meritopg@db_container:5432/moneywise
+        depends_on:
+            - db_container
+        networks:
+            - moneywise-network
+        command: >
+            sh -c "./wait-for-it.sh db_container:5432 -- flask db upgrade && python app.py"
+        volumes:
+            - .:/app
+
+    db_container:
+        image: postgres:13
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: meritopg
+            POSTGRES_DB: moneywise
+        ports:
+            - "5433:5432"
+        volumes:
+            - db-data:/var/lib/postgresql/data
+        networks:
+            - moneywise-network
+
+volumes:
+    db-data:
+
+networks:
+    moneywise-network:
+        driver: bridge

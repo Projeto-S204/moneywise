@@ -6,8 +6,9 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 import os
 from flask_mail import Mail
+from datetime import timedelta
 
-DB_HOST = "localhost"
+DB_HOST = "db_container"
 DB_NAME = "moneywise"
 DB_USER = "postgres"
 DB_PASS = "meritopg"
@@ -23,7 +24,7 @@ mail = Mail()
 class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_DATABASE_URI = (
-        f'postgresql://postgres:{DB_PASS}@localhost/{DB_NAME}'
+        f'postgresql://postgres:{DB_PASS}@{DB_HOST}/{DB_NAME}'
     )
     SECRET_KEY = (
         "k\x8d-\xbd\xb9\x05\xeax\x92\xd9{H\xf0\x9c\xf9\xde\x91\xc6\xe6"
@@ -49,6 +50,7 @@ class Config:
     JWT_COOKIE_NAME = "access_token_cookie"
     JWT_ACCESS_COOKIE_PATH = '/'
     JWT_REFRESH_COOKIE_PATH = '/auth/refresh'
+    JWT_ACCESS_TOKEN_EXPIRES = timedelta(minutes=2)
 
     @staticmethod
     def get_db_connection():
