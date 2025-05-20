@@ -2,7 +2,7 @@ import { expect, type Page } from "@playwright/test";
 import dotenv from 'dotenv';
 dotenv.config();
 
-let URL = 'http://127.0.0.1:' + process.env.CURRENT_PORT;
+let URL = 'http://127.0.0.1:3000';
 
 export class BaseSetup {
   private readonly page: Page;
