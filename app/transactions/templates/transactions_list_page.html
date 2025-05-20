@@ -25,7 +25,7 @@
         <img src="static/images/white_logo.png" alt="MoneyWise Logo" class="logo" />
         <div class="user-info" onclick="toggleMenu(event)">
           <div class="user-info-content">
-            <span>{{ user.name }}</span>
+            <span>{{ current_user.name }}</span>
             <i class="bi bi-person-circle"></i>
           </div>
           <div id="user-menu" class="user-menu">
@@ -36,7 +36,7 @@
 
             <div class="dashboards-option-contenct">
               <i class="bi bi-bar-chart"></i>
-              <a href="#">Estatísticas</a>
+              <a href="{{ url_for('statistics.statistics_page') }}">Estatísticas</a>
             </div>
 
             <div class="profile-option-contenct">
@@ -75,7 +75,7 @@
 
       <div class="card blue">
         <div class="card-header">
-          <p>Receitas</p>
+          <p>Saldo</p>
           <i class="bi bi-currency-dollar"></i>
         </div>
         <h1 id="total-value">R$ 0</h1>

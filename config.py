@@ -11,7 +11,7 @@ from datetime import timedelta
 DB_HOST = "db_container"
 DB_NAME = "moneywise"
 DB_USER = "postgres"
-DB_PASS = "meritopg"
+DB_PASS = "1234"
 DB_PORT = "5432"
 
 db = SQLAlchemy()

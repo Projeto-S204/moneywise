@@ -22,7 +22,7 @@ services:
         image: postgres:13
         environment:
             POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: meritopg
+            POSTGRES_PASSWORD: 1234
             POSTGRES_DB: moneywise
         ports:
             - "5433:5432"
