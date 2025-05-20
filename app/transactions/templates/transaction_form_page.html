@@ -27,17 +27,21 @@
           <div class="first-input-row">
             <div class="title-container">
               <label for="title">Título</label>
-              <input type="text" id="title" name="title" placeholder="Digite um Título" required value="{{ transaction.title }}" />
+              <input type="text" id="title" name="title" placeholder="Digite um Título" required
+                value="{{ transaction.title }}" />
             </div>
-      
+
             <div class="payment-method-container">
               <label for="payment_method">Método de Pagamento</label>
               <select id="payment_method" name="payment_method" required>
                 <option value="" disabled selected>Selecione uma opção</option>
-                <option value="Debito" {% if transaction.payment_method=='Debito' %} selected {% endif %}>Débito</option>
-                <option value="Credito" {% if transaction.payment_method=='Credito' %} selected {% endif %}>Crédito</option>
+                <option value="Debito" {% if transaction.payment_method=='Debito' %} selected {% endif %}>Débito
+                </option>
+                <option value="Credito" {% if transaction.payment_method=='Credito' %} selected {% endif %}>Crédito
+                </option>
                 <option value="PIX" {% if transaction.payment_method=='PIX' %} selected {% endif %}>PIX</option>
-                <option value="Boleto" {% if transaction.payment_method=='Boleto' %} selected {% endif %}>Boleto</option>
+                <option value="Boleto" {% if transaction.payment_method=='Boleto' %} selected {% endif %}>Boleto
+                </option>
                 <option value="Outro" {% if transaction.payment_method=='Outro' %} selected {% endif %}>Outro</option>
               </select>
             </div>
@@ -47,20 +51,23 @@
           <div class="second-input-row">
             <div class="amount-container">
               <label for="amount">Valor</label>
-              <input type="text" id="amount" name="amount" placeholder="Digite um Valor" value="{{ transaction.amount }}" required />
+              <input type="text" id="amount" name="amount" placeholder="Digite um Valor"
+                value="{{ transaction.amount }}" required />
             </div>
-      
+
             <div class="date-container">
               <label for="transaction_date">Data</label>
-              <input type="date" id="transaction_date" name="transaction_date" value="{{ transaction.transaction_date }}" required />
+              <input type="date" id="transaction_date" name="transaction_date"
+                value="{{ transaction.transaction_date }}" required />
             </div>
-      
+
             <div class="category-container">
               <label for="category">Categoria</label>
               <select id="category" name="category" required>
                 <option value="" disabled selected>Selecione uma opção</option>
                 <option value="Casa" {% if transaction.category=='Casa' %} selected {% endif %}>Casa</option>
-                <option value="Entretenimento" {% if transaction.category=='Entretenimento' %} selected {% endif %}>Entretenimento</option>
+                <option value="Entretenimento" {% if transaction.category=='Entretenimento' %} selected {% endif %}>
+                  Entretenimento</option>
                 <option value="Estudos" {% if transaction.category=='Estudos' %} selected {% endif %}>Estudos</option>
                 <option value="Viagem" {% if transaction.category=='Viagem' %} selected {% endif %}>Viagem</option>
                 <option value="Saúde" {% if transaction.category=='Saúde' %} selected {% endif %}>Saúde</option>
@@ -71,7 +78,8 @@
 
           <div class="input-container">
             <label for="description">Descrição</label>
-            <textarea id="description" name="description" placeholder="Digite uma Descrição para a sua Transação">{{ transaction.description }}</textarea>
+            <textarea id="description" name="description"
+              placeholder="Digite uma Descrição para a sua Transação">{{ transaction.description }}</textarea>
           </div>
 
           <div class="is_recurring_content">
@@ -83,7 +91,8 @@
 
             <div style="display: none;" id="number-of-payments-container">
               <label for="number_of_payments">Número de parcelas</label>
-              <input type="number" id="number_of_payments" name="number_of_payments" placeholder="Número de parcelas" value="{{ transaction.number_of_payments if transaction.number_of_payments else 2 }}">
+              <input type="number" id="number_of_payments" name="number_of_payments" placeholder="Número de parcelas"
+                value="{{ transaction.number_of_payments if transaction.number_of_payments else 2 }}">
             </div>
           </div>
 
@@ -100,10 +109,12 @@
           </select> -->
 
           <div class="transaction-type-buttons">
-            <button type="button" id="income-btn" class="income-btn" onclick="setTransactionType('income'); changeButtonColor(this)">
+            <button type="button" id="income-btn" class="income-btn"
+              onclick="setTransactionType('income'); changeButtonColor(this)">
               <i class="bi bi-caret-up-square-fill"></i> Receita
             </button>
-            <button type="button" id="expense-btn" class="expense-btn" onclick="setTransactionType('expense'); changeButtonColor(this)">
+            <button type="button" id="expense-btn" class="expense-btn"
+              onclick="setTransactionType('expense'); changeButtonColor(this)">
               <i class="bi bi-caret-down-square-fill"></i> Despesa
             </button>
           </div>

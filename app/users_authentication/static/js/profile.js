@@ -50,8 +50,31 @@ document.addEventListener("DOMContentLoaded", () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          alert("Perfil atualizado com sucesso!");
-          location.reload();
+          // Mudando o título para "Perfil Atualizado"
+          title.firstChild.textContent = "Perfil";
+
+          // Popup de sucesso após salvar
+          const successPopup = document.createElement("div");
+          successPopup.classList.add("popup", "success");
+          successPopup.textContent = "Perfil atualizado com sucesso!";
+          document.body.appendChild(successPopup);
+
+          // Mostrar o popup e removê-lo após 2 segundos
+          setTimeout(() => {
+            successPopup.remove();
+            location.reload();
+          }, 2000);
+
+          // Desabilitar os campos e esconder os botões após salvar
+          inputs.forEach((input) => {
+            input.disabled = true;
+            input.style.backgroundColor = "#0F0F10";
+            input.style.color = "#FFFFFF";
+          });
+
+          buttonWrapper.remove();
+          buttonWrapper = null;
+          editBtn.style.display = "inline";
         } else {
           alert("Erro ao atualizar perfil.");
         }
@@ -78,37 +101,34 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector(".info").appendChild(buttonWrapper);
   });
 
-  
+  // Lógica para deletar conta
   const deleteBtn = document.getElementById("delete-account-btn");
   const deleteModal = document.getElementById("delete-confirm-modal");
   const cancelDeleteBtn = document.getElementById("cancel-delete-btn");
   const flashMessage = document.querySelector(".flash-message");
   const deleteErrorMessage = document.querySelector("delete-error-message");
-   
-  
+
   if (flashMessage) {
-     deleteModal.style.display = "block";
-   }
+    deleteModal.style.display = "block";
+  }
 
   if (deleteBtn) {
     deleteBtn.addEventListener("click", (e) => {
       e.preventDefault();
-    
+
       deleteModal.style.display = "block";
     });
 
     cancelDeleteBtn.addEventListener("click", () => {
       deleteModal.style.display = "none";
-      
+
       if (deleteErrorMessage) {
         deleteErrorMessage.style.display = "none";
       }
 
-      if(passwordField){
+      if (passwordField) {
         passwordField.value = "";
       }
-
     });
   }
 });
-

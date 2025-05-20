@@ -1,8 +1,8 @@
 from config import Config
 from .utils import convert_value
 
-
 class TransactionsModal:
+    
     @staticmethod
     def create_transaction_table():
         try:
@@ -32,6 +32,7 @@ class TransactionsModal:
                     db_connection.commit()
         except Exception as e:
             print(f"Error {e}")
+
 
     @staticmethod
     def transaction_create(transaction_data: dict, user_id=None):
@@ -143,6 +144,7 @@ class TransactionsModal:
                     rows = cursor.fetchall()
                     results = [dict(zip(column_names, row)) for row in rows]
 
+                    print("Transações encontradas:", results)
                     return results
 
         except Exception as e:
@@ -183,4 +185,4 @@ class TransactionsModal:
                     
         except Exception as e:
             print(f"Error {e}")
-            return f"Erro ao deletar transação: {e}"
+            return f"Erro ao deletar transação: {e}"  

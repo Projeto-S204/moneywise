@@ -7,7 +7,7 @@ bcrypt = Bcrypt()
 
 
 class User(db.Model, UserMixin):
-    __tablename__ = "users"
+    __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
     created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
@@ -19,27 +19,28 @@ class User(db.Model, UserMixin):
     avatar = db.Column(db.String(255), nullable=True)
 
     def __repr__(self):
-        return f"<User {self.name} ID {str(self.id)}>"
+        return f'<User {self.name} ID {str(self.id)}>'
 
     def __str__(self):
-        return f"{self.name}"
+        return f'{self.name}'
 
     def to_dict(self):
         return {
-            "id": self.id,
-            "avatar": self.avatar,
-            "name": self.name,
-            "email": self.email,
-            "birthday": self.birthday.strftime("%Y-%m-%d"),
-            "created_at": self.created_at.strftime("%Y-%m-%d %H:%M:%S"),
-            "updated_at": self.updated_at,
+            'id': self.id,
+            'avatar': self.avatar,
+            'name': self.name,
+            'email': self.email,
+            'birthday': self.birthday.strftime('%Y-%m-%d'),
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
         }
 
-    def __init__(self, email, name, password, birthday, avatar=None):
+    def __init__(self, email, name, password, birthday,
+                 avatar=None):
         self.email = email
         self.name = name
-        self.hashed_password = bcrypt.generate_password_hash(password) \
-            .decode("utf-8")
+        self.hashed_password = bcrypt.generate_password_hash(
+            password).decode('utf-8')
         self.birthday = birthday
         self.avatar = avatar
 
