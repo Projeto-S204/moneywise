@@ -1,8 +1,8 @@
 from config import Config
 from .utils import convert_value
 
+
 class TransactionsModal:
-    
     @staticmethod
     def create_transaction_table():
         try:
@@ -32,7 +32,6 @@ class TransactionsModal:
                     db_connection.commit()
         except Exception as e:
             print(f"Error {e}")
-
 
     @staticmethod
     def transaction_create(transaction_data: dict, user_id=None):
