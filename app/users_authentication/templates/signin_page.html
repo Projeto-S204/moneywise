@@ -1,55 +1,32 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="{{ url_for('users.static', filename='css/singin_page.css') }}"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Jomhuria&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;700&display=swap"
-      rel="stylesheet"
-    />
-  </head>
 
-  <body>
-    <div class="container mt-5">
-      <a href="{{ url_for('home.home_page') }}">
-        <img
-          src="{{ url_for('home.static', filename='images/logo.png') }}"
-          alt="Logo"
-          class="logo"
-        />
-      </a>
-      <h2>Entrar no MoneyWise</h2>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="{{ url_for('users.static', filename='css/singin_page.css') }}" />
+  <link href="https://fonts.googleapis.com/css2?family=Jomhuria&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;700&display=swap" rel="stylesheet" />
+</head>
 
-      {% with messages = get_flashed_messages(with_categories=true) %} {% if
-      messages %} {% for category, message in messages %}
-      <div
-        class="alert alert-{{ category }} alert-dismissible fade show"
-        role="alert"
-      >
-        {{ message }}
-        <button
-          type="button"
-          class="close"
-          data-dismiss="alert"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      {% endfor %} {% endif %} {% endwith %}
+<body>
+  <div class="container mt-5">
+    <a href="{{ url_for('home.home_page') }}">
+      <img src="{{ url_for('home.static', filename='images/logo.png') }}" alt="Logo" class="logo" />
+    </a>
+    <h2>Entrar no MoneyWise</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %} {% for category, message in messages %}
+    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endfor %} {% endif %} {% endwith %}
 
       <form action="{{ url_for('users.signin_page') }}" method="POST">
         {{ form.hidden_tag() }}
@@ -62,33 +39,26 @@
           form.password(class="form-control", placeholder="Digite sua senha") }}
         </div>
 
-        <div class="remember-forgot-container">
-          <div class="remember-me-container">
-            <input
-              type="checkbox"
-              id="remember_me"
-              name="remember_me"
-              value="1"
-            />
-            <label for="remember_me">Lembrar-me?</label>
-          </div>
-
-          <div class="forgot-password-container">
-            <a href="{{ url_for('users.reset_password') }}"
-              >Esqueci minha senha</a
-            >
-          </div>
+      <div class="remember-forgot-container">
+        <div class="remember-me-container">
+          <input type="checkbox" id="remember_me" name="remember_me" value="1" />
+          <label for="remember_me">Lembrar-me?</label>
         </div>
 
-        <div class="form-group">{{ form.submit(class="btn btn-submit") }}</div>
-        <div class="text-center">
-          <p>
-            Não tem uma conta?
-            <a href="{{ url_for('users.signup_page') }}">Registrar-se</a>
-          </p>
+        <div class="forgot-password-container">
+          <a href="{{ url_for('users.reset_password') }}">Esqueci minha senha</a>
         </div>
-      </form>
-    </div>
+      </div>
+
+      <div class="form-group">{{ form.submit(class="btn btn-submit") }}</div>
+      <div class="text-center">
+        <p>
+          Não tem uma conta?
+          <a href="{{ url_for('users.signup_page') }}">Registrar-se</a>
+        </p>
+      </div>
+    </form>
+  </div>
 
     <script>
       document
