@@ -20,11 +20,24 @@ const layoutTemplate = {
   margin: { l: 40, r: 40, t: 60, b: 40 },
 };
 
+// 🟡 Adiciona isso aqui no topo!
+const coresPorCategoria = {
+  Casa: "#F7B7B7",
+  Viagem: "#B2D7F6",
+  Entretenimento: "#F1D7A7",
+  Estudos: "#B7D6B5",
+  Saúde: "#F5D1D1",
+  Mercado: "#D0E5D7",
+};
+
 document.addEventListener("DOMContentLoaded", function () {
   // === 1. Gráfico de pizza - Receitas por categoria ===
   const receitasLabels = receitasPorCategoria.map((item) => item[0]);
   const receitasValues = receitasPorCategoria.map((item) =>
     parseFloat(item[1])
+  );
+  const receitasColors = receitasLabels.map(
+    (categoria) => coresPorCategoria[categoria] || "#CCCCCC"
   );
 
   Plotly.newPlot(
@@ -37,26 +50,20 @@ document.addEventListener("DOMContentLoaded", function () {
         textinfo: "label+percent",
         hole: 0.4,
         marker: {
-          colors: [
-            "#F7B7B7",
-            "#F1D7A7",
-            "#B7D6B5",
-            "#B2D7F6",
-            "#F5D1D1",
-            "#D0E5D7",
-          ],
+          colors: receitasColors,
         },
       },
     ],
-    {
-      ...layoutTemplate,
-    }
+    { ...layoutTemplate }
   );
 
   // === 2. Gráfico de pizza - Despesas por categoria ===
   const despesasLabels = despesasPorCategoria.map((item) => item[0]);
   const despesasValues = despesasPorCategoria.map((item) =>
     parseFloat(item[1])
+  );
+  const despesasColors = despesasLabels.map(
+    (categoria) => coresPorCategoria[categoria] || "#CCCCCC"
   );
 
   Plotly.newPlot(
@@ -69,20 +76,11 @@ document.addEventListener("DOMContentLoaded", function () {
         textinfo: "label+percent",
         hole: 0.4,
         marker: {
-          colors: [
-            "#F7B7B7",
-            "#F1D7A7",
-            "#B7D6B5",
-            "#B2D7F6",
-            "#F5D1D1",
-            "#D0E5D7",
-          ],
+          colors: despesasColors,
         },
       },
     ],
-    {
-      ...layoutTemplate,
-    }
+    { ...layoutTemplate }
   );
 
   // === 3. Gráfico de linha - Evolução do saldo ===
@@ -123,9 +121,7 @@ document.addEventListener("DOMContentLoaded", function () {
         type: "bar",
         marker: {
           color: "#92CA7E",
-          line: {
-            color: "#92CA7E",
-          },
+          line: { color: "#92CA7E" },
         },
       },
       {
@@ -134,10 +130,8 @@ document.addEventListener("DOMContentLoaded", function () {
         name: "Despesas",
         type: "bar",
         marker: {
-          color: "#CA7E7E", // nova cor
-          line: {
-            color: "#CA7E7E",
-          },
+          color: "#CA7E7E",
+          line: { color: "#CA7E7E" },
         },
       },
     ],
@@ -191,7 +185,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // === 5. Gráfico de barra horizontal - Top 5 maiores despesas ===
   const top5Ordenado = top5Despesas
-    .slice() // faz uma cópia para não alterar o original
+    .slice()
     .sort((a, b) => parseFloat(b[1]) - parseFloat(a[1]))
     .reverse();
 
