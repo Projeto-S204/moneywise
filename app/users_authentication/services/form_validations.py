@@ -1,16 +1,17 @@
 from flask import flash
 from app.users_authentication.models import User
+from flask_login import login_user  # current_user
 from config import db
 
 
-def validate_form_on_signin(form):
+def validade_form_on_signin(form):
 
     if form.validate_on_submit():
-        attempted_user = User.query.filter_by(email=form.email.data).first()
-        if (
-            attempted_user
-            and attempted_user.check_password(form.password.data)
-        ):
+        attempted_user = User.query.filter_by(
+            email=form.email.data).first()
+        if attempted_user and attempted_user.check_password(
+                form.password.data):
+            login_user(attempted_user)
             return attempted_user
         else:
             flash("Email ou senha inválidos", category="danger")
@@ -43,3 +44,15 @@ def validate_form_on_signup(form):
         flash("Erro ao criar conta. Tente novamente.", category="danger")
         print(f"Flash: Erro ao criar conta: {e}")
         return False
+
+
+# def validade_delete_user_form(form):
+#     if form.validate_on_submit():
+#         if current_user.check_password(form.password.data):
+#             user = User.query.get(current_user.id)
+#             db.session.delete(user)
+#             db.session.commit()
+#             return True
+#         else:
+#             flash("Senha incorreta. Tente novamente.", category="danger")
+#     return False

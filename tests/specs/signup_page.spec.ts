@@ -1,21 +1,17 @@
 import { test } from "../fixtures/fixtures"
 
 test.describe("Registration Methods", () => {
-  test.afterEach(async ({ transactionsPage, profilePage }) => {
+  test.afterEach(async ({ signinPage, transactionsPage, profilePage }) => {
+    await signinPage.login('test@test.com', '!Test12345678');
     await transactionsPage.gotoProfilePage();
     await profilePage.deleteUser('!Test12345678');
   });
-  
-  test("should be able to register with valid credentials", async ({ baseSetup, signupPage, signinPage }) => {
-    const userName = `test +${Date.now()}@test.com`;
-    const email = `test+${Date.now()}@test.com`;
-    const password = '!Test12345678';
-    const birthDate = '2002-09-29';
-    
-    await signupPage.register(userName, email, password, password, birthDate);
+
+  test("should be able to register with valid credentials", async ({ baseSetup, signupPage }) => {
+    await signupPage.register('test', 'test@test.com', '!Test12345678', '!Test12345678', '2002-09-29');
     await baseSetup.expectURL('/signin');
-    await signinPage.login(email, password);
   });
+
 });
 
 test("should not be able to register with invalid email", async ({ signupPage }) => {
