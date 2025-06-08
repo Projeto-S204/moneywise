@@ -15,8 +15,6 @@ from flask_jwt_extended import (
     jwt_required,
     # verify_jwt_in_request,
     get_jwt,
-    get_jwt_identity,
-    verify_jwt_in_request
     # create_refresh_token,
 )
 from app.users_authentication.services.signin_form import UserSigninForm
@@ -25,12 +23,12 @@ from app.users_authentication.services.delete_form import UserDeleteForm
 from app.users_authentication.services.user_service import delete_user_logic
 from app.users_authentication.services.form_validations import (
     validate_form_on_signup,
-    validate_form_on_signin,
+    validade_form_on_signin,
 )
-from flask_jwt_extended.exceptions import NoAuthorizationError
-from jwt import ExpiredSignatureError
-from app.users_authentication.models import User
+from flask_login import logout_user, current_user, login_required
 from datetime import datetime, timezone, timedelta
+from app.email_utils import enviar_email
+
 
 users = Blueprint(
     'users',
@@ -43,22 +41,12 @@ users = Blueprint(
 
 @users.route("/signin", methods=["GET", "POST"])
 def signin_page():
-    try:
-        verify_jwt_in_request(optional=True)
-        user_id = get_jwt_identity()
-        if user_id:
-            return redirect(url_for("transactions.transactions_page"))
-    except ExpiredSignatureError:
-        flash("Sua sessão expirou. Faça login novamente.", category="auth")
-        response = make_response(redirect(url_for("users.signin_page")))
-        unset_jwt_cookies(response)
-        return response
-    except NoAuthorizationError:
-        pass
+    if current_user.is_authenticated:
+        return redirect(url_for("transactions.transactions_page"))
 
     form = UserSigninForm()
     if form.is_submitted():
-        user = validate_form_on_signin(form)
+        user = validade_form_on_signin(form)
         if user:
             access_token = create_access_token(identity=str(user.id))
             print(f"[ROTA] Token com Flask-JWT-Extended: {access_token}")
@@ -78,17 +66,18 @@ def signup_page():
     if form.is_submitted():
         user = validate_form_on_signup(form)
         if user:
-            flash("Conta criada com sucesso. Faça login.", category="auth")
+            flash("Conta criada com sucesso. Faça login.", category="success")
             return redirect(url_for("users.signin_page"))
 
     return render_template("signup_page.html", form=form)
 
 
-@users.route("/logout", methods=["GET"])
+@users.route("/logout")
 def logout():
+    logout_user()
     response = make_response(redirect(url_for("users.signin_page")))
     unset_jwt_cookies(response)
-    flash("Logout realizado com sucesso!", category="auth")
+    flash("Logout realizado com sucesso!", "success")
     return response
 
 
@@ -142,29 +131,25 @@ def token_expires():
 
 
 @users.route("/profile")
-@jwt_required()
+@login_required
 def profile_page():
-    user_id = get_jwt_identity()
-    user = User.query.get(user_id)
     form = UserDeleteForm()
-    return render_template("profile.html", user=user, form=form)
+    return render_template("profile.html", user=current_user, form=form)
 
 
 @users.route("/profile/update", methods=["POST"])
-@jwt_required()
+@login_required
 def update_profile():
-    user_id = get_jwt_identity()
-    user = User.query.get(user_id)
     from app import db
     try:
         data = request.json
-        user.name = data.get('name')
-        user.email = data.get('email')
+        current_user.name = data.get('name')
+        current_user.email = data.get('email')
 
         birthday_str = data.get('birthday')
         if birthday_str:
             try:
-                user.birthday = datetime.strptime(
+                current_user.birthday = datetime.strptime(
                     birthday_str, '%Y-%m-%d'
                 ).date()
             except ValueError:
@@ -186,18 +171,17 @@ def update_profile():
 
 
 @users.route("/delete_account", methods=["POST"])
-@jwt_required()
+@login_required
 def delete_account():
-    user_id = get_jwt_identity()
-    user = User.query.get(user_id)
     form = UserDeleteForm()
     if form.is_submitted():
-        success = delete_user_logic(user, form.password.data)
+        success = delete_user_logic(current_user, form.password.data)
 
         if success:
+            logout_user()
             response = make_response(redirect(url_for("users.signin_page")))
             unset_jwt_cookies(response)
-            flash("Conta excluída com sucesso.", category="auth")
+            flash("Conta excluída com sucesso.", category="success")
             return response
         else:
             flash(
@@ -206,3 +190,65 @@ def delete_account():
             )
 
     return redirect(url_for("users.profile_page"))
+
+@users.route('/reset_password', methods=['GET', 'POST'])
+def reset_password():
+    if request.method == 'POST':
+        email = request.form['email']
+
+        # Monta o link para redefinir a senha
+        link_redefinir = 'http://127.0.0.1:59436/changing_password'  # ou o seu domínio real
+
+        # Envia o email de recuperação
+        assunto = 'Recuperação de Senha - MoneyWise'
+        corpo = f'''
+        <h2>Recuperação de Senha - MoneyWise</h2>
+        <p>Olá!</p>
+        <p>Recebemos uma solicitação para redefinir a sua senha. Se você pediu essa alteração, clique no botão abaixo:</p>
+        <br>
+        <a href="{link_redefinir}" style="padding: 10px 20px; background-color: #7E9DCA; color: white; text-decoration: none; border-radius: 5px;">Redefinir Senha</a>
+        <br><br>
+        <p>Se você não solicitou a redefinição, pode ignorar este email. Sua senha continuará a mesma.</p>
+        <p>Atenciosamente,<br><strong>Equipe MoneyWise</strong></p>
+        '''
+        enviar_email(email, assunto, corpo)
+
+        flash('Um email de recuperação foi enviado!', 'success')
+        return redirect(url_for('users.signin_page')) 
+
+    return render_template('reset_password_page.html')
+
+
+@users.route('/reset_password/<token>', methods=['GET', 'POST'])
+def reset_password_token(token):
+    if request.method == 'POST':
+        nova_senha = request.form['nova_senha']
+        confirmar_senha = request.form['confirmar_senha']
+
+        if nova_senha != confirmar_senha:
+            flash('As senhas não coincidem.', 'danger')
+            return redirect(request.url)
+
+        # Aqui no futuro: validar o token e alterar a senha do usuário no banco de dados
+
+        flash('Senha alterada com sucesso! Faça login.', 'success')
+        return redirect(url_for('users.signin_page'))
+
+    return render_template('changing_password_page.html')
+
+@users.route('/changing_password', methods=['GET', 'POST'])
+def changing_password():
+    if request.method == 'POST':
+        nova_senha = request.form['nova_senha']
+        confirmar_senha = request.form['confirmar_senha']
+
+        if nova_senha != confirmar_senha:
+            flash('As senhas não coincidem!', 'danger')
+            return redirect(url_for('users.changing_password'))
+
+        # Aqui você salvaria a nova senha no banco de dados (depois configuramos isso)
+        
+        flash('Senha alterada com sucesso!', 'success')
+        return redirect(url_for('users.signin_page'))
+
+    return render_template('changing_password_page.html')

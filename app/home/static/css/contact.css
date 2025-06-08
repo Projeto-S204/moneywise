@@ -7,7 +7,9 @@ body {
 }
 
 main {
-  margin: 90px 90px 0 90px;
+  display: flex;
+  margin-left: 75px;
+  justify-content: center;
 }
 
 #form-contact {

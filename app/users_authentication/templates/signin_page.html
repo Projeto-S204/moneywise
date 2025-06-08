@@ -33,16 +33,16 @@
       {% endif %}
     {% endwith %}
 
-    <form action="{{ url_for('users.signin_page') }}" method="POST">
-      {{ form.hidden_tag() }}
-      <div class="form-group">
-        {{ form.email.label(class="form-label") }}
-        {{ form.email(class="form-control", placeholder="Digite seu email") }}
-      </div>
-      <div class="form-group">
-        {{ form.password.label(class="form-label") }}
-        {{ form.password(class="form-control", placeholder="Digite sua senha") }}
-      </div>
+      <form action="{{ url_for('users.signin_page') }}" method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+          {{ form.email.label(class="form-label") }} {{
+          form.email(class="form-control", placeholder="Digite seu email") }}
+        </div>
+        <div class="form-group">
+          {{ form.password.label(class="form-label") }} {{
+          form.password(class="form-control", placeholder="Digite sua senha") }}
+        </div>
 
       <div class="remember-forgot-container">
         <div class="remember-me-container">
@@ -51,14 +51,11 @@
         </div>
 
         <div class="forgot-password-container">
-          <a href="#">Esqueci minha senha</a>
+          <a href="{{ url_for('users.reset_password') }}">Esqueci minha senha</a>
         </div>
       </div>
 
-      <div class="form-group">
-        {{ form.submit(class="btn btn-submit") }}
-      </div>
-
+      <div class="form-group">{{ form.submit(class="btn btn-submit") }}</div>
       <div class="text-center">
         <p>
           Não tem uma conta?
@@ -68,9 +65,17 @@
     </form>
   </div>
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
+    <script>
+      document
+        .querySelector(".forgot-password-container a")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+          window.location.href = this.href;
+        });
+    </script>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
 </html>

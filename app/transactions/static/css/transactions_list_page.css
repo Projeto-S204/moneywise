@@ -25,7 +25,7 @@ body {
 
 .sidebar {
   width: 30%;
-  background-color: #0F0F10;
+  background-color: #0f0f10;
   height: 100vh;
   box-sizing: border-box;
   display: flex;
@@ -67,14 +67,14 @@ body {
 }
 
 .user-info i {
-  color: #DADAE0;
+  color: #dadae0;
   font-size: 30px;
 }
 
 .user-menu {
   display: none;
   position: fixed;
-  background: #2B2B30;
+  background: #2b2b30;
   border-radius: 5px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   min-width: 120px;
@@ -83,7 +83,7 @@ body {
   margin-top: 50px;
   flex-direction: column;
 }
-.user-menu>* {
+.user-menu > * {
   display: flex;
   align-items: center;
   justify-content: left;
@@ -93,16 +93,16 @@ body {
 .user-menu a {
   display: block;
   text-decoration: none;
-  color: #DADAE0;
+  color: #dadae0;
 }
 
-.user-menu>* {
+.user-menu > * {
   width: 100%;
   padding: 10px 50px;
 }
 
-.user-menu>*:hover {
-  background: #3A3A40;
+.user-menu > *:hover {
+  background: #3a3a40;
   border-radius: 5px;
 }
 
@@ -114,18 +114,18 @@ body {
 }
 
 .green {
-  background-color: #92CA7E;
-  color: #2A2A2F;
+  background-color: #92ca7e;
+  color: #2a2a2f;
 }
 
 .red {
-  background-color: #CA7E7E;
-  color: #2A2A2F;
+  background-color: #ca7e7e;
+  color: #2a2a2f;
 }
 
 .blue {
-  background-color: #26262B;
-  color: #7E9DCA;
+  background-color: #26262b;
+  color: #7e9dca;
 }
 
 .card-header {
@@ -146,8 +146,8 @@ body {
 
 .new-transaction-btn {
   background-color: transparent;
-  border: 1px solid #7E9DCA;
-  color: #7E9DCA;
+  border: 1px solid #7e9dca;
+  color: #7e9dca;
 
   padding: 15px 10px 10px 10px;
   cursor: pointer;
@@ -160,11 +160,9 @@ body {
 }
 
 .new-transaction-btn:hover {
-  background-color: #7E9DCA;
-  color: #26262B;
+  background-color: #7e9dca;
+  color: #26262b;
 }
-
-
 
 .container {
   width: 70%;
@@ -185,16 +183,16 @@ body {
   padding: 15px 15px 10px 15px;
 
   border: none;
-  background-color: #1E1E22;
-  color: #E0E0E0;
+  background-color: #1e1e22;
+  color: #e0e0e0;
   font-size: 16px;
   cursor: text;
 }
 
 .filter-button {
   background-color: transparent;
-  border: 1px solid #EFA23B;
-  color: #EFA23B;
+  border: 1px solid #efa23b;
+  color: #efa23b;
   padding: 15px 15px 10px 15px;
   cursor: pointer;
   border-radius: 5px;
@@ -208,7 +206,7 @@ body {
 }
 
 .filter-button:hover {
-  background-color: #EFA23B;
+  background-color: #efa23b;
   color: #272827;
 }
 
@@ -223,7 +221,7 @@ body {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr;
   align-items: center;
-  background-color: #1F1F23;
+  background-color: #1f1f23;
   padding: 15px 30px;
   border-radius: 5px;
   color: white;
@@ -235,7 +233,7 @@ body {
 }
 
 .transaction-item:hover {
-  background: #3A3A40;
+  background: #3a3a40;
 }
 
 .transaction-item * {
@@ -256,7 +254,7 @@ body {
 
 .transaction-category {
   text-align: center;
-  color: #1F1F23;
+  color: #1f1f23;
   padding-top: 5px;
   border-radius: 5px;
   font-weight: normal;
@@ -268,9 +266,9 @@ body {
 }
 
 .expense {
-  color: #CA7E7E;
+  color: #ca7e7e;
 }
 
 .income {
-  color: #92CA7E;
+  color: #92ca7e;
 }

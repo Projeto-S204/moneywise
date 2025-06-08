@@ -25,31 +25,33 @@
         <img src="static/images/white_logo.png" alt="MoneyWise Logo" class="logo" />
         <div class="user-info" onclick="toggleMenu(event)">
           <div class="user-info-content">
-            <span>{{ user.name }}</span>
+            <span>{{ current_user.name }}</span>
             <i class="bi bi-person-circle"></i>
           </div>
           <div id="user-menu" class="user-menu">
-            <div class="transactions-option-contenct">
+            <div class="transactions-option-contenct"
+              onclick="window.location.href='{{ url_for('transactions.transactions_page') }}'">
               <i class="bi bi-cash-stack"></i>
               <a href="{{ url_for('transactions.transactions_page') }}">Transações</a>
             </div>
 
-            <div class="dashboards-option-contenct">
+            <div class="dashboards-option-contenct"
+              onclick="window.location.href='{{ url_for('statistics.statistics_page') }}'">
               <i class="bi bi-bar-chart"></i>
-              <a href="#">Estatísticas</a>
+              <a href="{{ url_for('statistics.statistics_page') }}">Estatísticas</a>
             </div>
 
-            <div class="profile-option-contenct">
+            <div class="profile-option-contenct" onclick="window.location.href='{{ url_for('users.profile_page') }}'">
               <i class="bi bi-person"></i>
               <a href="{{ url_for('users.profile_page') }}">Perfil</a>
             </div>
 
-            <div class="settings-option-contenct">
+            <div class="settings-option-contenct" onclick="window.location.href='#'">
               <i class="bi bi-gear"></i>
               <a href="#">Ajustes</a>
             </div>
 
-            <div class="logout-option-contenct">
+            <div class="logout-option-contenct" onclick="window.location.href='{{ url_for('users.logout') }}'">
               <i class="bi bi-box-arrow-left"></i>
               <a href="{{ url_for('users.logout') }}">Logout</a>
             </div>
@@ -75,7 +77,7 @@
 
       <div class="card blue">
         <div class="card-header">
-          <p>Receitas</p>
+          <p>Saldo</p>
           <i class="bi bi-currency-dollar"></i>
         </div>
         <h1 id="total-value">R$ 0</h1>
