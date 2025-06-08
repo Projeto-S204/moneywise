@@ -2,7 +2,7 @@
 <html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
-    <title>Perfil</title>
+    <title>Perfil | MoneyWise</title>
     <link
       rel="stylesheet"
       href="{{ url_for('users.static', filename='css/profile.css') }}"
@@ -23,19 +23,15 @@
       <div class="sidebar">
         <div class="menu-topo">
           <ul>
-            <li class="transactions-option-content">
+            <li class="transactions-option-content" onclick="window.location.href='{{ url_for('transactions.transactions_page') }}'">
               <i class="bi bi-cash-stack"></i>
-              <a href="{{ url_for('transactions.transactions_page') }}"
-                >Transações</a
-              >
+              <a href="{{ url_for('transactions.transactions_page') }}">Transações</a>
             </li>
-            <li class="dashboards-option-content">
+            <li class="dashboards-option-content" onclick="window.location.href='{{ url_for('statistics.statistics_page') }}'">
               <i class="bi bi-bar-chart"></i>
-              <a href="{{ url_for('statistics.statistics_page') }}"
-                >Estatísticas</a
-              >
+              <a href="{{ url_for('statistics.statistics_page') }}">Estatísticas</a>
             </li>
-            <li class="settings-option-content">
+            <li class="settings-option-content" onclick="window.location.href='#'">
               <i class="bi bi-gear"></i>
               <a href="#">Ajustes</a>
             </li>
@@ -44,12 +40,12 @@
 
         <div class="menu-rodape">
           <ul>
-            <li class="delete-option-content">
+            <li class="delete-option-content" onclick="window.location.href='#'">
               <i class="bi bi-trash" style="font-size: 1.5rem"></i>
               <a href="#" id="delete-account-btn">Deletar Conta</a>
             </li>
 
-            <li class="logout-option-contenct">
+            <li class="logout-option-content" onclick="window.location.href='{{ url_for('users.logout') }}'">
               <i class="bi bi-box-arrow-left"></i>
               <a href="{{ url_for('users.logout') }}">Logout</a>
             </li>
