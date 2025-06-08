@@ -12,7 +12,7 @@ export default defineConfig({
   use: {
     baseURL: 'http://127.0.0.1:' + process.env.AVAILABLE_PORT,
 
-    trace: 'on-first-retry',
+    trace: 'on',
   },
 
   projects: [
