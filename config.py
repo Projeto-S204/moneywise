@@ -8,10 +8,10 @@ import os
 from flask_mail import Mail
 from datetime import timedelta
 
-DB_HOST = "db_container"
+DB_HOST = "localhost"
 DB_NAME = "moneywise"
 DB_USER = "postgres"
-DB_PASS = "meritopg"
+DB_PASS = "1234"
 DB_PORT = "5432"
 
 db = SQLAlchemy()
@@ -50,7 +50,7 @@ class Config:
     JWT_COOKIE_NAME = "access_token_cookie"
     JWT_ACCESS_COOKIE_PATH = '/'
     JWT_REFRESH_COOKIE_PATH = '/auth/refresh'
-    JWT_ACCESS_TOKEN_EXPIRES = timedelta(minutes=2)
+    JWT_ACCESS_TOKEN_EXPIRES = timedelta(minutes=30)
 
     @staticmethod
     def get_db_connection():
