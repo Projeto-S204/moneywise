@@ -1,66 +1,59 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, DateField, SubmitField
 from wtforms.validators import (
-    DataRequired,
-    Email,
-    Length,
-    EqualTo,
-    ValidationError,
+    DataRequired, Email, Length, EqualTo, ValidationError
 )
 from app.users_authentication.models import User
 
 
 class UserSignupForm(FlaskForm):
     username = StringField(
-        label="Usuário:",
+        "Usuário:",
         validators=[Length(min=3, max=30), DataRequired()],
     )
     email_address = StringField(
-        label="Email:", validators=[Email(), DataRequired()],
+        "Email:",
+        validators=[Email(), DataRequired()],
     )
     password = PasswordField(
-        label="Senha:", validators=[DataRequired()],
+        "Senha:",
+        validators=[DataRequired()],
     )
     confirm_password = PasswordField(
-        label="Confirmar Senha:",
+        "Confirmar Senha:",
         validators=[
-            EqualTo("password", message="As senhas não coincidem."),
             DataRequired(),
+            EqualTo("password", message="As senhas não coincidem."),
         ],
     )
     birthday = DateField(
-        "Aniversário:", format="%Y-%m-%d", validators=[DataRequired()]
+        "Aniversário:",
+        format="%Y-%m-%d",
+        validators=[DataRequired()],
     )
 
-    submit = SubmitField(label="Criar Conta")
+    submit = SubmitField("Criar Conta")
 
-    # avatar = FileField("Avatar URL (Optional):")
-
-    def validate_username(self, username_to_check):
-        user = User.query.filter_by(
-            name=username_to_check.data
-        ).first()
-        if user:
+    def validate_username(self, field):
+        if User.query.filter_by(name=field.data).first():
             raise ValidationError("Usuário já cadastrado.")
 
-    def validate_email_address(self, email_address_to_check):
-        email_address = User.query.filter_by(
-            email=email_address_to_check.data
-        ).first()
-        if email_address:
+    def validate_email_address(self, field):
+        if User.query.filter_by(email=field.data).first():
             raise ValidationError("Email já cadastrado.")
 
-    def validate_password(self, password_to_check):
-        if len(password_to_check.data) < 8:
+    def validate_password(self, field):
+        pwd = field.data
+
+        if len(pwd) < 8:
             raise ValidationError("A senha deve ter pelo menos 8 caracteres.")
-        if not any(c.isalpha() for c in password_to_check.data):
+        if not any(c.isalpha() for c in pwd):
             raise ValidationError("A senha deve conter pelo menos uma letra.")
-        if not any(c.isalnum() for c in password_to_check.data):
+        if not any(c.isdigit() for c in pwd):
             raise ValidationError("A senha deve conter pelo menos um número.")
 
         special_characters = "!@#$%^&*()-_+=<>?/|{}[]:;'"
-
-        if not any(c in special_characters for c in password_to_check.data):
+        if not any(c in special_characters for c in pwd):
             raise ValidationError(
                 "A senha deve conter pelo menos um caractere especial."
             )

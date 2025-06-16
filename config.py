@@ -38,6 +38,7 @@ class Config:
     MAIL_USERNAME = 'suportemw011@gmail.com'
     MAIL_PASSWORD = 'krofvxeymfmvsjwx'
     MAIL_DEFAULT_SENDER = 'suportemw011@gmail.com'
+    SECURITY_PASSWORD_SALT = "7f2e1c9d3b4a6f8e"
 
     JWT_SECRET_KEY = (
         "k\x8d-\xbd\xb9\x04\xfax\x92\xd9{H\xf0\x9c\xf9\xde\x91\xc6\xe6"

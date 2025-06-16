@@ -22,7 +22,16 @@ from flask_jwt_extended import (
 from app.users_authentication.services.signin_form import UserSigninForm
 from app.users_authentication.services.signup_form import UserSignupForm
 from app.users_authentication.services.delete_form import UserDeleteForm
-from app.users_authentication.services.user_service import delete_user_logic
+from app.users_authentication.services.request_password_form import (
+    RequestResetForm,
+)
+from app.users_authentication.services.user_service import reset_password_logic
+
+from app.users_authentication.services.user_service import (
+    process_reset_request,
+    delete_user_logic,
+)
+
 from app.users_authentication.services.form_validations import (
     validate_form_on_signup,
     validate_form_on_signin,
@@ -31,6 +40,7 @@ from flask_jwt_extended.exceptions import NoAuthorizationError
 from jwt import ExpiredSignatureError
 from app.users_authentication.models import User
 from datetime import datetime, timezone, timedelta
+
 
 users = Blueprint(
     'users',
@@ -206,3 +216,20 @@ def delete_account():
             )
 
     return redirect(url_for("users.profile_page"))
+
+
+@users.route("/forgot-password", methods=["GET", "POST"])
+def forgot_password_page():
+    form = RequestResetForm()
+    if process_reset_request(form):
+        flash(
+            "Um link de recuperação foi enviado para seu e-mail.",
+            category="info"
+        )
+        return redirect(url_for("users.signin_page"))
+    return render_template("request_password_page.html", form=form)
+
+
+@users.route("/reset-password/<token>", methods=["GET", "POST"])
+def reset_password(token):
+    return reset_password_logic(token)
