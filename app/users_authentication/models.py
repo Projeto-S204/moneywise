@@ -49,3 +49,6 @@ class User(db.Model, UserMixin):
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(user_id)
+
+    def set_password(self, password):
+        self.hashed_password = bcrypt.generate_password_hash(password).decode()

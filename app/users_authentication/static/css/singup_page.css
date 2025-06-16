@@ -7,7 +7,7 @@ body {
   align-items: center;
   justify-content: center;
   color: #ffffff;
-}
+} 
 
 #tela {
   width: 100%;
@@ -50,10 +50,9 @@ body {
 
 #esquerda h2 {
   color: #efa23b;
-  font-weight: bold;
-  font-size: 96px;
   font-weight: 300;
-  font-family: "Jomhuria", sans-serif;
+  font-size: 96px;
+  font-family: "Jomhuria", cursive;
 }
 
 #esquerda p {
@@ -119,9 +118,19 @@ body {
   border-radius: 5px;
   text-decoration: none;
   width: 100%;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .btn-submit:hover {
   background-color: #efa23b;
   color: #000000;
+}
+
+/* Estilo para o texto discreto da dica da senha */
+.password-info {
+  color: #bbbbbb;
+  font-size: 0.85rem;
+  font-style: italic;
+  margin-bottom: 6px;
+  user-select: none;
 }
