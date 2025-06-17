@@ -1,141 +1,137 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lista de Transações</title>
-
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Jomhuria&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;700&display=swap" rel="stylesheet" />
-
-  <link rel="stylesheet" href="{{ url_for('transactions.static', filename='css/filter_modal.css') }}" />
-  <link rel="stylesheet" href="{{ url_for('transactions.static', filename='css/transactions_list_page.css') }}" />
-
-  <script src="{{ url_for('transactions.static', filename='js/filter_modal.js') }}"></script>
-  <script src="{{ url_for('transactions.static', filename='js/search_transaction.js') }}"></script>
-  <script src="{{ url_for('transactions.static', filename='js/transactions_list_page.js') }}"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minhas Transações</title>
+  <link rel="stylesheet" href="{{ url_for('transactions.static', filename='css/transaction_form_page.css') }}">
+  <script src="{{ url_for('transactions.static', filename='js/transaction_form_page.js') }}"></script>
 </head>
 
 <body>
-  <div class="sidebar">
-    <div class="sidebar-content">
-      <header class="header">
-        <img src="static/images/white_logo.png" alt="MoneyWise Logo" class="logo" />
-        <div class="user-info" onclick="toggleMenu(event)">
-          <div class="user-info-content">
-            <span>{{ user.name }}</span>
-            <i class="bi bi-person-circle"></i>
-          </div>
-          <div id="user-menu" class="user-menu">
-            <div class="transactions-option-contenct"
-              onclick="window.location.href='{{ url_for('transactions.transactions_page') }}'">
-              <i class="bi bi-cash-stack"></i>
-              <a href="{{ url_for('transactions.transactions_page') }}">Transações</a>
-            </div>
+  <div class="form-content">
 
-            <div class="dashboards-option-contenct"
-              onclick="window.location.href='{{ url_for('statistics.statistics_page') }}'">
-              <i class="bi bi-bar-chart"></i>
-              <a href="{{ url_for('statistics.statistics_page') }}">Estatísticas</a>
-            </div>
+    {% if transaction %}
+    <form action="{{ url_for('transactions.transaction_edit_page', transaction_id=transaction['transaction_id']) }}"
+      method="POST">
+      <h1>Sua Transação</h1>
+      {% else %}
+      <h1>Nova Transação</h1>
+      <form action="{{ url_for('transactions.transaction_create_page') }}" method="POST">
+        {% endif %}
 
-            <div class="profile-option-contenct" onclick="window.location.href='{{ url_for('users.profile_page') }}'">
-              <i class="bi bi-person"></i>
-              <a href="{{ url_for('users.profile_page') }}">Perfil</a>
-            </div>
+        <form action="{{ url_for('transactions.transaction_create_page') }}" method="POST">
 
-            <div class="settings-option-contenct" onclick="window.location.href='#'">
-              <i class="bi bi-gear"></i>
-              <a href="#">Ajustes</a>
-            </div>
 
-            <div class="logout-option-contenct" onclick="window.location.href='{{ url_for('users.logout') }}'">
-              <i class="bi bi-box-arrow-left"></i>
-              <a href="{{ url_for('users.logout') }}">Logout</a>
+          <div class="first-input-row">
+            <div class="title-container">
+              <label for="title">Título</label>
+              <input type="text" id="title" name="title" placeholder="Digite um Título" required value="{{ transaction.title }}" />
+            </div>
+      
+            <div class="payment-method-container">
+              <label for="payment_method">Método de Pagamento</label>
+              <select id="payment_method" name="payment_method" required>
+                <option value="" disabled selected>Selecione uma opção</option>
+                <option value="Debito" {% if transaction.payment_method=='Debito' %} selected {% endif %}>Débito</option>
+                <option value="Credito" {% if transaction.payment_method=='Credito' %} selected {% endif %}>Crédito</option>
+                <option value="PIX" {% if transaction.payment_method=='PIX' %} selected {% endif %}>PIX</option>
+                <option value="Boleto" {% if transaction.payment_method=='Boleto' %} selected {% endif %}>Boleto</option>
+                <option value="Outro" {% if transaction.payment_method=='Outro' %} selected {% endif %}>Outro</option>
+              </select>
             </div>
           </div>
-        </div>
-      </header>
 
-      <div class="card green">
-        <div class="card-header">
-          <p>Receitas</p>
-          <i class="bi bi-caret-up-square-fill"></i>
-        </div>
-        <h1 id="income-value">R$ 0</h1>
-      </div>
 
-      <div class="card red">
-        <div class="card-header">
-          <p>Despesas</p>
-          <i class="bi bi-caret-down-square-fill"></i>
-        </div>
-        <h1 id="expense-value">R$ 0</h1>
-      </div>
+          <div class="second-input-row">
+            <div class="amount-container">
+              <label for="amount">Valor</label>
+              <input type="text" id="amount" name="amount" placeholder="Digite um Valor" value="{{ transaction.amount }}" required />
+            </div>
+      
+            <div class="date-container">
+              <label for="transaction_date">Data</label>
+              <input type="date" id="transaction_date" name="transaction_date" value="{{ transaction.transaction_date }}" required />
+            </div>
+      
+            <div class="category-container">
+              <label for="category">Categoria</label>
+              <select id="category" name="category" required>
+                <option value="" disabled selected>Selecione uma opção</option>
+                <option value="Casa" {% if transaction.category=='Casa' %} selected {% endif %}>Casa</option>
+                <option value="Entretenimento" {% if transaction.category=='Entretenimento' %} selected {% endif %}>Entretenimento</option>
+                <option value="Estudos" {% if transaction.category=='Estudos' %} selected {% endif %}>Estudos</option>
+                <option value="Viagem" {% if transaction.category=='Viagem' %} selected {% endif %}>Viagem</option>
+                <option value="Saúde" {% if transaction.category=='Saúde' %} selected {% endif %}>Saúde</option>
+                <option value="Mercado" {% if transaction.category=='Mercado' %} selected {% endif %}>Mercado</option>
+              </select>
+            </div>
+          </div>
 
-      <div class="card blue">
-        <div class="card-header">
-          <p>Saldo</p>
-          <i class="bi bi-currency-dollar"></i>
-        </div>
-        <h1 id="total-value">R$ 0</h1>
-      </div>
+          <div class="input-container">
+            <label for="description">Descrição</label>
+            <textarea id="description" name="description" placeholder="Digite uma Descrição para a sua Transação">{{ transaction.description }}</textarea>
+          </div>
 
-      <a class="new-transaction-btn" href="{{ url_for('transactions.transaction_create_page') }}">Nova Transação</a>
-    </div>
+          <div class="is_recurring_content">
+            <div class="left-content">
+              <input type="checkbox" id="checkbox" name="is_recurring" {% if transaction.is_recurring %} checked {%
+                endif %} onchange="toggleNumberOfPayments()">
+              <p class="checkbox_label">Transação Recorrente</p>
+            </div>
+
+            <div style="display: none;" id="number-of-payments-container">
+              <label for="number_of_payments">Número de parcelas</label>
+              <input type="number" id="number_of_payments" name="number_of_payments" placeholder="Número de parcelas" value="{{ transaction.number_of_payments if transaction.number_of_payments else 2 }}">
+            </div>
+          </div>
+
+          <!-- <input type="date" id="start_date" name="start_date" value="{{ transaction.start_date }}">
+
+          <input type="date" id="end_date" name="end_date" value="{{ transaction.end_date }}">
+
+          <select id="interval" name="interval">
+            <option value="">Selecione um intervalo</option>
+            <option value="daily" {% if transaction.interval=='daily' %} selected {% endif %}>Diário</option>
+            <option value="weekly" {% if transaction.interval=='weekly' %} selected {% endif %}>Semanal</option>
+            <option value="monthly" {% if transaction.interval=='monthly' %} selected {% endif %}>Mensal</option>
+            <option value="yearly" {% if transaction.interval=='yearly' %} selected {% endif %}>Anual</option>
+          </select> -->
+
+          <div class="transaction-type-buttons">
+            <button type="button" id="income-btn" class="income-btn" onclick="setTransactionType('income'); changeButtonColor(this)">
+              <i class="bi bi-caret-up-square-fill"></i> Receita
+            </button>
+            <button type="button" id="expense-btn" class="expense-btn" onclick="setTransactionType('expense'); changeButtonColor(this)">
+              <i class="bi bi-caret-down-square-fill"></i> Despesa
+            </button>
+          </div>
+          <input type="hidden" id="transaction_type" name="transaction_type" value="{{ transaction.transaction_type }}">
+
+          <div class="options-container" {% if not transaction %} style="justify-content: right;" {% endif %}>
+            {% if transaction %}
+            <button type="submit" class="delete-btn">
+              <a
+                href="{{ url_for('transactions.transaction_delete', transaction_id=transaction['transaction_id']) }}">Deletar</a>
+            </button>
+            {% endif %}
+
+            <div class="right-buttons">
+              <a class="cancel-btn" onclick="window.history.back()">Voltar</a>
+              {% if transaction %}
+              <button type="submit" class="edit-btn">Editar</button>
+              {% else %}
+              <button type="submit" class="submit-btn">Cadastrar</button>
+              {% endif %}
+            </div>
+          </div>
+
+        </form>
   </div>
-  <div class="container">
-    <div class="search-container">
-      <input type="text" id="search" placeholder="Busque uma Transação" />
-      <button class="filter-button" id="filter-button">
-        <i class="bi bi-funnel-fill"></i>
-        Filtrar
-      </button>
-      {% include 'filter_modal.html' %}
-    </div>
-    <div class="transactions" id="transactions">
-      {% if transactions %} {% for transaction in transactions %} {% if
-      transaction.is_recurring %} {% for i in
-      range(transaction.number_of_payments) %}
-      <form action="{{ url_for('transactions.transaction_edit_page', transaction_id=transaction['transaction_id']) }}"
-        method="GET">
-        <div class="transaction-item" class="transaction-item" onclick="this.parentNode.submit();">
-          <span class="transaction-name">{{ transaction.title }} {{ i+1 }}/{{
-            transaction.number_of_payments }}</span>
-          <span style="display: none" class="transaction-type">{{ transaction.transaction_type }}</span>
-          <span class="transaction-amount {{ transaction.transaction_type }}">
-            R$ {{ "%.2f"|format(transaction.amount /
-            transaction.number_of_payments) }}
-          </span>
 
-          <span class="transaction-category" style="background-color: {{ category_colors[transaction.category] }}">{{
-            transaction.category }}</span>
-          <span class="transaction-date">{{ transaction.transaction_date }}</span>
-        </div>
-      </form>
-      {% endfor %} {% else %}
-      <form action="{{ url_for('transactions.transaction_edit_page', transaction_id=transaction['transaction_id']) }}"
-        method="GET">
-        <div class="transaction-item" onclick="this.parentNode.submit();">
-          <span class="transaction-name">{{ transaction.title }}</span>
-          <span style="display: none" class="transaction-type">{{ transaction.transaction_type }}</span>
-          <span class="transaction-amount {{ transaction.transaction_type }}">
-            R$ {{ "%.2f"|format(transaction.amount) }}
-          </span>
-          <span class="transaction-category" style="background-color: {{ category_colors[transaction.category] }}">{{
-            transaction.category }}</span>
-          <span class="transaction-date">{{ transaction.transaction_date }}</span>
-        </div>
-      </form>
-      {% endif %} {% endfor %} {% else %}
-      <p style="color: white; text-align: center">
-        Nenhuma transação encontrada
-      </p>
-      {% endif %}
-    </div>
-  </div>
+  <link rel=" stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
 </body>
 
 </html>

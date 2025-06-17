@@ -1,12 +1,12 @@
 from flask import Blueprint, redirect, render_template, request, url_for, flash
 from app.users_authentication.models import User
+from app.categories.models import Category
 from .transaction_db import TransactionsModal
 from flask_jwt_extended import (
     verify_jwt_in_request,
     get_jwt_identity,
     jwt_required
 )
-
 
 TransactionsModal.create_transaction_table()
 
@@ -31,7 +31,6 @@ def transactions_page():
         return redirect(url_for("users.signin_page"))
 
     user_id = get_jwt_identity()
-
     user = User.query.get(user_id)
 
     transactions_filters = {key: request.args.get(key) for key in [
@@ -88,7 +87,8 @@ def transaction_create_page():
             )
             print(f"Error: {e}")
 
-    return render_template('transaction_form_page.html', transaction=None)
+    categories = Category.query.all()
+    return render_template('transaction_form_page.html', transaction=None, categories=categories)
 
 
 @transactions.route('/edit/<int:transaction_id>', methods=['GET', 'POST'])
@@ -103,6 +103,7 @@ def transaction_edit_page(transaction_id):
         transaction = TransactionsModal.transactions_get_list(
             transaction_id=transaction_id
         )[0]
+        categories = Category.query.all()
 
     if request.method == 'POST':
         try:
@@ -126,7 +127,8 @@ def transaction_edit_page(transaction_id):
 
     return render_template(
         'transaction_form_page.html',
-        transaction=transaction
+        transaction=transaction,
+        categories=categories
     )
 
 

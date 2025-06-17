@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lista de Categorias</title>
+  <link rel="stylesheet" href="{{ url_for('transactions.static', filename='css/transaction_form_page.css') }}" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" />
+</head>
+
+<body>
+  <div class="form-content">
+    <h1>Lista de Categorias</h1>
+
+    <div style="margin-bottom: 20px;">
+      <a href="{{ url_for('categories.category_new_page') }}" class="submit-btn">Nova Categoria</a>
+    </div>
+
+    <div>
+      {% for category in categories %}
+      <div style="padding: 10px; border-bottom: 1px solid #ccc; display: flex; justify-content: space-between; align-items: center;">
+        <span>{{ category.name }} ({{ category.transaction_type | capitalize }})</span>
+        <a href="{{ url_for('categories.category_edit_page', category_id=category['id']) }}" class="edit-btn">Editar</a>
+      </div>
+      {% else %}
+      <p>Nenhuma categoria cadastrada.</p>
+      {% endfor %}
+    </div>
+
+    <div style="margin-top: 30px;">
+      <a class="cancel-btn" onclick="window.history.back()">Voltar</a>
+    </div>
+
+  </div>
+</body>
+
+</html>

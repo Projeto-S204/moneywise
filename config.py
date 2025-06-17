@@ -9,9 +9,9 @@ from flask_mail import Mail
 from datetime import timedelta
 
 DB_HOST = "localhost"
-DB_NAME = "moneywise"
+DB_NAME = "category_felipe"
 DB_USER = "postgres"
-DB_PASS = "1234"
+DB_PASS = "root"
 DB_PORT = "5432"
 
 db = SQLAlchemy()
