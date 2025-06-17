@@ -8,10 +8,10 @@ import os
 from flask_mail import Mail
 from datetime import timedelta
 
-DB_HOST = "localhost"
+DB_HOST = "db_container"
 DB_NAME = "moneywise"
 DB_USER = "postgres"
-DB_PASS = "1234"
+DB_PASS = "meritopg"
 DB_PORT = "5432"
 
 db = SQLAlchemy()
