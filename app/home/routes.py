@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for
 from flask_mail import Message
 from config import mail
 
@@ -56,11 +56,9 @@ def contact_page():
                 html=email_body
             )
             mail.send(msg)
-            
             return redirect(url_for('home.home_page'))
         except Exception as e:
             print(f"Erro ao enviar email: {e}")
             return redirect(url_for('home.contact_page'))
 
     return render_template('contact.html')
-
