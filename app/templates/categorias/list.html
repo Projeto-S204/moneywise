@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Categorias{% endblock %}
+
+{% block content %}
+<div style="display: flex;">
+  <div style="flex: 1; padding-right: 20px; border-right: 1px solid #444;">
+    <h1><i class="fa-solid fa-money-bill-trend-up fa-icon"></i>Categorias de Receitas</h1>
+    <div style="display: grid; grid-template-columns: 1fr auto; gap: 10px;">
+      {% for cat in receitas %}
+      <div style="background-color: #333; padding: 15px; border-radius: 5px;">
+        <span>{{ cat.name }}</span>
+        {% if cat.fixed %}<span class="text-muted">Fixa</span>{% endif %}
+      </div>
+      <div style="display: flex; gap: 10px; align-items: center;">
+        {% if not cat.fixed %}
+        <a href="{{ url_for('categories.editar_categoria', id=cat.id) }}" class="btn" style="padding: 5px 10px;">
+          <i class="fa-solid fa-pen-to-square"></i>
+        </a>
+        <form action="{{ url_for('categories.deletar_categoria', id=cat.id) }}" method="POST" style="display:inline;">
+          <button type="submit" class="btn btn-danger" style="padding: 5px 10px;">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </form>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div style="flex: 1; padding-left: 20px;">
+    <h1><i class="fa-solid fa-cart-shopping fa-icon"></i>Categorias de Despesas</h1>
+    <div style="display: grid; grid-template-columns: 1fr auto; gap: 10px;">
+      {% for cat in despesas %}
+      <div style="background-color: #333; padding: 15px; border-radius: 5px;">
+        <span>{{ cat.name }}</span>
+        {% if cat.fixed %}<span class="text-muted">Fixa</span>{% endif %}
+      </div>
+      <div style="display: flex; gap: 10px; align-items: center;">
+        {% if not cat.fixed %}
+        <a href="{{ url_for('categories.editar_categoria', id=cat.id) }}" class="btn" style="padding: 5px 10px;">
+          <i class="fa-solid fa-pen-to-square"></i>
+        </a>
+        <form action="{{ url_for('categories.deletar_categoria', id=cat.id) }}" method="POST" style="display:inline;">
+          <button type="submit" class="btn btn-danger" style="padding: 5px 10px;">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </form>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<!-- No final do list.html, substitua o botão por: -->
+<div style="display: flex; justify-content: center; margin-top: 20px;">
+  <a href="{{ url_for('categories.nova_categoria') }}" class="btn">
+    <i class="fa-solid fa-plus"></i> Criar Nova Categoria
+  </a>
+</div>
+{% endblock %}
