@@ -56,19 +56,11 @@ def contact_page():
                 html=email_body
             )
             mail.send(msg)
-            flash("Mensagem enviada com sucesso!", "success")
-            return redirect(url_for('home.sucesso'))
+            
+            return redirect(url_for('home.home_page'))
         except Exception as e:
             print(f"Erro ao enviar email: {e}")
-            flash(
-                "Erro ao enviar e-mail. Tente novamente mais tarde.",
-                "danger"
-            )
             return redirect(url_for('home.contact_page'))
 
     return render_template('contact.html')
 
-
-@home.route('/sucesso')
-def sucesso():
-    return 'Email enviado com sucesso!'
