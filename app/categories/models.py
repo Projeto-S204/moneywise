@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for
 from app.categories import categories_bp
 from app import db
-from app.models import Category
+from app.categories.models import Category
 
 @categories_bp.route('/categorias')
 def listar_categorias():
